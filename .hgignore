@@ -1,7 +1,6 @@
+bin/
+_obj/
 syntax: glob
-*.suo
-**/*.user
-**/bin/*
-**/obj/*
-*.user
+*.go.swp
+_linux_amd64_.6
 
