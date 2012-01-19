@@ -3,4 +3,5 @@ _obj/
 syntax: glob
 *.go.swp
 _linux_amd64_.6
+bestbuys/bestbuys
 
