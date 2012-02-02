@@ -24,7 +24,7 @@ body {
   padding: 20px;
   border-radius: 5px;
 }
-.recipe-summary {
+.game-summary {
   border-bottom: 1px dotted #999999;
   float: left;
   padding: 10px;
@@ -41,26 +41,15 @@ body {
 
 /* Recipes */
 
-.rating {
+.income {
   float: left;
-  width: 40px;
-  text-align: center;
-  font-size: 20pt;
-  margin: 0 20px 0 0;
-  height: 38px;
-  background-color: #448866;
-  border-radius: 5px;
+  width: 200px;
+  padding: 5px;
 }
 .summary {
   width: 610px;
   float: left;
   font-size: 16pt;
-  padding: 5px;
-}
-.user {
-  width: 150px;
-  float: left;
-  font-size: 12pt;
   padding: 5px;
 }
 
