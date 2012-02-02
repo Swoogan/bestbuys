@@ -1,17 +1,33 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-  <title>The Awesome Recipe Site!!!</title>
+  <title>Uken Games Land Purchase System</title>
   <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
   <script src="jsrender.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    function CurrencyFormatted(amount)
+    {
+      var f = parseFloat(amount);
+      if(isNaN(f)) { return '$0'; }
+      var s = new String(f);
+      var temps = "";
+      for (var i = s.length; i > 0; i -= 3)
+      {
+         temps = s.slice(Math.max(i-3, 0), i) + ',' + temps
+      }
+
+      return '$' + temps.slice(0, -1);
+    }
+  </script>
   <link href="main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <script id="recipeTemplate" type="text/x-jquery-tmpl">
-    <div class="recipe-summary">
-      <div class="rating">{{=income}}</div>
-      <div class="summary"><a href="recipe.html?id={{=_id.$oid}}">{{=name}}</a></div>
-      <div class="user">{{=user}}</div>
+  <script id="gameTemplate" type="text/x-jquery-tmpl">
+    <div class="game-summary">
+      <div class="income">Income: {{format income}}</div>
+      <div class="income">Upkeep: {{format upkeep}}</div>
+      <div class="income">Balance: {{format balance}}</div>
+      <div class="income">Wallet: {{format wallet}}</div>
     </div>
   </script>
 
@@ -20,7 +36,7 @@
   </div>
 
   <div id="content">
-    <div id="recipeList"></div>
+    <div id="gameList"></div>
   </div>
   
   <script type="text/javascript">
@@ -29,15 +45,18 @@
 
     var request = new XMLHttpRequest();  
     request.open('GET', url, true);  
+    request.setRequestHeader("accept", "application/json")
     request.onreadystatechange = function (aEvt) {  
       if (request.readyState == 4) {  
          if (request.status == 200) {
-           // alert(request.responseText);
            var finances = JSON.parse(request.responseText);
-           // alert(String(recipes[0]["_id"]["$oid"]));
 
-           $( "#recipeList" ).html(
-             $( "#recipeTemplate" ).render( finances )
+           $.views.registerTags({
+		format: CurrencyFormatted
+	   });
+
+           $( "#gameList" ).html(
+             $( "#gameTemplate" ).render( finances )
            );
 	 }
          else {
