@@ -43,13 +43,13 @@ body {
 
 .field {
   float: left;
-  width: 90px;
+  width: 75px;
   padding: 5px;
   text-align: center;
 }
 .data {
   float: left;
-  width: 95px;
+  width: 110px;
   padding: 5px;
   background-color: white;
   text-align: right;
