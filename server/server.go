@@ -10,7 +10,7 @@ import (
 func main() {
 	log.Printf("Connecting to mongodb")
 
-	session, err := mgo.Mongo("172.16.1.63")
+	session, err := mgo.Mongo("localhost")
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -19,7 +19,6 @@ func main() {
 
 	db := session.DB("uken")
 
-	mongorest.NewMongoRest(db, "finances")
 	mongorest.NewMongoRest(db, "games")
 
 	log.Printf("About to listen on 4040")
