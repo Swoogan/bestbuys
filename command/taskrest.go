@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"fmt"
 	"http"
 	"json"
@@ -72,10 +73,12 @@ func (mr *TaskRest) Find(w http.ResponseWriter, idString string, r *http.Request
 
 // Create and add a new document to the collection
 func (mr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
+	//TODO: Check the content-type
 	dec := json.NewDecoder(r.Body)
 	var result task
 	if err := dec.Decode(&result); err != nil {
 		rest.BadRequest(w, formatting)
+	        log.Println("Could not decode json")
 		return
 	}
 
@@ -83,6 +86,7 @@ func (mr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 
 	if err := mr.col.Insert(result); err != nil {
 		rest.BadRequest(w, "Could not insert document")
+	        log.Println("Could not save to datastore")
 		return
 	}
 

@@ -11,13 +11,13 @@
   <script id="gameTemplate" type="text/x-jquery-tmpl">
     <div class="game-summary">
       <div class="field">Income:</div>
-      <div class="data" onClick="this.contentEditable='true';">{{format income}}</div>
+      <div class="data" id="income" onClick="this.contentEditable='true';">{{format income}}</div>
       <div class="field">Upkeep:</div>
       <div class="data" onClick="this.contentEditable='true';">{{format upkeep}}</div>
       <div class="field">Balance:</div>
       <div class="data" onClick="this.contentEditable='true';">{{format balance}}</div>
       <div class="field">Wallet:</div>
-      <div class="data" onClick="this.contentEditable='true';">{{format wallet}}</div>
+      <div class="data" id="wallet" onClick="this.contentEditable='true';">{{format wallet}}</div>
     </div>
   </script>
 
@@ -28,6 +28,8 @@
   <div id="content">
     <div id="gameList"></div>
   </div>
+
+  <div class="log"></div>
   
   <script type="text/javascript">
 
@@ -56,7 +58,20 @@
       }  
     };  
     request.send(null);  
+  </script>
+  <script type="text/javascript">
+    $("div.log").ajaxError(function(e, xhr, settings, exception) {
+      $(this).text( 'error in: ' + settings.url + '  error:' + xhr.responseText );
+    });
+    alert('outside');
+    $( ".data" ).focusout(function() {
+      alert('inside');
+      $.post( "http://localhost:4041/tasks/", 
+              '{ name: "setWallet", data: {wallet: 1234} }',
+              {contentType: 'application/json'});
+    });
 
+    $(".data").keypress(function(e){ return e.which != 13; });
   </script>
 </body>
 </html>
