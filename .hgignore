@@ -5,7 +5,7 @@ syntax: glob
 _linux_amd64_.6
 bestbuys/bestbuys
 server/server
-
 eventbus/eventbus
 query/query
 command/command
+scheduler/scheduler

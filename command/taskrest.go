@@ -1,6 +1,8 @@
 package main
 
 import (
+//	"os"
+//	"io/ioutil"
 	"log"
 	"fmt"
 	"http"
@@ -73,11 +75,22 @@ func (mr *TaskRest) Find(w http.ResponseWriter, idString string, r *http.Request
 
 // Create and add a new document to the collection
 func (mr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
+/*
+	contents, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+        }
+	log.Printf("%s\n", string(contents))
+	os.Exit(0)
+*/
+
 	//TODO: Check the content-type
 	dec := json.NewDecoder(r.Body)
 	var result task
 	if err := dec.Decode(&result); err != nil {
 		rest.BadRequest(w, formatting)
+	        log.Println(err)
 	        log.Println("Could not decode json")
 		return
 	}
