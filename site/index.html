@@ -66,8 +66,8 @@
     alert('outside');
     $( ".data" ).focusout(function() {
       alert('inside');
-      $.post( "http://localhost:4041/tasks/", 
-              '{ name: "setWallet", data: {wallet: 1234} }',
+      $.post( "/tasks/", 
+              '{ "name": "setWallet", "data": {"wallet": 1234} }',
               {contentType: 'application/json'});
     });
 
