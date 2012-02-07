@@ -1,0 +1,6 @@
+Add config files to servers
+	goinstall goconf.googlecode.com/hg
+Add log files to servers
+Validate numbers entered in javascript
+Figure out how to get numbers to transfer as numbers in JSON
+Clean up the div entry fields so they don't get smaller when you delete or bigger when you fill them (they need to scroll the text if too big)
