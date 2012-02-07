@@ -19,7 +19,7 @@ func main() {
 
 	db := session.DB("uken")
 
-	mongorest.NewMongoRest(db, "games")
+	mongorest.New(db, "games")
 
 	log.Printf("About to listen on 4040")
 	err = http.ListenAndServe(":4040", nil)
