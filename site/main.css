@@ -50,13 +50,15 @@ body {
 .data {
   float: left;
   width: 110px;
-  padding: 5px;
+  height: 16px;
+  padding: 2px;
   background-color: white;
   text-align: right;
   border-radius: 2px;
   border-style: solid;
   border-width: 2px;
   border-color: #373430;
+  overflow: hidden;
 }
 .summary {
   width: 610px;
