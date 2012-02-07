@@ -1,6 +1,10 @@
 $(document).ready(function() {
   var bindBehaviors = function() {
-    $(".data").click(function() { this.contentEditable='true'; });
+    $(".data").click(function() { 
+      if (this.className.indexOf("shadow") == -1) {
+        this.className += " shadow";
+      }
+    });
 
     $(".income").focusout(function() {
       $.post( "/tasks/", 
