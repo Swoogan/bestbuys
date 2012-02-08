@@ -17,11 +17,12 @@ var formatting = "Valid JSON is required\n"
 type task struct {
 	Id bson.ObjectId `json:",omitempty" bson:"_id"`
 	Name string
-	Data map[string]interface{}
+	Data Data
 }
 
 type TaskRest struct {
 	col mgo.Collection
+	handle func(c Command)
 }
 
 /*
@@ -74,7 +75,7 @@ func (mr *TaskRest) Find(w http.ResponseWriter, idString string, r *http.Request
 */
 
 // Create and add a new document to the collection
-func (mr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
+func (tr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 	//TODO: Check the content-type
 	dec := json.NewDecoder(r.Body)
 	var result task
@@ -87,7 +88,7 @@ func (mr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 
 	result.Id = bson.NewObjectId()
 
-	if err := mr.col.Insert(result); err != nil {
+	if err := tr.col.Insert(result); err != nil {
 		rest.BadRequest(w, "Could not insert document")
 	        log.Println("Could not save to datastore")
 	        log.Println(err)
@@ -95,10 +96,11 @@ func (mr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	output := fmt.Sprintf("%v%v", r.URL.String(), result.Id.Hex())
+	tr.handle(Command { result.Name, result.Data })
 	rest.Created(w, output)
 }
 
-func NewTaskRest(col mgo.Collection) *TaskRest {
-        return &TaskRest{ col: col }
+func NewTaskRest(col mgo.Collection, handler func(c Command) ) *TaskRest {
+        return &TaskRest{ col, handler }
 }
 
