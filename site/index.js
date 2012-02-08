@@ -1,4 +1,6 @@
 $(document).ready(function() {
+  var focusoutEnabled = true;
+
   var blur = function(element) {
     if (element.className.indexOf("shadow") != -1) {
       element.className = element.className.replace(" shadow", "");
@@ -13,18 +15,22 @@ $(document).ready(function() {
     });
 
     $(".income").focusout(function() {
+      if (!focusoutEnabled) { return; }
       post("setIncome", "income", $(this).html());
       blur(this);
     });
     $(".upkeep").focusout(function() {
+      if (!focusoutEnabled) { return; }
       post("setUpkeep", "upkeep", $(this).html());
       blur(this);
     });
     $(".balance").focusout(function() {
+      if (!focusoutEnabled) { return; }
       post("setBalance", "balance", $(this).html());
       blur(this);
     });
     $(".wallet").focusout(function() {
+      if (!focusoutEnabled) { return; }
       post("setWallet", "wallet", $(this).html());
       blur(this);
     });
@@ -35,7 +41,10 @@ $(document).ready(function() {
 
       if (esc) {
         document.execCommand("undo", false, null);
+        focusoutEnabled = false;
         e.target.blur();
+        blur(e.target);
+        focusoutEnabled = true;
       } else if (enter) {
         e.target.blur();
       }
