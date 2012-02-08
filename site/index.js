@@ -1,4 +1,10 @@
 $(document).ready(function() {
+  var blur = function(element) {
+    if (element.className.indexOf("shadow") != -1) {
+      element.className = element.className.replace(" shadow", "");
+    }
+  }
+
   var bindBehaviors = function() {
     $(".data").click(function() { 
       if (this.className.indexOf("shadow") == -1) {
@@ -7,39 +13,39 @@ $(document).ready(function() {
     });
 
     $(".income").focusout(function() {
-      $.post( "/tasks/", 
-              '{ "name": "setIncome", "data": {"income": "' + $(this).html() + '"} }',
-              {contentType: 'application/json'});
-      if (this.className.indexOf("shadow") != -1) {
-        this.className = this.className.replace(" shadow", "");
-      }
+      post("setIncome", "income", $(this).html());
+      blur(this);
     });
     $(".upkeep").focusout(function() {
-      $.post( "/tasks/", 
-              '{ "name": "setUpkeep", "data": {"upkeep": "' + $(this).html() + '"} }',
-              {contentType: 'application/json'});
-      if (this.className.indexOf("shadow") != -1) {
-        this.className = this.className.replace(" shadow", "");
-      }
+      post("setUpkeep", "upkeep", $(this).html());
+      blur(this);
     });
     $(".balance").focusout(function() {
-      $.post( "/tasks/", 
-              '{ "name": "setBalance", "data": {"balance": "' + $(this).html() + '"} }',
-              {contentType: 'application/json'});
-      if (this.className.indexOf("shadow") != -1) {
-        this.className = this.className.replace(" shadow", "");
-      }
+      post("setBalance", "balance", $(this).html());
+      blur(this);
     });
     $(".wallet").focusout(function() {
-      $.post( "/tasks/", 
-              '{ "name": "setWallet", "data": {"wallet": "' + $(this).html() + '"} }',
-              {contentType: 'application/json'});
-      if (this.className.indexOf("shadow") != -1) {
-        this.className = this.className.replace(" shadow", "");
-      }
+      post("setWallet", "wallet", $(this).html());
+      blur(this);
     });
 
-    $(".data").keypress(function(e){ return e.which != 13; });
+    $(".data").keyup(function(e){ 
+      var esc = e.which == 27;
+      var enter = e.which == 13;
+
+      if (esc) {
+        document.execCommand("undo", false, null);
+        e.target.blur();
+      } else if (enter) {
+        e.target.blur();
+      }
+    });
+  }
+
+  var post = function(task, name, value) {
+    $.post( "/tasks/", 
+            '{ "name": "'+task+'", "data": {"'+name+'": "' + value + '"} }',
+            {contentType: 'application/json'});
   }
 
   bindBehaviors();
