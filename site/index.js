@@ -53,7 +53,7 @@ $(document).ready(function() {
 
   var post = function(task, name, value) {
     $.post( "/tasks/", 
-            '{ "name": "'+task+'", "data": {"'+name+'": "' + value + '"} }',
+            '{ "name": "'+task+'", "data": {"'+name+'": "'+ParseCurrency(value)+'"} }',
             {contentType: 'application/json'});
   }
 

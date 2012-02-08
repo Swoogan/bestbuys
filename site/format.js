@@ -19,6 +19,6 @@ function ParseCurrency(amount)
   if (amount.charAt(0) == "$") { amount = amount.slice(1); }  
   amount = amount.replace(",", "");
   var i = parseInt(amount);
-  if(isNaN(f)) { return "0"; }
+  if(isNaN(i)) { return "0"; }
   return i;
 }
