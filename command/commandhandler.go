@@ -6,7 +6,10 @@ import (
 )
 */
 
-type Handler struct {
+type handlerPool map[string]func (cmd Command)
+
+type Disbatcher struct {
+	pool handlerPool
 }
 
 /*
@@ -15,7 +18,7 @@ func NewHandler() *Handler {
 }
 */
 
-func(h Handler) handleCommand(cmd Command) {
+func(d Disbatcher) handleCommand(cmd Command) {
 }
 
 type commandHandler interface {
