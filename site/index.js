@@ -7,33 +7,25 @@ $(document).ready(function() {
     }
   }
 
+  var focusout = function(name, task) {
+    $("."+name).focusout(function() {
+      if (!focusoutEnabled) { return; }
+      post(task, name, $(this).html());
+      blur(this);
+    });
+  }
+
   var bindBehaviors = function() {
-    $(".data").click(function() { 
+    $(".data").focus(function() { 
       if (this.className.indexOf("shadow") == -1) {
         this.className += " shadow";
       }
     });
 
-    $(".income").focusout(function() {
-      if (!focusoutEnabled) { return; }
-      post("setIncome", "income", $(this).html());
-      blur(this);
-    });
-    $(".upkeep").focusout(function() {
-      if (!focusoutEnabled) { return; }
-      post("setUpkeep", "upkeep", $(this).html());
-      blur(this);
-    });
-    $(".balance").focusout(function() {
-      if (!focusoutEnabled) { return; }
-      post("setBalance", "balance", $(this).html());
-      blur(this);
-    });
-    $(".wallet").focusout(function() {
-      if (!focusoutEnabled) { return; }
-      post("setWallet", "wallet", $(this).html());
-      blur(this);
-    });
+    focusout("income", "setIncome");
+    focusout("upkeep", "setUpkeep");
+    focusout("balance", "setBalance");
+    focusout("wallet", "setWallet");
 
     $(".data").keyup(function(e){ 
       var esc = e.which == 27;
