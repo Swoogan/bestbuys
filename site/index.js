@@ -8,10 +8,11 @@ $(document).ready(function() {
   }
 
   var focusout = function(name, task) {
-    $("."+name).focusout(function() {
-      if (!focusoutEnabled) { return; }
-      post(task, name, $(this).html());
-      blur(this);
+    $("."+name).focusout(function(event) {
+      if (focusoutEnabled) { 
+        post(task, name, $(this).html(), $(this).parent().attr('id'));
+        blur(this);
+      }
     });
   }
 
@@ -43,9 +44,9 @@ $(document).ready(function() {
     });
   }
 
-  var post = function(task, name, value) {
+  var post = function(task, name, value, game) {
     $.post( "/tasks/", 
-            '{ "name": "'+task+'", "data": {"'+name+'": '+ParseCurrency(value)+'} }',
+            '{ "name": "'+task+'", "data": {"'+name+'": '+ParseCurrency(value)+', "game": "'+game+'"} }',
             {contentType: 'application/json'});
   }
 
