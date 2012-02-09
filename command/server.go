@@ -38,5 +38,6 @@ func main() {
 
 func handleCommand(cmd Command) {
 	log.Println("Command Handler")
+	handlers[cmd.name].
 
 }
