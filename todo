@@ -1,13 +1,13 @@
 Pass the gameId to the command side
 Refresh the data after a post
 ?Only post if data actually changed?
-Refactor index.js
 Add config files to servers
 	goinstall goconf.googlecode.com/hg
 Add log files to servers
 Implement the scheduler
 
 DONE:
+Refactor index.js
 Figure out how to get numbers to transfer as numbers in JSON
 Validate numbers entered in javascript
 Have esc and enter change a field back to not having a shadow
