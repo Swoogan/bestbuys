@@ -10,7 +10,7 @@ import (
 	"github.com/Swoogan/rest.go"
 	"launchpad.net/mgo"
 	"launchpad.net/gobson/bson"
-	"denormalizer"
+	"eventbus/event"
 )
 
 var formatting = "Valid JSON is required\n"
@@ -18,7 +18,7 @@ var formatting = "Valid JSON is required\n"
 type task struct {
 	Id bson.ObjectId `json:",omitempty" bson:"_id"`
 	Name string
-	Data denormalizer.Data
+	Data event.Data
 }
 
 type TaskRest struct {
