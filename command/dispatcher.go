@@ -3,15 +3,15 @@ package main
 import (
 	"log"
 	"rpc"
-	"denormalizer"
+	"eventbus/event"
 )
 
-type handler func(d denormalizer.Data)
+type handler func(d event.Data)
 type handlerPool map[string]handler
 
 type command struct {
 	name string
-	data denormalizer.Data
+	data event.Data
 }
 
 type dispatcher struct {
@@ -41,14 +41,14 @@ type Dispatches interface {
 // HANDLERS
 //
 
-func setWallet(d denormalizer.Data) {
+func setWallet(d event.Data) {
 	client, err := rpc.DialHTTP("tcp", ":4042")
 	if err != nil {
 		log.Println("OMG connect failed need to queue this!1!!:", err)
 		return
 	}
 
-	event := &denormalizer.Event{"walletWasSet", d}
+	event := &event.Event{"walletWasSet", d}
 	var reply int
 
 	err = client.Call("Denormalizer.HandleEvent", event, &reply)
