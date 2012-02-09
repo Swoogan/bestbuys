@@ -22,7 +22,7 @@ type task struct {
 
 type TaskRest struct {
 	col mgo.Collection
-	handle func(c Command)
+	dispatcher Dispatches
 }
 
 /*
@@ -96,11 +96,11 @@ func (tr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	output := fmt.Sprintf("%v%v", r.URL.String(), result.Id.Hex())
-	tr.handle(Command { result.Name, result.Data })
+	tr.dispatcher.Dispatch(Command { result.Name, result.Data })
 	rest.Created(w, output)
 }
 
-func NewTaskRest(col mgo.Collection, handler func(c Command) ) *TaskRest {
-        return &TaskRest{ col, handler }
+func newTaskRest(col mgo.Collection, dispatcher Dispatches) *TaskRest {
+        return &TaskRest{ col, dispatcher }
 }
 
