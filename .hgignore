@@ -10,3 +10,4 @@ query/query
 command/command
 scheduler/scheduler
 denormalizer/denormalizer
+denormalizer/denormalizer-server/denormalizer-server

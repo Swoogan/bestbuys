@@ -1,14 +1,21 @@
 package main
 
-import "denormalizer"
+import (
+	"denormalizer"
+	"rpc"
+	"net"
+	"log"
+	"http"
+)
 
 func main() {
 	denorm := new(denormalizer.Denormalizer)
 	rpc.Register(denorm)
 	rpc.HandleHTTP()
-	l, e := net.Listen("tcp", ":1234")
+	log.Println("About to listen on localhost:4042")
+	l, e := net.Listen("tcp", ":4042")
 	if e != nil {
 		log.Fatal("listen error:", e)
 	}
-	go http.Serve(l, nil)
+	http.Serve(l, nil)
 }
