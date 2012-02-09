@@ -7,13 +7,6 @@ import (
 	"github.com/Swoogan/rest.go"
 )
 
-type Data map[string]interface{}
-
-type Command struct {
-	name string
-	data Data
-}
-
 func main() {
 	log.Printf("Connecting to mongodb")
 
@@ -26,7 +19,8 @@ func main() {
 
 	db := session.DB("command")
 
-	tr := NewTaskRest(db.C("tasks"), handleCommand)
+	dispatcher := newDispatcher()
+	tr := newTaskRest(db.C("tasks"), dispatcher)
 	rest.Resource("tasks", tr)
 
 	log.Printf("About to listen on 4041")
@@ -36,8 +30,3 @@ func main() {
 	}
 }
 
-func handleCommand(cmd Command) {
-	log.Println("Command Handler")
-	handlers[cmd.name].
-
-}
