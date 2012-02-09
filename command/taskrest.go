@@ -10,6 +10,7 @@ import (
 	"github.com/Swoogan/rest.go"
 	"launchpad.net/mgo"
 	"launchpad.net/gobson/bson"
+	"denormalizer"
 )
 
 var formatting = "Valid JSON is required\n"
@@ -17,7 +18,7 @@ var formatting = "Valid JSON is required\n"
 type task struct {
 	Id bson.ObjectId `json:",omitempty" bson:"_id"`
 	Name string
-	Data Data
+	Data denormalizer.Data
 }
 
 type TaskRest struct {
@@ -96,7 +97,7 @@ func (tr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	output := fmt.Sprintf("%v%v", r.URL.String(), result.Id.Hex())
-	tr.dispatcher.Dispatch(Command { result.Name, result.Data })
+	tr.dispatcher.Dispatch(command { result.Name, result.Data })
 	rest.Created(w, output)
 }
 

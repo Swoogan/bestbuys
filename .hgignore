@@ -9,3 +9,4 @@ eventbus/eventbus
 query/query
 command/command
 scheduler/scheduler
+denormalizer/denormalizer
