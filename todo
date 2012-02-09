@@ -1,5 +1,5 @@
-Pass the gameId to the command side
 Refresh the data after a post
+Fix the denormalizer so it uses the game id for updates
 ?Only post if data actually changed?
 Add config files to servers
 	goinstall goconf.googlecode.com/hg
@@ -7,6 +7,7 @@ Add log files to servers
 Implement the scheduler
 
 DONE:
+Pass the gameId to the command side
 Refactor index.js
 Figure out how to get numbers to transfer as numbers in JSON
 Validate numbers entered in javascript
