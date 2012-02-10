@@ -3,20 +3,9 @@ body {
   font-size: 10pt;
   background-color: #FFF3E0;
 }
-#content a:link, a:visited {
-  color: #0077CC;
-  text-decoration: none;
-}
-#content a:hover, a:active {
-  text-decoration: underline;
-}
-#content a:visited {
-  color: #4A6B82;
-  text-decoration: none;
-}
 #title {
   margin: 10px auto;
-  width: 820px;
+  width: 828px;
   background-color: #373430;
   font-size: 18pt;
   color: #FFFFFF;
@@ -25,24 +14,15 @@ body {
   border-radius: 5px;
   box-shadow: 2px 2px 2px 2px #ccc;
 }
-.game-summary {
-  border-bottom: 1px dotted #999999;
-  float: left;
-  padding: 10px;
-}
-#content {
+#tabs {
   margin: 10px auto;
-  min-height: 250px;
   width: 860px;
-  background-color: #FFC266;
-  padding: 1px;
-  color: #333333;
-  border-radius: 5px;
   box-shadow: 2px 2px 2px 2px #ccc;
 }
-
-/* Recipes */
-
+.gameInfo {
+  margin: 10px auto;
+  min-height: 200px;
+}
 .field {
   float: left;
   width: 75px;
@@ -51,13 +31,14 @@ body {
 }
 .data {
   float: left;
-  width: 110px;
+  width: 120px;
   height: 16px;
   padding: 2px;
   margin-left: 2px;
   margin-right: 2px;
   background-color: white;
   text-align: right;
+  font-size: 10pt;
   border-radius: 2px;
   border-style: solid;
   border-width: 2px;
@@ -67,11 +48,5 @@ body {
 }
 .shadow {
   box-shadow: 2px 2px 5px 2px #666;
-}
-.summary {
-  width: 610px;
-  float: left;
-  font-size: 16pt;
-  padding: 5px;
 }
 

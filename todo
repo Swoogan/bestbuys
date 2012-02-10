@@ -1,4 +1,3 @@
-Implement jQuery tabs for the various games
 Error and success reporting on the page
 ?Only post if data actually changed?
 Add config files to servers
@@ -7,6 +6,7 @@ Add log files to servers
 Implement the scheduler
 
 DONE:
+Implement jQuery tabs for the various games
 Reorganize website folder
 Refresh the data after a post
 Fix the denormalizer so it uses the game id for updates
