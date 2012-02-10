@@ -17,15 +17,14 @@ type Denormalizer struct {
 }
 
 func New(database mgo.Database) *Denormalizer {
-	return &Denormalizer{
-		database,
-		handlerPool{
-			"walletWasSet":  walletWasSet,
-			"upkeepWasSet":  upkeepWasSet,
-			"balanceWasSet": balanceWasSet,
-			"incomeWasSet":  incomeWasSet,
-		},
+	pool := handlerPool{
+		"walletWasSet":  walletWasSet,
+		"upkeepWasSet":  upkeepWasSet,
+		"balanceWasSet": balanceWasSet,
+		"incomeWasSet":  incomeWasSet,
 	}
+
+	return &Denormalizer{database, pool}
 }
 
 func (d *Denormalizer) HandleEvent(e *event.Event, i *int) os.Error {
@@ -43,11 +42,11 @@ func (d *Denormalizer) HandleEvent(e *event.Event, i *int) os.Error {
 
 func walletWasSet(database mgo.Database, data event.Data) (err os.Error) {
 	log.Println("Handling Event: walletWasSet")
-	selector := bson.M{"_id": bson.ObjectIdHex("4f18697b3946caf4198dd697")}
+	id := bson.ObjectIdHex(data["game"].(string))
+	selector := bson.M{"_id": id}
 	change := bson.M{"$set": bson.M{"wallet": data["wallet"]}}
 	if err = database.C("games").Update(selector, change); err != nil {
-		log.Println("Could not update the datastore")
-		log.Println(err)
+		log.Println("Could not update the datastore, ", err, ": ", data["game"])
 	}
 	return
 }
