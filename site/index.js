@@ -4,6 +4,7 @@ $(document).ready(function() {
   var blur = function(element) {
     if (element.className.indexOf("shadow") != -1) {
       element.className = element.className.replace(" shadow", "");
+      $(element).html(currencyFormat($(element).html()));
     }
   }
 
@@ -46,7 +47,7 @@ $(document).ready(function() {
 
   var post = function(task, name, value, game) {
     $.post( "/tasks/", 
-            '{ "name": "'+task+'", "data": {"'+name+'": '+ParseCurrency(value)+', "game": "'+game+'"} }',
+            '{ "name": "'+task+'", "data": {"'+name+'": '+parseCurrency(value)+', "game": "'+game+'"} }',
             {contentType: 'application/json'});
   }
 
@@ -54,7 +55,7 @@ $(document).ready(function() {
 
   $.getJSON('/games/', function(data) {
      $.views.registerTags({
-       format: CurrencyFormatted
+       format: currencyFormat
      });
 
      $("#gameList" ).html(
