@@ -21,30 +21,69 @@
   <script id="gameTemplate" type="text/x-jquery-tmpl">
       <div id="tabs-{{=$itemNumber}}" class="gameInfo">
         <div class="finance">
-          <div class="input">
-            <div class="field">Income</div>
-            <div class="data income" contentEditable="true">{{format income}}</div>
+          <div class="line">
+            <div class="input">
+              <div class="field">Income</div>
+              <div class="data income" contentEditable="true">{{format income}}</div>
+            </div>
           </div>
-          <div class="input">
-            <div class="operation"></div>
-            <div class="field">Upkeep</div>
-            <div class="data upkeep" contentEditable="true">{{format upkeep}}</div>
+          <br/>
+          <div class="line">
+            <div class="operation" style="font-size: 14pt;">&mdash;</div>
+            <div class="input">
+              <div class="field">Upkeep</div>
+              <div class="data upkeep" contentEditable="true">{{format upkeep}}</div>
+            </div>
+          </div>
+          <br class="clear"/>
+          <hr/>
+          <div class="line">
+            <div class="operation" style="font-size: 14pt;">=</div>
+            <div class="input">
+              <div class="field">Hourly</div>
+              <div class="data upkeep" contentEditable="true">{{format hourly}}</div>
+            </div>
+          </div>
+          <br class="clear"/>
+          <div class="line">
+            <div class="operation">x 24</div>
+            <div class="input">
+              <div class="field">Daily</div>
+              <div class="data upkeep" contentEditable="true">{{format daily}}</div>
+            </div>
           </div>
         </div>
-        <div class="moneys">
-          <div class="input">
-            <div class="field">Balance</div>
-            <div class="data balance" contentEditable="true">{{format balance}}</div>
+        <div class="monies">
+          <div class="line">
+            <div class="input">
+              <div class="field">Balance</div>
+              <div class="data balance" contentEditable="true">{{format balance}}</div>
+            </div>
           </div>
-          <div class="input">
-            <div class="operation"></div>
-            <div class="field">Wallet</div>
-            <div class="data wallet" contentEditable="true">{{format wallet}}</div>
+          <br/>
+          <div class="line">
+            <div class="operation" style="font-size: 14pt;">+</div>
+            <div class="input">
+              <div class="field">Wallet</div>
+              <div class="data wallet" contentEditable="true">{{format wallet}}</div>
+            </div>
           </div>
-          <div class="input">
-            <div class="operation"></div>
-            <div class="field">Lands</div>
-            <div class="data landIncome" contentEditable="true">{{format landIncome}}</div>
+          <br/>
+          <div class="line">
+            <div class="operation" style="font-size: 14pt;">+</div>
+            <div class="input">
+              <div class="field">Lands</div>
+              <div class="data landIncome" contentEditable="true">{{format landIncome}}</div>
+            </div>
+          </div>
+          <br class="clear"/>
+          <hr/>
+          <div class="line">
+            <div class="operation" style="font-size: 14pt;">=</div>
+            <div class="input">
+              <div class="field">Total</div>
+              <div class="data landIncome" contentEditable="true">{{format totalMonies}}</div>
+            </div>
           </div>
         </div>
       </div>

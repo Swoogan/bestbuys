@@ -18,6 +18,10 @@ body {
   margin: 10px auto;
   width: 860px;
   box-shadow: 2px 2px 2px 2px #ccc;
+  height: 400px;
+}
+.clear {
+  clear: both;
 }
 .gameInfo {
   margin: 10px auto;
@@ -25,25 +29,38 @@ body {
 }
 .finance {
   float: left;
+  height: 160px;
   padding: 5px 10px 5px 10px;
   border-style: solid;
   border-width: medium;
+  margin-left: 100px;
 }
-.moneys {
-  position: absolute;
+.monies {
+  float: right;
+  height: 160px;
   top: 60px;
-  left: 300px;
+  left: 400px;
   padding: 4px 10px 4px 10px;
   border-style: solid;
   border-width: medium;
+  margin-right: 100px;
 }
-.input {
-  font-size: 10pt;
-  height: 25px;
-  margin-top: 6px;
-  margin-bottom: 6px;
+.line {
+  width: 100%;
+  float: left;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 .operation {
+  float: left;
+  width: 30px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-right: 10px;
+}
+.input {
+  float: right;
+  font-size: 10pt;
 }
 .field {
   float: left;
