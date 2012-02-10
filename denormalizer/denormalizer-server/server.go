@@ -12,14 +12,14 @@ import (
 func main() {
 	log.Printf("Connecting to mongodb")
 
-        session, err := mgo.Mongo("localhost")
-        if err != nil {
-                log.Fatal(err)
-                return
-        }
-        defer session.Close()
+	session, err := mgo.Mongo("localhost")
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	defer session.Close()
 
-        db := session.DB("uken")
+	db := session.DB("uken")
 
 	denorm := denormalizer.New(db)
 

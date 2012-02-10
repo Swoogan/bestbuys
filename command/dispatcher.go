@@ -19,16 +19,16 @@ type dispatcher struct {
 }
 
 func newDispatcher() dispatcher {
-	pool := handlerPool {
-			"setWallet": setWallet,
-			"setUpkeep": setUpkeep,
-			"setBalance": setBalance,
-			"setIncome": setIncome,
-		}
-	return dispatcher{ pool }
+	pool := handlerPool{
+		"setWallet":  setWallet,
+		"setUpkeep":  setUpkeep,
+		"setBalance": setBalance,
+		"setIncome":  setIncome,
+	}
+	return dispatcher{pool}
 }
 
-func(d dispatcher) Dispatch(cmd command) {
+func (d dispatcher) Dispatch(cmd command) {
 	if handler, ok := d.pool[cmd.name]; ok {
 		handler(cmd.data)
 	} else {
@@ -65,7 +65,7 @@ func schedule(e *event.Event) {
 
 func dispatch(e *event.Event) {
 	denormalize(e)
-//	schedule(e)
+	//	schedule(e)
 	log.Printf("Dispatched event: %v", e.Name)
 }
 
