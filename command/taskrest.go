@@ -17,6 +17,7 @@ var formatting = "Valid JSON is required\n"
 
 type task struct {
 	Id bson.ObjectId `json:",omitempty" bson:"_id"`
+	Date bson.Timestamp
 	Name string
 	Data event.Data
 }
@@ -88,6 +89,7 @@ func (tr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result.Id = bson.NewObjectId()
+	result.Date = bson.Now()
 
 	if err := tr.col.Insert(result); err != nil {
 		rest.BadRequest(w, "Could not insert document")
