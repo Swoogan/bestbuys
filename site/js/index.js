@@ -4,7 +4,8 @@ $(document).ready(function() {
   var blur = function(element) {
     if (element.className.indexOf("shadow") != -1) {
       element.className = element.className.replace(" shadow", "");
-      $(element).html(currencyFormat($(element).html()));
+      var newVal = currencyFormat(parseCurrency($(element).html()));
+      $(element).html(newVal);
     }
   }
 
@@ -58,9 +59,14 @@ $(document).ready(function() {
        format: currencyFormat
      });
 
-     $("#gameList" ).html(
-       $("#gameTemplate").render(data)
+     var listItems = "<ul>" + $("#listTemplate").render(data) + "</ul>";
+     var games = $("#gameTemplate").render(data);
+
+     $("#tabs").html(
+       listItems + games
      );
+
+     $("#tabs").tabs();
      bindBehaviors();
   });
 

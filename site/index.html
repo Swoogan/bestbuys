@@ -3,22 +3,32 @@
 <head>
   <title>Uken Games Land Purchase System</title>
   <script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
+  <script src="js/jquery-ui-1.8.17.custom.min.js" type="text/javascript"></script>
+<!--
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js" type="text/javascript"></script>
+-->
   <script src="js/jsrender.js" type="text/javascript"></script>
   <script src="js/format.js" type="text/javascript"></script>
   <script src="js/index.js" type="text/javascript"> </script>
   <link href="css/index.css" rel="stylesheet" type="text/css">
+  <link href="css/ui-lightness/jquery-ui-1.8.17.custom.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+  <script id="listTemplate" type="text/x-jquery-tmpl">
+    <li><a href="#tabs-{{=$itemNumber}}">{{=name}}</a></li>
+  </script>
   <script id="gameTemplate" type="text/x-jquery-tmpl">
-    <div class="game-summary" id="{{=_id}}">
-      <div class="field">Income:</div>
-      <div class="data income" contentEditable="true">{{format income}}</div>
-      <div class="field">Upkeep:</div>
-      <div class="data upkeep" contentEditable="true">{{format upkeep}}</div>
-      <div class="field">Balance:</div>
-      <div class="data balance" contentEditable="true">{{format balance}}</div>
-      <div class="field">Wallet:</div>
-      <div class="data wallet" contentEditable="true">{{format wallet}}</div>
+      <div id="tabs-{{=$itemNumber}}" class="gameInfo">
+        <div class="field">Income:</div>
+        <div class="data income" contentEditable="true">{{format income}}</div>
+        <div class="field">Upkeep:</div>
+        <div class="data upkeep" contentEditable="true">{{format upkeep}}</div>
+        <div class="field">Balance:</div>
+        <div class="data balance" contentEditable="true">{{format balance}}</div>
+        <div class="field">Wallet:</div>
+        <div class="data wallet" contentEditable="true">{{format wallet}}</div>
+      </div>
     </div>
   </script>
 
@@ -26,9 +36,7 @@
     Uken Games Land Purchase System
   </div>
 
-  <div id="content">
-    <div id="gameList"></div>
-  </div>
+  <div id="tabs"></div>
 
   <div class="log"></div>
 </body>
