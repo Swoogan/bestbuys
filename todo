@@ -1,3 +1,4 @@
+Add current date to task documents
 Refresh the data after a post
 Fix the denormalizer so it uses the game id for updates
 ?Only post if data actually changed?
