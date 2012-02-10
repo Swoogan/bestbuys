@@ -1,4 +1,4 @@
-function CurrencyFormatted(amount)
+function currencyFormat(amount)
 {
   var f = parseFloat(amount);
   if(isNaN(f)) { return "$0"; }
@@ -13,7 +13,7 @@ function CurrencyFormatted(amount)
   return "$" + temps.slice(0, -1);
 }
 
-function ParseCurrency(amount)
+function parseCurrency(amount)
 {
   if (amount.length === "") { return 0; }
   if (amount.charAt(0) == "$") { amount = amount.slice(1); }  

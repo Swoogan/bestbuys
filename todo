@@ -1,5 +1,3 @@
-Fix the denormalizer so it uses the game id for updates
-Refresh the data after a post
 ?Only post if data actually changed?
 Add config files to servers
 	goinstall goconf.googlecode.com/hg
@@ -7,6 +5,8 @@ Add log files to servers
 Implement the scheduler
 
 DONE:
+Refresh the data after a post
+Fix the denormalizer so it uses the game id for updates
 Add current date to task documents
 Pass the gameId to the command side
 Refactor index.js
