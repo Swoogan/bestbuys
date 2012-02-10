@@ -1,8 +1,8 @@
 package main
 
 import (
-//	"os"
-//	"io/ioutil"
+	//	"os"
+	//	"io/ioutil"
 	"log"
 	"fmt"
 	"http"
@@ -16,14 +16,14 @@ import (
 var formatting = "Valid JSON is required\n"
 
 type task struct {
-	Id bson.ObjectId `json:",omitempty" bson:"_id"`
+	Id   bson.ObjectId `json:",omitempty" bson:"_id"`
 	Date bson.Timestamp
 	Name string
 	Data event.Data
 }
 
 type TaskRest struct {
-	col mgo.Collection
+	col        mgo.Collection
 	dispatcher Dispatches
 }
 
@@ -83,8 +83,8 @@ func (tr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 	var result task
 	if err := dec.Decode(&result); err != nil {
 		rest.BadRequest(w, formatting)
-	        log.Println("Could not decode json")
-	        log.Println(err)
+		log.Println("Could not decode json")
+		log.Println(err)
 		return
 	}
 
@@ -93,17 +93,16 @@ func (tr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 
 	if err := tr.col.Insert(result); err != nil {
 		rest.BadRequest(w, "Could not insert document")
-	        log.Println("Could not save to datastore")
-	        log.Println(err)
+		log.Println("Could not save to datastore")
+		log.Println(err)
 		return
 	}
 
 	output := fmt.Sprintf("%v%v", r.URL.String(), result.Id.Hex())
-	tr.dispatcher.Dispatch(command { result.Name, result.Data })
+	tr.dispatcher.Dispatch(command{result.Name, result.Data})
 	rest.Created(w, output)
 }
 
 func newTaskRest(col mgo.Collection, dispatcher Dispatches) *TaskRest {
-        return &TaskRest{ col, dispatcher }
+	return &TaskRest{col, dispatcher}
 }
-

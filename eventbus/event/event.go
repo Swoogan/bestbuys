@@ -3,6 +3,6 @@ package event
 type Data map[string]interface{}
 
 type Event struct {
-        Name string
-        Data Data
+	Name string
+	Data Data
 }
