@@ -1,3 +1,6 @@
+Reorganize website folder
+Implement jQuery tabs for the various games
+Error and success reporting on the page
 ?Only post if data actually changed?
 Add config files to servers
 	goinstall goconf.googlecode.com/hg
