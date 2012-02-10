@@ -23,28 +23,52 @@ body {
   margin: 10px auto;
   min-height: 200px;
 }
+.finance {
+  float: left;
+  padding: 5px 10px 5px 10px;
+  border-style: solid;
+  border-width: medium;
+}
+.moneys {
+  position: absolute;
+  top: 60px;
+  left: 300px;
+  padding: 4px 10px 4px 10px;
+  border-style: solid;
+  border-width: medium;
+}
+.input {
+  font-size: 10pt;
+  height: 25px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.operation {
+}
 .field {
   float: left;
-  width: 75px;
-  padding: 5px;
-  text-align: center;
+  width: auto;
+  margin-right: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
 }
 .data {
-  float: left;
+  float: right;
   width: 120px;
-  height: 16px;
   padding: 2px;
-  margin-left: 2px;
-  margin-right: 2px;
   background-color: white;
   text-align: right;
-  font-size: 10pt;
   border-radius: 2px;
   border-style: solid;
   border-width: 2px;
   border-color: #373430;
   overflow: hidden;
   outline: none;
+  vertical-align: middle;
+  display: table-cell;
 }
 .shadow {
   box-shadow: 2px 2px 5px 2px #666;
