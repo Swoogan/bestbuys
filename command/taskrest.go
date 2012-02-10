@@ -83,8 +83,7 @@ func (tr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 	var result task
 	if err := dec.Decode(&result); err != nil {
 		rest.BadRequest(w, formatting)
-		log.Println("Could not decode json")
-		log.Println(err)
+		log.Println("Could not decode json", err)
 		return
 	}
 
@@ -93,8 +92,7 @@ func (tr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 
 	if err := tr.col.Insert(result); err != nil {
 		rest.BadRequest(w, "Could not insert document")
-		log.Println("Could not save to datastore")
-		log.Println(err)
+		log.Println("Could not save to datastore:", err)
 		return
 	}
 
