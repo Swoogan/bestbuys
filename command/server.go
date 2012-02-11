@@ -19,8 +19,8 @@ func main() {
 
 	db := session.DB("command")
 
-	dispatcher := newDispatcher()
-	tr := newTaskRest(db.C("tasks"), dispatcher)
+	handler := newCommandHandler()
+	tr := newTaskRest(db.C("tasks"), handler)
 	rest.Resource("tasks", tr)
 
 	log.Printf("About to listen on 4041")

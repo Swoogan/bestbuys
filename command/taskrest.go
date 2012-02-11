@@ -1,8 +1,6 @@
 package main
 
 import (
-	//	"os"
-	//	"io/ioutil"
 	"log"
 	"fmt"
 	"http"
@@ -10,7 +8,6 @@ import (
 	"github.com/Swoogan/rest.go"
 	"launchpad.net/mgo"
 	"launchpad.net/gobson/bson"
-	"eventbus/event"
 )
 
 var formatting = "Valid JSON is required\n"
@@ -19,12 +16,12 @@ type task struct {
 	Id   bson.ObjectId `json:",omitempty" bson:"_id"`
 	Date bson.Timestamp
 	Name string
-	Data event.Data
+	Data data
 }
 
 type TaskRest struct {
 	col        mgo.Collection
-	dispatcher Dispatches
+	handler HandlesCommand
 }
 
 /*
@@ -97,10 +94,10 @@ func (tr *TaskRest) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	output := fmt.Sprintf("%v%v", r.URL.String(), result.Id.Hex())
-	tr.dispatcher.Dispatch(command{result.Name, result.Data})
+	tr.handler.Handle(command{result.Name, result.Data})
 	rest.Created(w, output)
 }
 
-func newTaskRest(col mgo.Collection, dispatcher Dispatches) *TaskRest {
-	return &TaskRest{col, dispatcher}
+func newTaskRest(col mgo.Collection, handler HandlesCommand) *TaskRest {
+	return &TaskRest{col, handler}
 }

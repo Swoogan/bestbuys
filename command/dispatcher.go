@@ -6,40 +6,6 @@ import (
 	"eventbus/event"
 )
 
-type handler func(d event.Data)
-type handlerPool map[string]handler
-
-type command struct {
-	name string
-	data event.Data
-}
-
-type dispatcher struct {
-	pool handlerPool
-}
-
-func newDispatcher() dispatcher {
-	pool := handlerPool{
-		"setWallet":  setWallet,
-		"setUpkeep":  setUpkeep,
-		"setBalance": setBalance,
-		"setIncome":  setIncome,
-	}
-	return dispatcher{pool}
-}
-
-func (d dispatcher) Dispatch(cmd command) {
-	if handler, ok := d.pool[cmd.name]; ok {
-		handler(cmd.data)
-	} else {
-		log.Printf("No handler specified for command: %v", cmd.name)
-	}
-}
-
-type Dispatches interface {
-	Dispatch(cmd command)
-}
-
 func rpcCall(address string, method string, e *event.Event) {
 	client, err := rpc.DialHTTP("tcp", address)
 	if err != nil {
@@ -69,26 +35,3 @@ func dispatch(e *event.Event) {
 	log.Printf("Dispatched event: %v", e.Name)
 }
 
-//
-// HANDLERS
-//
-
-func setWallet(d event.Data) {
-	event := &event.Event{"walletWasSet", d}
-	dispatch(event)
-}
-
-func setUpkeep(d event.Data) {
-	event := &event.Event{"upkeepWasSet", d}
-	dispatch(event)
-}
-
-func setBalance(d event.Data) {
-	event := &event.Event{"balanceWasSet", d}
-	dispatch(event)
-}
-
-func setIncome(d event.Data) {
-	event := &event.Event{"incomeWasSet", d}
-	dispatch(event)
-}
