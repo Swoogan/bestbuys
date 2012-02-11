@@ -18,10 +18,10 @@ type Denormalizer struct {
 
 func New(database mgo.Database) *Denormalizer {
 	pool := handlerPool{
-		"walletWasSet":  walletWasSet,
-		"upkeepWasSet":  upkeepWasSet,
-		"balanceWasSet": balanceWasSet,
-		"incomeWasSet":  incomeWasSet,
+		"walletSet":  walletSet,
+		"upkeepSet":  upkeepSet,
+		"balanceSet": balanceSet,
+		"incomeSet":  incomeSet,
 	}
 
 	return &Denormalizer{database, pool}
@@ -40,8 +40,8 @@ func (d *Denormalizer) HandleEvent(e *event.Event, i *int) os.Error {
 // Handlers
 //
 
-func walletWasSet(database mgo.Database, data event.Data) (err os.Error) {
-	log.Println("Handling Event: walletWasSet")
+func walletSet(database mgo.Database, data event.Data) (err os.Error) {
+	log.Println("Handling Event: walletSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
 	change := bson.M{"$set": bson.M{"wallet": data["wallet"]}}
@@ -51,17 +51,17 @@ func walletWasSet(database mgo.Database, data event.Data) (err os.Error) {
 	return
 }
 
-func upkeepWasSet(database mgo.Database, data event.Data) os.Error {
-	log.Println("Handling Event: upkeepWasSet")
+func upkeepSet(database mgo.Database, data event.Data) os.Error {
+	log.Println("Handling Event: upkeepSet")
 	return nil
 }
 
-func balanceWasSet(database mgo.Database, data event.Data) os.Error {
-	log.Println("Handling Event: balanceWasSet")
+func balanceSet(database mgo.Database, data event.Data) os.Error {
+	log.Println("Handling Event: balanceSet")
 	return nil
 }
 
-func incomeWasSet(database mgo.Database, data event.Data) os.Error {
-	log.Println("Handling Event: incomeWasSet")
+func incomeSet(database mgo.Database, data event.Data) os.Error {
+	log.Println("Handling Event: incomeSet")
 	return nil
 }

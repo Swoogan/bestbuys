@@ -85,8 +85,18 @@ body {
   border-color: #373430;
   overflow: hidden;
   outline: none;
-  vertical-align: middle;
-  display: table-cell;
+}
+.readonly {
+  float: right;
+  width: 120px;
+  padding: 2px;
+  background-color: lightGray;
+  text-align: right;
+  border-radius: 2px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #373430;
+  overflow: hidden;
 }
 .shadow {
   box-shadow: 2px 2px 5px 2px #666;
