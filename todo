@@ -1,3 +1,4 @@
+Add the jQuery accordian to break up the page
 Use the jQuery tab ajax method to lazy-load the tabs
 Error and success reporting on the page
 ?Only post if data actually changed?
