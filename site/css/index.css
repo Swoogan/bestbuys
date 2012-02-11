@@ -5,17 +5,18 @@ body {
 }
 #title {
   margin: 10px auto;
-  width: 828px;
+  width: 870px;
   background-color: #373430;
   font-size: 18pt;
   color: #FFFFFF;
   text-align: center;
-  padding: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   border-radius: 5px;
   box-shadow: 2px 2px 2px 2px #ccc;
 }
 #tabs {
-  margin: 10px auto;
+  margin: 15px auto;
   width: 860px;
   box-shadow: 2px 2px 2px 2px #ccc;
   height: 400px;
