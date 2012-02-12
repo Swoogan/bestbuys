@@ -1,4 +1,4 @@
-Implement event saving
+Fix the javascript currency formatting. numbers garbled again
 Refactor command handlers
 Refactor denormalizer event handlers
 Add the jQuery accordian to break up the page
@@ -11,6 +11,8 @@ Add log files to servers
 Implement the scheduler
 
 DONE:
+Re-add the game id to the posted command
+Implement event saving
 Implement jQuery tabs for the various games
 Reorganize website folder
 Refresh the data after a post
