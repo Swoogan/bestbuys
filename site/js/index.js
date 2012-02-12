@@ -12,7 +12,7 @@ $(document).ready(function() {
   var focusout = function(name, task) {
     $("."+name).focusout(function(event) {
       if (focusoutEnabled) { 
-        post(task, name, $(this).html(), $(this).parent().attr('id'));
+        post(task, name, $(this).html(), $(this).parents(".gameInfo").attr('data-game'));
         blur(this);
       }
     });
@@ -29,6 +29,7 @@ $(document).ready(function() {
     focusout("upkeep", "setUpkeep");
     focusout("balance", "setBalance");
     focusout("wallet", "setWallet");
+    focusout("landIncome", "setLandIncome");
 
     $(".data").keyup(function(e){ 
       var esc = e.which == 27;
@@ -62,11 +63,9 @@ $(document).ready(function() {
      var listItems = "<ul>" + $("#listTemplate").render(data) + "</ul>";
      var games = $("#gameTemplate").render(data);
 
-     $("#tabs").html(
-       listItems + games
-     );
-
+     $("#tabs").html(listItems + games);
      $("#tabs").tabs();
+
      bindBehaviors();
   });
 
