@@ -19,7 +19,8 @@ func main() {
 
 	db := session.DB("command")
 
-	handler := newCommandHandler()
+	repo := newRepository()
+	handler := newCommandHandler(repo)
 	tr := newTaskRest(db.C("tasks"), handler)
 	rest.Resource("tasks", tr)
 
