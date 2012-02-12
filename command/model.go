@@ -1,8 +1,11 @@
 package main
 
-//
-// MODEL
-//
+type repository map[string]game
+
+func newRepository() repository {
+	return make(map[string]game, 3)
+}
+
 type game struct {
 	finance finance
 	monies monies
@@ -13,8 +16,12 @@ type finance struct {
 	upkeep int64
 }
 
-func (f finance) difference() int64 {
+func (f finance) hourly() int64 {
 	return f.income - f.upkeep
+}
+
+func (f finance) daily(hourly int64) int64 {
+	return hourly * 24;
 }
 
 type monies struct {

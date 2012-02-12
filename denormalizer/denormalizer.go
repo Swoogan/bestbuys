@@ -44,7 +44,10 @@ func walletSet(database mgo.Database, data event.Data) (err os.Error) {
 	log.Println("Handling Event: walletSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
-	change := bson.M{"$set": bson.M{"wallet": data["wallet"]}}
+	change := bson.M{"$set": bson.M{
+			"wallet": data["wallet"], 
+			"total": data["total"],
+			}}
 	if err = database.C("games").Update(selector, change); err != nil {
 		log.Println("Could not update the datastore, ", err, ": ", data["game"])
 	}
