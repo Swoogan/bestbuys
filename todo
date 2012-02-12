@@ -1,4 +1,6 @@
+Implement event saving
 Refactor command handlers
+Refactor denormalizer event handlers
 Add the jQuery accordian to break up the page
 Use the jQuery tab ajax method to lazy-load the tabs
 Error and success reporting on the page

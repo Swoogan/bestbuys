@@ -8,7 +8,7 @@ func newRepository() repository {
 
 type game struct {
 	finance finance
-	monies monies
+	monies  monies
 }
 
 type finance struct {
@@ -21,16 +21,15 @@ func (f finance) hourly() int64 {
 }
 
 func (f finance) daily(hourly int64) int64 {
-	return hourly * 24;
+	return hourly * 24
 }
 
 type monies struct {
 	balance int64
-	wallet int64
-	lands int64
+	wallet  int64
+	lands   int64
 }
 
 func (m monies) total() int64 {
 	return m.balance + m.wallet + m.lands
 }
-
