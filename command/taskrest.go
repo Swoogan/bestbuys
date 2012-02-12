@@ -20,7 +20,7 @@ type task struct {
 }
 
 type TaskRest struct {
-	col        mgo.Collection
+	col     mgo.Collection
 	handler HandlesCommand
 }
 

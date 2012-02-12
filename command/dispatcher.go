@@ -34,4 +34,3 @@ func dispatch(e *event.Event) {
 	//	schedule(e)
 	log.Printf("Dispatched event: %v", e.Name)
 }
-

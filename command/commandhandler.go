@@ -26,13 +26,13 @@ func newCommandHandler(repo repository) commandHandler {
 		"setBalance": setBalance,
 		"setIncome":  setIncome,
 	}
-	return commandHandler{pool,repo}
+	return commandHandler{pool, repo}
 }
 
 func (c commandHandler) Handle(cmd command) {
 	if handler, ok := c.pool[cmd.name]; ok {
-		data := event.Data {
-			"name": cmd.data["name"], 
+		data := event.Data{
+			"name": cmd.data["name"],
 			"data": cmd.data["data"],
 		}
 		event := handler(data, c.repo)
