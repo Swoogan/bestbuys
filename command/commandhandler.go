@@ -59,50 +59,59 @@ type HandlesCommand interface {
 // HANDLERS
 //
 func setIncome(data event.Data, repo repository) *event.Event {
-	id := data["game"].(string)
-	game := repo[id]
+	id, game := getGame(data, repo)
 	game.finance.income = int64(data["income"].(float64))
 	repo[id] = game
 	hourly := game.finance.hourly()
 	data["hourly"] = hourly
 	data["daily"] = game.finance.daily(hourly)
-	return &event.Event{"incomeSet", bson.Now(), data}
+	return createEvent("incomeSet", data)
 }
 
 func setUpkeep(data event.Data, repo repository) *event.Event {
-	id := data["game"].(string)
-	game := repo[id]
-	game.finance.upkeep = data["upkeep"].(int64)
+	id, game := getGame(data, repo)
+	game.finance.upkeep = int64(data["upkeep"].(float64))
 	repo[id] = game
 	hourly := game.finance.hourly()
 	data["hourly"] = hourly
 	data["daily"] = game.finance.daily(hourly)
-	return &event.Event{"upkeepSet", bson.Now(), data}
+	return createEvent("upkeepSet", data)
 }
 
 func setBalance(data event.Data, repo repository) *event.Event {
-	id := data["game"].(string)
-	game := repo[id]
-	game.monies.balance = data["balance"].(int64)
+	id, game := getGame(data, repo)
+	game.monies.balance = int64(data["balance"].(float64))
 	repo[id] = game
 	data["total"] = game.monies.total()
-	return &event.Event{"balanceSet", bson.Now(), data}
+	return createEvent("balanceSet", data)
 }
 
 func setWallet(data event.Data, repo repository) *event.Event {
-	id := data["game"].(string)
-	game := repo[id]
-	game.monies.wallet = data["wallet"].(int64)
+	id, game := getGame(data, repo)
+	game.monies.wallet = int64(data["wallet"].(float64))
 	repo[id] = game
 	data["total"] = game.monies.total()
-	return &event.Event{"walletSet", bson.Now(), data}
+	return createEvent("walletSet", data)
 }
 
 func setLand(data event.Data, repo repository) *event.Event {
-	id := data["game"].(string)
-	game := repo[id]
-	game.monies.lands = data["lands"].(int64)
+	id, game := getGame(data, repo)
+	game.monies.lands = int64(data["lands"].(float64))
 	repo[id] = game
 	data["total"] = game.monies.total()
-	return &event.Event{"landSet", bson.Now(), data}
+	return createEvent("landSet", data)
+}
+
+//
+// Helpers
+//
+
+func getGame(data event.Data, repo repository) (string, game) {
+	id := data["game"].(string)
+	game := repo[id]
+	return id, game
+}
+
+func createEvent(name string, data event.Data) *event.Event {
+	return &event.Event{name, bson.Now(), data}
 }
