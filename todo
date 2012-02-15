@@ -1,4 +1,6 @@
-Refactor command handlers
+Refresh the data after a command is issued (always or should there be some kind of callback?)
+Implement snapshot timestamping
+Implement periodic snapshotting and event replay
 Refactor denormalizer event handlers
 Add the jQuery accordian to break up the page
 Use the jQuery tab ajax method to lazy-load the tabs
@@ -8,8 +10,11 @@ Add config files to servers
 	goinstall goconf.googlecode.com/hg
 Add log files to servers
 Implement the scheduler
+Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
 DONE:
+Snapshotting is not working, fix
+Refactor command handlers
 Fix the javascript currency formatting. numbers garbled again
 Re-add the game id to the posted command
 Implement event saving
