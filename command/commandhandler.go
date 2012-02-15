@@ -94,7 +94,7 @@ func setBalance(data event.Data, repo repository) *event.Event {
 	game := repo[id]
 	game.Monies.Balance = int64(data["balance"].(float64))
 	repo[id] = game
-	data["total"] = game.Monies.total()
+	data["totalMonies"] = game.Monies.total()
 	return &event.Event{"balanceSet", bson.Now(), data}
 }
 
