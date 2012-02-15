@@ -14,23 +14,24 @@ func newRepository() repository {
 }
 
 func (r repository) rebuild(d mgo.Database) {
+	log.Println("Loading snapshots")
 	var result []game
-	err := d.C("snapshot").Find(nil).All(&result)
+	err := d.C("snapshots").Find(nil).All(&result)
 	if err != nil {
 		log.Println("Could not load snapshots:", err)
 		return
 	}
 
 	for _, game := range result {
-		r[game.id.Hex()] = game
+		r[game.Id.Hex()] = game
 	}
 }
 
 func (r repository) snapshot(d mgo.Database) os.Error {
-	log.Println("in snapshot")
+	log.Println("Saving snapshots")
 	for id, game := range r {
-		selector := bson.M{"_id": id}
-		_, err := d.C("snapshot").Upsert(selector, game)
+		selector := bson.M{"_id": bson.ObjectIdHex(id)}
+		_, err := d.C("snapshots").Upsert(selector, bson.M{"$set": game})
 		if err != nil {
 			log.Println("Could not save snapshot:", err)
 			return err
@@ -40,18 +41,18 @@ func (r repository) snapshot(d mgo.Database) os.Error {
 }
 
 type game struct {
-	id bson.ObjectId `bson: "_id"`
-	finance finance
-	monies  monies
+	Id bson.ObjectId "hack"  // this should be "_id" but then Upsert doesn't do anything
+	Finance finance
+	Monies  monies
 }
 
 type finance struct {
-	income int64
-	upkeep int64
+	Income int64
+	Upkeep int64
 }
 
 func (f finance) hourly() int64 {
-	return f.income - f.upkeep
+	return f.Income - f.Upkeep
 }
 
 func (f finance) daily(hourly int64) int64 {
@@ -59,11 +60,11 @@ func (f finance) daily(hourly int64) int64 {
 }
 
 type monies struct {
-	balance int64
-	wallet  int64
-	lands   int64
+	Balance int64
+	Wallet  int64
+	Lands   int64
 }
 
 func (m monies) total() int64 {
-	return m.balance + m.wallet + m.lands
+	return m.Balance + m.Wallet + m.Lands
 }

@@ -3,12 +3,20 @@ package main
 import (
 	"os"
 	"log"
+	"fmt"
 	"http"
 	"syscall"
 	"os/signal"
 	"launchpad.net/mgo"
 	"github.com/Swoogan/rest.go"
 )
+
+/*
+func main() {
+	StoreTest()
+	LoadTest()
+}
+*/
 
 func main() {
 	log.Printf("Connecting to mongodb")
@@ -40,10 +48,10 @@ func main() {
 
 	select {
             case sig := <-signal.Incoming:
-                log.Printf("***Caught %s\n", sig)
+                fmt.Println("***Caught", sig)
                 switch sig.(os.UnixSignal) {
-                    case syscall.SIGTERM, syscall.SIGQUIT:
-                        log.Printf("***Caught signal %d, shutting down gracefully\n", sig)
+                    case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
+                        log.Println("Shutting down...")
                         return
                 }
         }
