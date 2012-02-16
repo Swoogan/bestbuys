@@ -1,8 +1,12 @@
 package main
 
 import (
-	"http"
+	"os"
 	"log"
+	"fmt"
+	"http"
+	"syscall"
+	"os/signal"
 	"launchpad.net/mgo"
 	"bitbucket.org/Swoogan/mongorest"
 )
@@ -22,8 +26,20 @@ func main() {
 	mongorest.New(db, "games")
 
 	log.Printf("About to listen on 4040")
-	err = http.ListenAndServe(":4040", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
+	go func() {
+		err = http.ListenAndServe(":4040", nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	select {
+            case sig := <-signal.Incoming:
+                fmt.Printf("***Caught %s\n", sig)
+                switch sig.(os.UnixSignal) {
+                    case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
+                        log.Println("Shutting down...")
+                        return
+                }
+        }
 }

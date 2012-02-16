@@ -1,16 +1,24 @@
 Command snapshot bootstrap script
 Periodic snapshotting
+Use the jQuery tab ajax method to lazy-load the tabs
+	Refreshing data is refreshing all data, which is too broad
+Order the games coming out so they stay consistent
+Implement snapshot timestamping
+Implement periodic snapshotting and event replay
 Refactor denormalizer event handlers
 Add the jQuery accordian to break up the page
-Use the jQuery tab ajax method to lazy-load the tabs
 Error and success reporting on the page
 ?Only post if data actually changed?
 Add config files to servers
 	goinstall goconf.googlecode.com/hg
 Add log files to servers
 Implement the scheduler
+Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
 DONE:
+Refactor command handlers
+Refresh the data after a command is issued (always or should there be some kind of callback?)
+Snapshotting is not working, fix
 Refactor command handlers
 Fix the javascript currency formatting. numbers garbled again
 Re-add the game id to the posted command

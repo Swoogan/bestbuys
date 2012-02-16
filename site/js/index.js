@@ -49,28 +49,42 @@ $(document).ready(function() {
 
   var post = function(task, name, value, game) {
     $.post( "/tasks/", 
-            '{ "name": "'+task+'", "data": {"'+name+'": '+parseCurrency(value)+', "game": "'+game+'"} }',
-            {contentType: 'application/json'});
+            '{ "name": "'+task+'", "data": {"'+name+'": '+parseCurrency(value)+', "game": "'+game+'"} }', 
+            reload);
+  }
+
+  var reload = function() {
+     $.getJSON('/games/', function(data) {
+       var listItems = "<ul>" + $("#listTemplate").render(data) + "</ul>";
+       var games = $("#gameTemplate").render(data);
+
+       $("#tabs").tabs("destroy");
+       $("#tabs").html(listItems + games);
+       $("#tabs").tabs();
+
+       bindBehaviors();
+    });
   }
 
   bindBehaviors();
 
   $.getJSON('/games/', function(data) {
-     $.views.registerTags({
-       format: currencyFormat
-     });
+    $.views.registerTags({
+      format: currencyFormat
+    });
 
-     var listItems = "<ul>" + $("#listTemplate").render(data) + "</ul>";
-     var games = $("#gameTemplate").render(data);
+    var listItems = "<ul>" + $("#listTemplate").render(data) + "</ul>";
+    var games = $("#gameTemplate").render(data);
 
-     $("#tabs").html(listItems + games);
-     $("#tabs").tabs();
+    $("#tabs").html(listItems + games);
+    $("#tabs").tabs();
 
-     bindBehaviors();
+    bindBehaviors();
   });
 
+
   $("div.log").ajaxError(function(e, xhr, settings, exception) {
-    $(this).text('error in: ' + settings.url + '  error:' + xhr.responseText);
+    $(this).text('error in: ' + settings.url + ' ' + exception);
   });
 });
 
