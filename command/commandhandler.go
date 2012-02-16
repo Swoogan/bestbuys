@@ -79,7 +79,6 @@ func setIncome(data event.Data, repo repository) *event.Event {
 
 func setUpkeep(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
-	game.finance.upkeep = int64(data["upkeep"].(float64))
 	game.Finance.Upkeep = int64(data["upkeep"].(float64))
 	repo[id] = game
 	hourly := game.Finance.hourly()
@@ -90,7 +89,6 @@ func setUpkeep(data event.Data, repo repository) *event.Event {
 
 func setBalance(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
-	game.monies.balance = int64(data["balance"].(float64))
 	game.Monies.Balance = int64(data["balance"].(float64))
 	repo[id] = game
 	data["totalMonies"] = game.Monies.total()
@@ -99,7 +97,6 @@ func setBalance(data event.Data, repo repository) *event.Event {
 
 func setWallet(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
-	game.monies.wallet = int64(data["wallet"].(float64))
 	game.Monies.Wallet = int64(data["wallet"].(float64))
 	repo[id] = game
 	data["totalMonies"] = game.Monies.total()
@@ -108,7 +105,6 @@ func setWallet(data event.Data, repo repository) *event.Event {
 
 func setLandIncome(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
-	game.monies.lands = int64(data["lands"].(float64))
 	game.Monies.Lands = int64(data["landIncome"].(float64))
 	repo[id] = game
 	data["totalMonies"] = game.Monies.total()
