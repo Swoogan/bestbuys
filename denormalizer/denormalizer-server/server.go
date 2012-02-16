@@ -1,11 +1,15 @@
 package main
 
 import (
-	"denormalizer"
+	"os"
+	"fmt"
 	"rpc"
 	"net"
 	"log"
 	"http"
+	"syscall"
+	"os/signal"
+	"denormalizer"
 	"launchpad.net/mgo"
 )
 
@@ -27,10 +31,21 @@ func main() {
 	rpc.HandleHTTP()
 	log.Println("About to listen on localhost:4042")
 
-	l, err := net.Listen("tcp", ":4042")
-	if err != nil {
-		log.Fatal("listen error:", err)
-	}
+	go func() {
+		l, err := net.Listen("tcp", ":4042")
+		if err != nil {
+			log.Fatal("listen error:", err)
+		}
+		http.Serve(l, nil)
+	}()
 
-	http.Serve(l, nil)
+	select {
+            case sig := <-signal.Incoming:
+                fmt.Println("***Caught", sig)
+                switch sig.(os.UnixSignal) {
+                    case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
+                        log.Println("Shutting down...")
+                        return
+                }
+        }
 }

@@ -24,10 +24,12 @@ type commandHandler struct {
 
 func newCommandHandler(repo repository, col mgo.Collection) commandHandler {
 	pool := handlerPool{
+		"createGame": createGame,
 		"setWallet":  setWallet,
 		"setUpkeep":  setUpkeep,
 		"setBalance": setBalance,
 		"setIncome":  setIncome,
+		"setLandIncome":  setLandIncome,
 	}
 	return commandHandler{pool, repo, col}
 }
@@ -58,48 +60,59 @@ type HandlesCommand interface {
 //
 // HANDLERS
 //
+func createGame(data event.Data, repo repository) *event.Event {
+	id := bson.NewObjectId()
+	data["id"] = id.Hex()
+	repo[id.Hex()] = game{ id, finance{0,0}, monies{0,0,0} }
+	return &event.Event{"gameCreated", bson.Now(), data}
+}
+
 func setIncome(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
-	game.finance.income = int64(data["income"].(float64))
+	game.Finance.Income = int64(data["income"].(float64))
 	repo[id] = game
-	hourly := game.finance.hourly()
+	hourly := game.Finance.hourly()
 	data["hourly"] = hourly
-	data["daily"] = game.finance.daily(hourly)
+	data["daily"] = game.Finance.daily(hourly)
 	return createEvent("incomeSet", data)
 }
 
 func setUpkeep(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
 	game.finance.upkeep = int64(data["upkeep"].(float64))
+	game.Finance.Upkeep = int64(data["upkeep"].(float64))
 	repo[id] = game
-	hourly := game.finance.hourly()
+	hourly := game.Finance.hourly()
 	data["hourly"] = hourly
-	data["daily"] = game.finance.daily(hourly)
+	data["daily"] = game.Finance.daily(hourly)
 	return createEvent("upkeepSet", data)
 }
 
 func setBalance(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
 	game.monies.balance = int64(data["balance"].(float64))
+	game.Monies.Balance = int64(data["balance"].(float64))
 	repo[id] = game
-	data["total"] = game.monies.total()
+	data["totalMonies"] = game.Monies.total()
 	return createEvent("balanceSet", data)
 }
 
 func setWallet(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
 	game.monies.wallet = int64(data["wallet"].(float64))
+	game.Monies.Wallet = int64(data["wallet"].(float64))
 	repo[id] = game
-	data["total"] = game.monies.total()
+	data["totalMonies"] = game.Monies.total()
 	return createEvent("walletSet", data)
 }
 
-func setLand(data event.Data, repo repository) *event.Event {
+func setLandIncome(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
 	game.monies.lands = int64(data["lands"].(float64))
+	game.Monies.Lands = int64(data["landIncome"].(float64))
 	repo[id] = game
-	data["total"] = game.monies.total()
-	return createEvent("landSet", data)
+	data["totalMonies"] = game.Monies.total()
+	return &event.Event{"landIncomeSet", bson.Now(), data}
 }
 
 //
