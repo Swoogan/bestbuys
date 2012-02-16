@@ -40,12 +40,12 @@ func main() {
 	}()
 
 	select {
-            case sig := <-signal.Incoming:
-                fmt.Println("***Caught", sig)
-                switch sig.(os.UnixSignal) {
-                    case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
-                        log.Println("Shutting down...")
-                        return
-                }
-        }
+	case sig := <-signal.Incoming:
+		fmt.Println("***Caught", sig)
+		switch sig.(os.UnixSignal) {
+		case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
+			log.Println("Shutting down...")
+			return
+		}
+	}
 }

@@ -41,9 +41,10 @@ func (r repository) snapshot(d mgo.Database) os.Error {
 }
 
 type game struct {
-	Id bson.ObjectId "hack"  // this should be "_id" but then Upsert doesn't do anything
-	Finance finance
-	Monies  monies
+	Id        bson.ObjectId "hack" // this should be "_id" but then Upsert doesn't do anything
+	Finance   finance
+	Monies    monies
+	LastSaved bson.Timestamp
 }
 
 type finance struct {
