@@ -57,10 +57,12 @@ $(document).ready(function() {
      $.getJSON('/games/', function(data) {
        var listItems = "<ul>" + $("#listTemplate").render(data) + "</ul>";
        var games = $("#gameTemplate").render(data);
-
+       
+       var selected = $("#tabs").tabs('option', 'selected');
        $("#tabs").tabs("destroy");
        $("#tabs").html(listItems + games);
        $("#tabs").tabs();
+       $("#tabs").tabs({ selected: selected});
 
        bindBehaviors();
     });
