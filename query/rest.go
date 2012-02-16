@@ -4,6 +4,7 @@ import (
 	"os"
 	"log"
 	"fmt"
+	"flag"
 	"http"
 	"syscall"
 	"os/signal"
@@ -12,22 +13,27 @@ import (
 )
 
 func main() {
+	var mongo *string = flag.String("m", "localhost", "Mongodb address")
+	var dbname *string = flag.String("d", "query", "Mongodb database name")
+	var colname *string = flag.String("c", "games", "Mongodb collection name")
+	var address *string = flag.String("a", ":4040", "Address to listen on")
+	flag.Parse()
+
 	log.Printf("Connecting to mongodb")
 
-	session, err := mgo.Mongo("localhost")
+	session, err := mgo.Mongo(*mongo)
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 	defer session.Close()
 
-	db := session.DB("uken")
+	db := session.DB(*dbname)
 
-	mongorest.New(db, "games")
+	mongorest.New(db, *colname)
 
-	log.Printf("About to listen on 4040")
+	log.Printf("About to listen on %v", *address)
 	go func() {
-		err = http.ListenAndServe(":4040", nil)
+		err = http.ListenAndServe(*address, nil)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -35,7 +41,7 @@ func main() {
 
 	select {
             case sig := <-signal.Incoming:
-                fmt.Printf("***Caught %s\n", sig)
+                fmt.Println("***Caught", sig)
                 switch sig.(os.UnixSignal) {
                     case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
                         log.Println("Shutting down...")
