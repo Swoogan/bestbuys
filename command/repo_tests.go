@@ -19,7 +19,11 @@ func StoreTest() {
 	repo := newRepository()
 	id := bson.NewObjectId()
 	log.Println("New id is:", id.Hex())
-	repo[id.Hex()] = game{ id, finance{1,0}, monies{0,1,0} }
+	repo[id.Hex()] = game{
+		Id:      id,
+		Finance: finance{1, 0},
+		Monies:  monies{0, 1, 0},
+	}
 	log.Println("Finance income is:", repo[id.Hex()].Finance.Income)
 
 	repo.snapshot(db)

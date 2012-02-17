@@ -4,6 +4,7 @@ import (
 	"os"
 	"log"
 	"fmt"
+	"flag"
 	"http"
 	"syscall"
 	"os/signal"
@@ -19,16 +20,21 @@ func main() {
 */
 
 func main() {
-	log.Printf("Connecting to mongodb")
+	mongo := flag.String("m", "localhost", "Mongo server address")
+	dbname := flag.String("d", "command", "Mongo database name")
+	address := flag.String("a", ":4041", "Address to listen on")
+	flag.Parse()
 
-	session, err := mgo.Mongo("localhost")
+	log.Println("Connecting to mongodb")
+
+	session, err := mgo.Mongo(*mongo)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 	defer session.Close()
 
-	db := session.DB("command")
+	db := session.DB(*dbname)
 
 	repo := newRepository()
 	repo.rebuild(db)
@@ -38,21 +44,21 @@ func main() {
 	tr := newTaskRest(db.C("tasks"), handler)
 	rest.Resource("tasks", tr)
 
-	log.Printf("About to listen on 4041")
+	log.Printf("About to listen on %v", *address)
 	go func() {
-		err = http.ListenAndServe(":4041", nil)
+		err = http.ListenAndServe(*address, nil)
 		if err != nil {
 			log.Fatal(err)
 		}
 	}()
 
 	select {
-            case sig := <-signal.Incoming:
-                fmt.Println("***Caught", sig)
-                switch sig.(os.UnixSignal) {
-                    case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
-                        log.Println("Shutting down...")
-                        return
-                }
-        }
+	case sig := <-signal.Incoming:
+		fmt.Println("***Caught", sig)
+		switch sig.(os.UnixSignal) {
+		case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
+			log.Println("Shutting down...")
+			return
+		}
+	}
 }
