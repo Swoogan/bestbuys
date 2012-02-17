@@ -30,6 +30,7 @@ func (r repository) rebuild(d mgo.Database) {
 func (r repository) snapshot(d mgo.Database) os.Error {
 	log.Println("Saving snapshots")
 	for id, game := range r {
+		game.LastSaved = bson.Now()	// what if save fails???
 		selector := bson.M{"_id": bson.ObjectIdHex(id)}
 		_, err := d.C("snapshots").Upsert(selector, bson.M{"$set": game})
 		if err != nil {
@@ -41,9 +42,10 @@ func (r repository) snapshot(d mgo.Database) os.Error {
 }
 
 type game struct {
-	Id bson.ObjectId "hack"  // this should be "_id" but then Upsert doesn't do anything
-	Finance finance
-	Monies  monies
+	Id        bson.ObjectId "hack" // this should be "_id" but then Upsert doesn't do anything
+	Finance   finance
+	Monies    monies
+	LastSaved bson.Timestamp
 }
 
 type finance struct {

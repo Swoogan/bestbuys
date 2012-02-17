@@ -76,6 +76,7 @@ body {
 .data {
   float: right;
   width: 120px;
+  height: 18px;
   padding: 2px;
   background-color: white;
   text-align: right;

@@ -19,17 +19,17 @@ type handlerPool map[string]handler
 type commandHandler struct {
 	pool handlerPool
 	repo repository
-	col mgo.Collection
+	col  mgo.Collection
 }
 
 func newCommandHandler(repo repository, col mgo.Collection) commandHandler {
 	pool := handlerPool{
-		"createGame": createGame,
-		"setWallet":  setWallet,
-		"setUpkeep":  setUpkeep,
-		"setBalance": setBalance,
-		"setIncome":  setIncome,
-		"setLandIncome":  setLandIncome,
+		"createGame":    createGame,
+		"setWallet":     setWallet,
+		"setUpkeep":     setUpkeep,
+		"setBalance":    setBalance,
+		"setIncome":     setIncome,
+		"setLandIncome": setLandIncome,
 	}
 	return commandHandler{pool, repo, col}
 }
@@ -63,7 +63,11 @@ type HandlesCommand interface {
 func createGame(data event.Data, repo repository) *event.Event {
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
-	repo[id.Hex()] = game{ id, finance{0,0}, monies{0,0,0} }
+	repo[id.Hex()] = game{
+		Id:      id,
+		Finance: finance{0, 0},
+		Monies:  monies{0, 0, 0},
+	}
 	return &event.Event{"gameCreated", bson.Now(), data}
 }
 
