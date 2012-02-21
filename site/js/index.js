@@ -47,17 +47,6 @@ $(document).ready(function() {
     });
   }
 
-  var post = function(task, name, value, game) {
-    $.ajax({
-              url: "/tasks/", 
-              type: "POST",
-              data: '{ "name": "'+task+'", "data": {"'+name+'": '+parseCurrency(value)+', "game": "'+game+'"} }',
-              contentType: "application/json",
-              dataType: "json",
-              success: reload
-            }); 
-  }
-
   var reload = function() {
      $.getJSON('/games/', function(data) {
        var listItems = "<ul>" + $("#listTemplate").render(data) + "</ul>";
@@ -71,6 +60,17 @@ $(document).ready(function() {
 
        bindBehaviors();
     });
+  }
+
+  var post = function(task, name, value, game) {
+    $.ajax({
+              url: "/tasks/", 
+              type: "POST",
+              data: '{ "name": "'+task+'", "data": {"'+name+'": '+parseCurrency(value)+', "game": "'+game+'"} }',
+              contentType: "application/json",
+              dataType: "text",
+              success: reload
+            }); 
   }
 
   bindBehaviors();
