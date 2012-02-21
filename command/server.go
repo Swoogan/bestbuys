@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"os/signal"
 	"launchpad.net/mgo"
-	"github.com/Swoogan/rest.go"
+	"bitbucket.org/Swoogan/mongorest"
 )
 
 /*
@@ -18,22 +18,25 @@ func main() {
 	LoadTest()
 }
 */
+var mongo *string = flag.String("m", "localhost", "Mongo server address")
+var dbname *string = flag.String("d", "command", "Mongo database name")
+var address *string = flag.String("a", ":4041", "Address to listen on")
+var logfile *string = flag.String("l", "", "Log file to write to")
 
 func main() {
-	mongo := flag.String("m", "localhost", "Mongo server address")
-	dbname := flag.String("d", "command", "Mongo database name")
-	address := flag.String("a", ":4041", "Address to listen on")
 	flag.Parse()
 
-	log.Println("Connecting to mongodb")
+	logger := createLogger(*logfile)
 
+	logger.Println("Connecting to mongodb")
 	session, err := mgo.Mongo(*mongo)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 		return
 	}
 	defer session.Close()
 
+	logger.Printf("Opening database %v", *dbname)
 	db := session.DB(*dbname)
 
 	repo := newRepository()
@@ -41,14 +44,14 @@ func main() {
 	defer repo.snapshot(db)
 
 	handler := newCommandHandler(repo, db.C("events"))
-	tr := newTaskRest(db.C("tasks"), handler)
-	rest.Resource("tasks", tr)
+	tasks := mongorest.Resource{DB: db, Name: "tasks", Handler: handler}
+	mongorest.Attach(tasks, logger)
 
-	log.Printf("About to listen on %v", *address)
+	logger.Printf("About to listen on %v", *address)
 	go func() {
 		err = http.ListenAndServe(*address, nil)
 		if err != nil {
-			log.Fatal(err)
+			logger.Fatal(err)
 		}
 	}()
 
@@ -57,8 +60,21 @@ func main() {
 		fmt.Println("***Caught", sig)
 		switch sig.(os.UnixSignal) {
 		case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
-			log.Println("Shutting down...")
+			logger.Println("Shutting down...")
 			return
 		}
 	}
 }
+
+func createLogger(logfile string) *log.Logger {
+        output := os.Stderr
+        if logfile != "" {
+                var err os.Error
+                output, err = os.OpenFile(logfile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+                if err != nil {
+                        log.Fatal(err)
+                }
+        }
+        return log.New(output, "", log.LstdFlags)
+}
+
