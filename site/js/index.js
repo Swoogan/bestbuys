@@ -48,9 +48,14 @@ $(document).ready(function() {
   }
 
   var post = function(task, name, value, game) {
-    $.post( "/tasks/", 
-            '{ "name": "'+task+'", "data": {"'+name+'": '+parseCurrency(value)+', "game": "'+game+'"} }', 
-            reload);
+    $.ajax({
+              url: "/tasks/", 
+              type: "POST",
+              data: '{ "name": "'+task+'", "data": {"'+name+'": '+parseCurrency(value)+', "game": "'+game+'"} }',
+              contentType: "application/json",
+              dataType: "json",
+              success: reload
+            }); 
   }
 
   var reload = function() {
