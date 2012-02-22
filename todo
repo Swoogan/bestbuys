@@ -3,13 +3,13 @@ Improve logging statements
 Order the games coming out so they stay consistent
 Implement periodic snapshotting and event replay
 Refactor denormalizer event handlers
+Add the jQuery accordian to break up the page
 Error and success reporting on the page
 ?Only post if data actually changed?
 	I think using double-click to enter edit mode would work
 Add config files to servers
 	goinstall goconf.googlecode.com/hg
 Add log files to servers
-Add the jQuery accordian to break up the page
 Implement the scheduler
 Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
