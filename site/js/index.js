@@ -12,7 +12,8 @@ $(document).ready(function() {
   var focusout = function(name, task) {
     $("."+name).focusout(function(event) {
       if (focusoutEnabled) { 
-        post(task, name, $(this).html(), $(this).parents(".gameInfo").attr('data-game'));
+        var id = $(this).parents(".gameInfo").attr('data-game') 
+        post(task, name, $(this).html(), id);
         blur(this);
       }
     });
@@ -71,8 +72,8 @@ $(document).ready(function() {
         format: currencyFormat
       });
   
-      $(panel).html(
-        $("#gameTemplate").render(data)
+      $(panel).children(".financeInfo").html(
+        $("#financeTemplate").render(data)
       );
   
       bindBehaviors();
