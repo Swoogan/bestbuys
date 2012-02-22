@@ -61,6 +61,7 @@ type HandlesCommand interface {
 // HANDLERS
 //
 func createGame(data event.Data, repo repository) *event.Event {
+	log.Println(data["lands"])
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
 	repo[id.Hex()] = game{
