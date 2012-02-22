@@ -46,7 +46,12 @@ $(document).ready(function() {
         e.target.blur();
       }
     });
-  }
+
+    $('.header').click(function() {
+      $(this).next().toggle('slow');
+      return false;
+    }).next().hide();
+ }
 
   var reload = function() {
     var $tabs = $('#tabs').tabs();

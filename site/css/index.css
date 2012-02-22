@@ -28,6 +28,14 @@ body {
   margin: 10px auto;
   min-height: 200px;
 }
+.header {
+  margin: 1px;
+  color: #fff;
+  padding: 3px 10px;
+  cursor: pointer;
+  position: relative;
+  background-color: #E78F08;
+}
 .finance {
   float: left;
   height: 160px;
