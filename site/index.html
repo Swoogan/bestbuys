@@ -21,9 +21,16 @@
 
   <script id="tabBodyTemplate" type="text/x-jquery-tmpl">
     <div id="tabs-{{=$itemNumber}}" class="gameInfo" data-game="{{=_id}}">
-      <div class="financeInfo"></div>
+      <h2 class="header">Finance</h2>
+      <div class="financeInfo" title="Finance"></div>
+      <br class="clear">
+      <h2 class="header">Lands</h2>
       <div class="landInfo"></div>
+      <br class="clear">
+      <h2 class="header">Structures</h2>
       <div class="structureInfo"></div>
+      <br class="clear">
+      <h2 class="header">Purchases</h2>
       <div class="purchaseInfo"></div>
     </div>
   </script>

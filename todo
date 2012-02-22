@@ -1,4 +1,5 @@
-Add the jQuery accordian to break up the page
+Figure out how to not have the nested divs animate when a section header is clicked
+Improve the layout and colours of the sections
 Improve logging statements
 Order the games coming out so they stay consistent
 Implement periodic snapshotting and event replay
@@ -14,6 +15,7 @@ Implement the scheduler
 Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
 DONE:
+Add the jQuery accordian to break up the page
 Use the jQuery tab ajax method to lazy-load the tabs
 	Refreshing data is refreshing all data, which is too broad
 Implement snapshot timestamping
