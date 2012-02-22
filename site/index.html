@@ -25,7 +25,10 @@
       <div class="financeInfo" title="Finance"></div>
       <br class="clear">
       <h2 class="header">Lands</h2>
-      <div class="landInfo"></div>
+      <table>
+        <tbody><tr><th>Name</th><th>Cost</th><th>Income</th></tr></tbody>
+        <tbody class="landsInfo">{{each lands}}</tbody>
+      </table>
       <br class="clear">
       <h2 class="header">Structures</h2>
       <div class="structureInfo"></div>
@@ -102,6 +105,14 @@
         </div>
       </div>
     </div>
+  </script>
+
+  <script id="landsTemplate" type="text/x-jquery-tmpl">
+    <tr>
+      <td>{{format name}}</td> 
+      <td>{{format cost}}</td> 
+      <td>{{format income}}</td> 
+    </tr>
   </script>
 
   <header id="title">
