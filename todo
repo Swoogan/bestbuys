@@ -1,8 +1,8 @@
+Add the jQuery accordian to break up the page
 Improve logging statements
 Order the games coming out so they stay consistent
 Implement periodic snapshotting and event replay
 Refactor denormalizer event handlers
-Add the jQuery accordian to break up the page
 Error and success reporting on the page
 ?Only post if data actually changed?
 	I think using double-click to enter edit mode would work
