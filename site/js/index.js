@@ -48,18 +48,9 @@ $(document).ready(function() {
   }
 
   var reload = function() {
-     $.getJSON('/games/', function(data) {
-       var listItems = "<ul>" + $("#listTemplate").render(data) + "</ul>";
-       var games = $("#gameTemplate").render(data);
-       
-       var selected = $("#tabs").tabs('option', 'selected');
-       $("#tabs").tabs("destroy");
-       $("#tabs").html(listItems + games);
-       $("#tabs").tabs();
-       $("#tabs").tabs({ selected: selected});
-
-       bindBehaviors();
-    });
+    var $tabs = $('#tabs').tabs();
+    var sel = $tabs.tabs('option', 'selected')+1;
+    load($('#tabs-'+sel));
   }
 
   var post = function(task, name, value, game) {
