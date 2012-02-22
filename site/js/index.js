@@ -73,22 +73,37 @@ $(document).ready(function() {
             }); 
   }
 
-  bindBehaviors();
-
-  $.getJSON('/games/', function(data) {
-    $.views.registerTags({
-      format: currencyFormat
+  var load = function(panel) {
+    var id = $(panel).attr('data-game');
+    $.getJSON('/games/'+id, function(data) {
+      $.views.registerTags({
+        format: currencyFormat
+      });
+  
+      $(panel).html(
+        $("#gameTemplate").render(data)
+      );
+  
+      bindBehaviors();
     });
+  }
 
-    var listItems = "<ul>" + $("#listTemplate").render(data) + "</ul>";
-    var games = $("#gameTemplate").render(data);
-
-    $("#tabs").html(listItems + games);
-    $("#tabs").tabs();
-
-    bindBehaviors();
+  $('#tabs').bind('tabsselect', function(event, ui) {
+    load(ui.panel);
   });
 
+  var url = '/games/?selector=%7B%22name%22%3A%201%7D'
+  $.getJSON(url, function(data) {
+    $('#tabs').html(
+      '<ul>' + $('#tabItemTemplate').render(data) + '</ul>' + 
+      $('#tabBodyTemplate').render(data)
+    );
+    var $tabs = $('#tabs').tabs();
+    var sel = $tabs.tabs('option', 'selected')+1;
+    load($('#tabs-'+sel));
+  });
+
+  bindBehaviors();
 
   $("div.log").ajaxError(function(e, xhr, settings, exception) {
     $(this).text('error in: ' + settings.url + ' ' + exception);
