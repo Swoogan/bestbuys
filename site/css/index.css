@@ -36,6 +36,8 @@ body {
   position: relative;
   background-color: #E78F08;
   border-radius: 5px 5px 0px 0px;
+  background: url("ui-lightness/images/ui-bg_gloss-wave_35_f6a828_500x100.png") repeat-x scroll 50% 50% #F6A828;
+  border: 1px solid #E78F08;
 }
 .content {
   float: left;
