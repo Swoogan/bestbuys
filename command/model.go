@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bestbuys"
 	"launchpad.net/gobson/bson"
 )
 
@@ -13,30 +14,30 @@ type game struct {
 }
 
 type finance struct {
-	Income money
-	Upkeep money
+	Income bestbuys.Money
+	Upkeep bestbuys.Money
 }
 
-func (f finance) hourly() money {
+func (f finance) hourly() bestbuys.Money {
 	return f.Income - f.Upkeep
 }
 
-func (f finance) daily(hourly money) money {
+func (f finance) daily(hourly bestbuys.Money) bestbuys.Money {
 	return hourly * 24
 }
 
 type monies struct {
-	Balance money
-	Wallet  money
-	Lands   money
+	Balance bestbuys.Money
+	Wallet  bestbuys.Money
+	Lands   bestbuys.Money
 }
 
-func (m monies) total() money {
+func (m monies) total() bestbuys.Money {
 	return m.Balance + m.Wallet + m.Lands
 }
 
 type land struct {
 	Name string
-	Cost money
-	Income money
+	Cost bestbuys.Money
+	Income bestbuys.Money
 }

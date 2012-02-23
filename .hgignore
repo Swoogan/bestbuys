@@ -3,7 +3,7 @@ _obj/
 syntax: glob
 *.go.swp
 _linux_amd64_.6
-bestbuys/bestbuys
+logic/logic
 eventbus/eventbus
 query/query
 command/command
