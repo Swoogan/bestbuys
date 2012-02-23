@@ -4,8 +4,6 @@ import (
 	"launchpad.net/gobson/bson"
 )
 
-type money float64
-
 type game struct {
 	Id        bson.ObjectId "hack" // this should be "_id" but then Upsert doesn't do anything
 	Finance   finance
