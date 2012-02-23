@@ -49,6 +49,7 @@ func gameCreated(database mgo.Database, data event.Data) (err os.Error) {
 	info := bson.M{
 		"_id":         id,
 		"name":        data["name"],
+		"lands": data["lands"],
 		"wallet":      0,
 		"balance":     0,
 		"landIncome":  0,
