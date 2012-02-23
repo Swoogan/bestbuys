@@ -96,7 +96,21 @@ $(document).ready(function() {
       return false;
     }).next().hide();
 
-    var $tabs = $('#tabs').tabs();
+    var $tabs = $('#tabs').tabs({
+      show: function(e,ui){
+        var $c = $(ui.panel), h = parseInt($(ui.tab).parent().outerHeight());
+        while ( $c.length > 0 && $c.hasClass("gameInfo") ){
+            h += ( $c.outerHeight(true) - $c.innerHeight() );
+            $c = $c.parent();
+        }
+        h = parseInt($c.innerHeight() - h );
+        $(ui.panel).height(h);
+        return true;
+      },
+      add: function(e,ui){
+          $(this).tabs("select",ui.index);
+      }
+    });
     var sel = $tabs.tabs('option', 'selected')+1;
     load($('#tabs-'+sel));
   });
