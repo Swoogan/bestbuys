@@ -2,11 +2,9 @@ $(document).ready(function() {
   var focusoutEnabled = true;
 
   var blur = function(element) {
-    if (element.className.indexOf("shadow") != -1) {
-      element.className = element.className.replace(" shadow", "");
-      var newVal = currencyFormat(parseCurrency($(element).html()));
-      $(element).html(newVal);
-    }
+    $(element).toggleClass("shadow");
+    var newVal = currencyFormat(parseCurrency($(element).html()));
+    $(element).html(newVal);
   }
 
   var focusout = function(name, command) {
@@ -21,9 +19,7 @@ $(document).ready(function() {
 
   var bindBehaviors = function() {
     $(".data").focus(function() { 
-      if (this.className.indexOf("shadow") == -1) {
-        this.className += " shadow";
-      }
+      $(this).toggleClass("shadow");
     });
 
     focusout("income", "setIncome");
