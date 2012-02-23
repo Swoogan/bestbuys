@@ -5,14 +5,10 @@ import (
 	"eventbus/event"
 	"launchpad.net/mgo"
 	"launchpad.net/gobson/bson"
+	"bitbucket.org/Swoogan/mongorest"
 )
 
-type command struct {
-	name string
-	data data
-}
-
-type data map[string]interface{}
+//type data map[string]interface{}
 type handler func(data event.Data, repo repository) *event.Event
 type handlerPool map[string]handler
 
@@ -34,14 +30,17 @@ func newCommandHandler(repo repository, col mgo.Collection) commandHandler {
 	return commandHandler{pool, repo, col}
 }
 
-func (c commandHandler) Handle(cmd command) {
-	if handler, ok := c.pool[cmd.name]; ok {
-		data := event.Data(cmd.data)
-		event := handler(data, c.repo)
+func (c commandHandler) Created(doc mongorest.Document) {
+	name := doc["name"].(string)
+	if handler, ok := c.pool[name]; ok {
+		data := doc["data"].(map[string]interface{})
+		edata := event.Data(data)
+		log.Println("Handling command:", name)
+		event := handler(edata, c.repo)
 		c.store(event)
 		dispatch(event)
 	} else {
-		log.Printf("No handler specified for command: %v", cmd.name)
+		log.Printf("No handler specified for command: %v", name)
 	}
 }
 
@@ -53,28 +52,35 @@ func (c commandHandler) store(e *event.Event) {
 	}
 }
 
-type HandlesCommand interface {
-	Handle(cmd command)
-}
-
 //
 // HANDLERS
 //
 func createGame(data event.Data, repo repository) *event.Event {
+	log.Println("In here")
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
 
-	for _, land := range data["lands"].([]interface{}) {
-		for key, value := range land.(map[string]interface{}) {
-			log.Println(key)
-			log.Println(value)
+	var lands []land
+	for _, landData := range data["lands"].([]interface{}) {
+		var land land
+		for key, value := range landData.(map[string]interface{}) {
+			switch key {
+			case "name":
+				land.Name = value.(string)
+			case "cost":
+				land.Cost = money(value.(float64))
+			case "income":
+				land.Income = money(value.(float64))
+			}
 		}
+		lands = append(lands, land)
 	}
 
 	repo[id.Hex()] = game{
 		Id:      id,
 		Finance: finance{0, 0},
 		Monies:  monies{0, 0, 0},
+		Lands: lands,
 	}
 
 	log.Println("Created game:", data["name"])
@@ -84,7 +90,7 @@ func createGame(data event.Data, repo repository) *event.Event {
 
 func setIncome(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
-	game.Finance.Income = int64(data["income"].(float64))
+	game.Finance.Income = money(data["income"].(float64))
 	repo[id] = game
 	hourly := game.Finance.hourly()
 	data["hourly"] = hourly
@@ -94,7 +100,7 @@ func setIncome(data event.Data, repo repository) *event.Event {
 
 func setUpkeep(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
-	game.Finance.Upkeep = int64(data["upkeep"].(float64))
+	game.Finance.Upkeep = money(data["upkeep"].(float64))
 	repo[id] = game
 	hourly := game.Finance.hourly()
 	data["hourly"] = hourly
@@ -104,7 +110,7 @@ func setUpkeep(data event.Data, repo repository) *event.Event {
 
 func setBalance(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Balance = int64(data["balance"].(float64))
+	game.Monies.Balance = money(data["balance"].(float64))
 	repo[id] = game
 	data["totalMonies"] = game.Monies.total()
 	return createEvent("balanceSet", data)
@@ -112,7 +118,7 @@ func setBalance(data event.Data, repo repository) *event.Event {
 
 func setWallet(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Wallet = int64(data["wallet"].(float64))
+	game.Monies.Wallet = money(data["wallet"].(float64))
 	repo[id] = game
 	data["totalMonies"] = game.Monies.total()
 	return createEvent("walletSet", data)
@@ -120,7 +126,7 @@ func setWallet(data event.Data, repo repository) *event.Event {
 
 func setLandIncome(data event.Data, repo repository) *event.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Lands = int64(data["landIncome"].(float64))
+	game.Monies.Lands = money(data["landIncome"].(float64))
 	repo[id] = game
 	data["totalMonies"] = game.Monies.total()
 	return createEvent("landIncomeSet", data)
