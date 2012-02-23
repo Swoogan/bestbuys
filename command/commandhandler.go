@@ -61,15 +61,25 @@ type HandlesCommand interface {
 // HANDLERS
 //
 func createGame(data event.Data, repo repository) *event.Event {
-	log.Println(data["lands"])
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
+
+	for _, land := range data["lands"].([]interface{}) {
+		for key, value := range land.(map[string]interface{}) {
+			log.Println(key)
+			log.Println(value)
+		}
+	}
+
 	repo[id.Hex()] = game{
 		Id:      id,
 		Finance: finance{0, 0},
 		Monies:  monies{0, 0, 0},
 	}
-	return &event.Event{"gameCreated", bson.Now(), data}
+
+	log.Println("Created game:", data["name"])
+
+	return createEvent("gameCreated", data)
 }
 
 func setIncome(data event.Data, repo repository) *event.Event {
@@ -113,7 +123,7 @@ func setLandIncome(data event.Data, repo repository) *event.Event {
 	game.Monies.Lands = int64(data["landIncome"].(float64))
 	repo[id] = game
 	data["totalMonies"] = game.Monies.total()
-	return &event.Event{"landIncomeSet", bson.Now(), data}
+	return createEvent("landIncomeSet", data)
 }
 
 //

@@ -9,11 +9,11 @@ $(document).ready(function() {
     }
   }
 
-  var focusout = function(name, task) {
+  var focusout = function(name, command) {
     $("."+name).focusout(function(event) {
       if (focusoutEnabled) { 
         var id = $(this).parents(".gameInfo").attr('data-game') 
-        post(task, name, $(this).html(), id);
+        post(command, name, $(this).html(), id);
         blur(this);
       }
     });
@@ -54,11 +54,11 @@ $(document).ready(function() {
     load($('#tabs-'+sel));
   }
 
-  var post = function(task, name, value, game) {
+  var post = function(command, name, value, game) {
     $.ajax({
-              url: "/tasks/", 
+              url: "/commands/", 
               type: "POST",
-              data: '{ "name": "'+task+'", "data": {"'+name+'": '+parseCurrency(value)+', "game": "'+game+'"} }',
+              data: '{ "name": "'+command+'", "data": {"'+name+'": '+parseCurrency(value)+', "game": "'+game+'"} }',
               contentType: "application/json",
               dataType: "text",
               success: reload

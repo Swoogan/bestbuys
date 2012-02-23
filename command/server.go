@@ -44,8 +44,8 @@ func main() {
 	defer repo.snapshot(db)
 
 	handler := newCommandHandler(repo, db.C("events"))
-	tasks := mongorest.Resource{DB: db, Name: "tasks", Handler: handler}
-	mongorest.Attach(tasks, logger)
+	commands := mongorest.Resource{DB: db, Name: "commands", Handler: handler}
+	mongorest.Attach(commands, logger)
 
 	logger.Printf("About to listen on %v", *address)
 	go func() {
