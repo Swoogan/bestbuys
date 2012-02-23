@@ -46,12 +46,7 @@ $(document).ready(function() {
         e.target.blur();
       }
     });
-
-    $('.header').click(function() {
-      $(this).next().toggle('slow');
-      return false;
-    }).next().hide();
- }
+  }
 
   var reload = function() {
     var $tabs = $('#tabs').tabs();
@@ -95,6 +90,12 @@ $(document).ready(function() {
       '<ul>' + $('#tabItemTemplate').render(data) + '</ul>' + 
       $('#tabBodyTemplate').render(data)
     );
+
+    $('.header').click(function() {
+      $(this).next().toggle('slow');
+      return false;
+    }).next().hide();
+
     var $tabs = $('#tabs').tabs();
     var sel = $tabs.tabs('option', 'selected')+1;
     load($('#tabs-'+sel));
