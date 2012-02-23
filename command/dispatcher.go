@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 	"rpc"
-	"eventbus/event"
+	"bestbuys"
 )
 
-func rpcCall(address string, method string, e *event.Event) {
+func rpcCall(address string, method string, e *bestbuys.Event) {
 	client, err := rpc.DialHTTP("tcp", address)
 	if err != nil {
 		log.Println("OMG connect failed need to queue this!1!!")
@@ -21,15 +21,15 @@ func rpcCall(address string, method string, e *event.Event) {
 	}
 }
 
-func denormalize(e *event.Event) {
+func denormalize(e *bestbuys.Event) {
 	rpcCall(":4042", "Denormalizer.HandleEvent", e)
 }
 
-func schedule(e *event.Event) {
+func schedule(e *bestbuys.Event) {
 	rpcCall(":4043", "Scheduler.HandleEvent", e)
 }
 
-func dispatch(e *event.Event) {
+func dispatch(e *bestbuys.Event) {
 	denormalize(e)
 	//	schedule(e)
 	log.Printf("Dispatched event: %v", e.Name)

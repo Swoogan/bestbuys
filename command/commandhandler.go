@@ -2,14 +2,14 @@ package main
 
 import (
 	"log"
-	"eventbus/event"
+	"bestbuys"
 	"launchpad.net/mgo"
 	"launchpad.net/gobson/bson"
 	"bitbucket.org/Swoogan/mongorest"
 )
 
 //type data map[string]interface{}
-type handler func(data event.Data, repo repository) *event.Event
+type handler func(data bestbuys.Data, repo repository) *bestbuys.Event
 type handlerPool map[string]handler
 
 type commandHandler struct {
@@ -34,7 +34,7 @@ func (c commandHandler) Created(doc mongorest.Document) {
 	name := doc["name"].(string)
 	if handler, ok := c.pool[name]; ok {
 		data := doc["data"].(map[string]interface{})
-		edata := event.Data(data)
+		edata := bestbuys.Data(data)
 		log.Println("Handling command:", name)
 		event := handler(edata, c.repo)
 		c.store(event)
@@ -44,7 +44,7 @@ func (c commandHandler) Created(doc mongorest.Document) {
 	}
 }
 
-func (c commandHandler) store(e *event.Event) {
+func (c commandHandler) store(e *bestbuys.Event) {
 	e.Date = bson.Now()
 
 	if err := c.col.Insert(e); err != nil {
@@ -55,7 +55,7 @@ func (c commandHandler) store(e *event.Event) {
 //
 // HANDLERS
 //
-func createGame(data event.Data, repo repository) *event.Event {
+func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
 	log.Println("In here")
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
@@ -68,9 +68,9 @@ func createGame(data event.Data, repo repository) *event.Event {
 			case "name":
 				land.Name = value.(string)
 			case "cost":
-				land.Cost = money(value.(float64))
+				land.Cost = bestbuys.Money(value.(float64))
 			case "income":
-				land.Income = money(value.(float64))
+				land.Income = bestbuys.Money(value.(float64))
 			}
 		}
 		lands = append(lands, land)
@@ -88,9 +88,9 @@ func createGame(data event.Data, repo repository) *event.Event {
 	return createEvent("gameCreated", data)
 }
 
-func setIncome(data event.Data, repo repository) *event.Event {
+func setIncome(data bestbuys.Data, repo repository) *bestbuys.Event {
 	id, game := getGame(data, repo)
-	game.Finance.Income = money(data["income"].(float64))
+	game.Finance.Income = bestbuys.Money(data["income"].(float64))
 	repo[id] = game
 	hourly := game.Finance.hourly()
 	data["hourly"] = hourly
@@ -98,9 +98,9 @@ func setIncome(data event.Data, repo repository) *event.Event {
 	return createEvent("incomeSet", data)
 }
 
-func setUpkeep(data event.Data, repo repository) *event.Event {
+func setUpkeep(data bestbuys.Data, repo repository) *bestbuys.Event {
 	id, game := getGame(data, repo)
-	game.Finance.Upkeep = money(data["upkeep"].(float64))
+	game.Finance.Upkeep = bestbuys.Money(data["upkeep"].(float64))
 	repo[id] = game
 	hourly := game.Finance.hourly()
 	data["hourly"] = hourly
@@ -108,25 +108,25 @@ func setUpkeep(data event.Data, repo repository) *event.Event {
 	return createEvent("upkeepSet", data)
 }
 
-func setBalance(data event.Data, repo repository) *event.Event {
+func setBalance(data bestbuys.Data, repo repository) *bestbuys.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Balance = money(data["balance"].(float64))
+	game.Monies.Balance = bestbuys.Money(data["balance"].(float64))
 	repo[id] = game
 	data["totalMonies"] = game.Monies.total()
 	return createEvent("balanceSet", data)
 }
 
-func setWallet(data event.Data, repo repository) *event.Event {
+func setWallet(data bestbuys.Data, repo repository) *bestbuys.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Wallet = money(data["wallet"].(float64))
+	game.Monies.Wallet = bestbuys.Money(data["wallet"].(float64))
 	repo[id] = game
 	data["totalMonies"] = game.Monies.total()
 	return createEvent("walletSet", data)
 }
 
-func setLandIncome(data event.Data, repo repository) *event.Event {
+func setLandIncome(data bestbuys.Data, repo repository) *bestbuys.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Lands = money(data["landIncome"].(float64))
+	game.Monies.Lands = bestbuys.Money(data["landIncome"].(float64))
 	repo[id] = game
 	data["totalMonies"] = game.Monies.total()
 	return createEvent("landIncomeSet", data)
@@ -136,12 +136,12 @@ func setLandIncome(data event.Data, repo repository) *event.Event {
 // Helpers
 //
 
-func getGame(data event.Data, repo repository) (string, game) {
+func getGame(data bestbuys.Data, repo repository) (string, game) {
 	id := data["game"].(string)
 	game := repo[id]
 	return id, game
 }
 
-func createEvent(name string, data event.Data) *event.Event {
-	return &event.Event{name, bson.Now(), data}
+func createEvent(name string, data bestbuys.Data) *bestbuys.Event {
+	return &bestbuys.Event{name, bson.Now(), data}
 }
