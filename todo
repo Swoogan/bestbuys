@@ -1,5 +1,4 @@
 Use jquery toggleclass to show/hide shadow
-Get the tabs to autosize their height
 Improve logging statements
 Order the games coming out so they stay consistent
 Implement periodic snapshotting and event replay
@@ -14,6 +13,7 @@ Implement the scheduler
 Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
 DONE:
+Get the tabs to autosize their height
 Figure out how to not have the nested divs animate when a section header is clicked
 Improve the layout and colours of the sections
 Add lands to game created commandhandler and eventhandler
