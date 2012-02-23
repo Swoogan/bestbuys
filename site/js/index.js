@@ -92,7 +92,7 @@ $(document).ready(function() {
     );
 
     $('.header').click(function() {
-      $(this).next().toggle('slow');
+      $(this).next().slideToggle('slow');
       return false;
     }).next().hide();
 

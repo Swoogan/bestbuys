@@ -19,13 +19,12 @@ body {
   margin: 15px auto;
   width: 860px;
   box-shadow: 2px 2px 2px 2px #ccc;
-  height: 400px;
 }
 .clear {
   clear: both;
 }
 .gameInfo {
-  margin: 10px auto;
+  margin: 0px auto;
   min-height: 200px;
 }
 .header {
