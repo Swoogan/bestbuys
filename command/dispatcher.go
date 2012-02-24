@@ -15,8 +15,7 @@ func rpcCall(address string, method string, e *bestbuys.Event) {
 	defer client.Close()
 
 	var reply int
-	err = client.Call(method, e, &reply)
-	if err != nil {
+	if err = client.Call(method, e, &reply); err != nil {
 		log.Println("OMG call failed, need to queue this!!!")
 	}
 }

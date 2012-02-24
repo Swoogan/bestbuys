@@ -1,17 +1,18 @@
-Improve logging statements
-Order the games coming out so they stay consistent
+Make logger a global variable (command)
+Error and success reporting on the page
 Implement periodic snapshotting and event replay
 Refactor denormalizer event handlers
-Error and success reporting on the page
+Order the games coming out so they stay consistent
 ?Only post if data actually changed?
 	I think using double-click to enter edit mode would work
 Add config files to servers
 	goinstall goconf.googlecode.com/hg
-Add log files to servers
 Implement the scheduler
 Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
 DONE:
+Add log files to servers
+Improve logging statements
 Use jquery toggleclass to show/hide shadow
 Get the tabs to autosize their height
 Figure out how to not have the nested divs animate when a section header is clicked
