@@ -14,6 +14,7 @@ type handlerPool map[string]handler
 type Denormalizer struct {
 	database mgo.Database
 	pool     handlerPool
+	log      *log.Logger
 }
 
 func New(database mgo.Database) *Denormalizer {
@@ -49,7 +50,7 @@ func gameCreated(database mgo.Database, data bestbuys.Data) (err os.Error) {
 	info := bson.M{
 		"_id":         id,
 		"name":        data["name"],
-		"lands": data["lands"],
+		"lands":       data["lands"],
 		"wallet":      0,
 		"balance":     0,
 		"landIncome":  0,
@@ -78,7 +79,8 @@ func incomeSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
 	if err = database.C("games").Update(selector, change); err != nil {
 		log.Println("Could not update the datastore, ", err, ": ", data["game"])
 	}
-	return }
+	return
+}
 
 func upkeepSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
 	log.Println("Handling Event: upkeepSet")
