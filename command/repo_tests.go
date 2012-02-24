@@ -20,12 +20,12 @@ func StoreTest() {
 	repo := newRepository(logger)
 	id := bson.NewObjectId()
 	log.Println("New id is:", id.Hex())
-	repo[id.Hex()] = game{
+	repo.games[id.Hex()] = game{
 		Id:      id,
 		Finance: finance{1, 0},
 		Monies:  monies{0, 1, 0},
 	}
-	log.Println("Finance income is:", repo[id.Hex()].Finance.Income)
+	log.Println("Finance income is:", repo.games[id.Hex()].Finance.Income)
 
 	repo.snapshot(db)
 }
@@ -43,7 +43,7 @@ func LoadTest() {
 	repo := newRepository(logger)
 	repo.rebuild(db)
 
-	for id, game := range repo {
+	for id, game := range repo.games {
 		log.Println("Id is:", id)
 		log.Println("Game is:", game)
 	}

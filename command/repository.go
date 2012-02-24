@@ -7,35 +7,37 @@ import (
 	"launchpad.net/gobson/bson"
 )
 
-type repository map[string]game
+type repository struct {
+	games map[string]game
+	log *log.Logger
+}
 
 func newRepository(logger *log.Logger) repository {
-	logger.Println("wak")
-	return make(map[string]game, 3)
+	return repository{make(map[string]game, 3), logger}
 }
 
 func (r repository) rebuild(d mgo.Database) {
-	log.Println("Loading snapshots")
+	r.log.Println("Loading snapshots")
 	var result []game
 	err := d.C("snapshots").Find(nil).All(&result)
 	if err != nil {
-		log.Println("Could not load snapshots:", err)
+		r.log.Println("Could not load snapshots:", err)
 		return
 	}
 
 	for _, game := range result {
-		r[game.Id.Hex()] = game
+		r.games[game.Id.Hex()] = game
 	}
 }
 
 func (r repository) snapshot(d mgo.Database) os.Error {
-	log.Println("Saving snapshots")
-	for id, game := range r {
+	r.log.Println("Saving snapshots")
+	for id, game := range r.games {
 		game.LastSaved = bson.Now() // what if save fails???
 		selector := bson.M{"_id": bson.ObjectIdHex(id)}
 		_, err := d.C("snapshots").Upsert(selector, bson.M{"$set": game})
 		if err != nil {
-			log.Println("Could not save snapshot:", err)
+			r.log.Println("Could not save snapshot:", err)
 			return err
 		}
 	}
