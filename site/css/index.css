@@ -15,8 +15,23 @@ body {
   border-radius: 5px;
   box-shadow: 2px 2px 2px 2px #ccc;
 }
+#message {
+  padding: 5px 10px 5px 10px;
+  margin: 10px auto;
+  width: 400px;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px 2px #ccc;
+}
+.error {
+  background-color: #FF8C8C;
+  border: 1px solid red;
+}
+.success {
+  background-color: #9BAAFF;
+  border: 1px solid blue;
+}
 #tabs {
-  margin: 15px auto;
+  margin: 10px auto;
   width: 860px;
   box-shadow: 2px 2px 2px 2px #ccc;
 }
