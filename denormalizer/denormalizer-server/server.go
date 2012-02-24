@@ -2,29 +2,31 @@ package main
 
 import (
 	"os"
-	"fmt"
 	"rpc"
 	"net"
-	"log"
 	"flag"
 	"http"
 	"syscall"
+	"bestbuys"
 	"os/signal"
 	"denormalizer"
 	"launchpad.net/mgo"
 )
 
+var mongo *string = flag.String("m", "localhost", "Mongo server address")
+var dbname *string = flag.String("d", "query", "Mongo database name")
+var address *string = flag.String("a", ":4042", "Address to listen on")
+var logfile *string = flag.String("l", "", "File to log to")
+
 func main() {
-	mongo := flag.String("m", "localhost", "Mongo server address")
-	dbname := flag.String("d", "query", "Mongo database name")
-	address := flag.String("a", ":4042", "Address to listen on")
 	flag.Parse()
 
-	log.Printf("Connecting to mongodb")
+	logger := bestbuys.NewLogger(*logfile)
 
+	logger.Printf("Connecting to mongodb")
 	session, err := mgo.Mongo(*mongo)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 		return
 	}
 	defer session.Close()
@@ -35,22 +37,22 @@ func main() {
 
 	rpc.Register(denorm)
 	rpc.HandleHTTP()
-	log.Printf("About to listen on %v", *address)
+	logger.Printf("About to listen on %v", *address)
 
 	go func() {
 		l, err := net.Listen("tcp", *address)
 		if err != nil {
-			log.Fatal("listen error:", err)
+			logger.Fatal("listen error:", err)
 		}
 		http.Serve(l, nil)
 	}()
 
 	select {
 	case sig := <-signal.Incoming:
-		fmt.Println("***Caught", sig)
+		logger.Println("***Caught", sig)
 		switch sig.(os.UnixSignal) {
 		case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
-			log.Println("Shutting down...")
+			logger.Println("Shutting down...")
 			return
 		}
 	}

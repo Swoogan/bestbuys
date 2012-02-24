@@ -78,8 +78,7 @@ func incomeSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
 	if err = database.C("games").Update(selector, change); err != nil {
 		log.Println("Could not update the datastore, ", err, ": ", data["game"])
 	}
-	return
-}
+	return }
 
 func upkeepSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
 	log.Println("Handling Event: upkeepSet")

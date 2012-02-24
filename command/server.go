@@ -2,11 +2,11 @@ package main
 
 import (
 	"os"
-	"log"
 	"fmt"
 	"flag"
 	"http"
 	"syscall"
+	"bestbuys"
 	"os/signal"
 	"launchpad.net/mgo"
 	"bitbucket.org/Swoogan/mongorest"
@@ -26,7 +26,7 @@ var logfile *string = flag.String("l", "", "Log file to write to")
 func main() {
 	flag.Parse()
 
-	logger := createLogger(*logfile)
+	logger := bestbuys.NewLogger(*logfile)
 
 	logger.Println("Connecting to mongodb")
 	session, err := mgo.Mongo(*mongo)
@@ -64,17 +64,5 @@ func main() {
 			return
 		}
 	}
-}
-
-func createLogger(logfile string) *log.Logger {
-        output := os.Stderr
-        if logfile != "" {
-                var err os.Error
-                output, err = os.OpenFile(logfile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-                if err != nil {
-                        log.Fatal(err)
-                }
-        }
-        return log.New(output, "", log.LstdFlags)
 }
 
