@@ -48,7 +48,7 @@ $(document).ready(function() {
     var message = $('#message');
     message.removeClass('error');
     message.addClass('success');
-    message.fadeToggle('slow');
+    message.fadeIn('slow');
     message.html("Successfully saved changes.");
 
     var $tabs = $('#tabs').tabs();
@@ -74,8 +74,12 @@ $(document).ready(function() {
         format: currencyFormat
       });
   
-      $(panel).children(".financeInfo").html(
-        $("#financeTemplate").render(data)
+      $('.financeInfo').html(
+        $('#financeTemplate').render(data)
+      );
+
+      $('.landsInfo').html(
+        $('#landsTemplate').render(data['lands'])
       );
   
       bindBehaviors();

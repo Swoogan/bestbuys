@@ -1,18 +1,20 @@
-Make denormalizer suspend on ctrl+z
-	make command and mongorestd do the same
+Do something about font-faces 
+Refactor denormalizer event handlers
 Make repo a global variable? (command)
 Implement periodic snapshotting and event replay
-Refactor denormalizer event handlers
 ?Only post if data actually changed?
 	I think using double-click to enter edit mode would work
-Order the games coming out so they stay consistent
 Add config files to servers
 	goinstall goconf.googlecode.com/hg
+Order the games coming out so they stay consistent
 Implement the scheduler
 Do some benchmarking
 Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
 DONE:
+Make denormalizer suspend on ctrl+z
+	make command and mongorestd do the same
+	CAN'T: limitation of Go signal handling
 Change rpc calls to use json instead of gob
 Make logger a global variable (command)
 	command/dispatcher.go not even using logger
