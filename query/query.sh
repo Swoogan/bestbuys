@@ -1,2 +1,2 @@
-./mongorestd -d uken -a :4040 -o query.log games,ro
+./mongorestd -d query -a :4040 -o query.log games,ro
 

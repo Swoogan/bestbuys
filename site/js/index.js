@@ -45,10 +45,11 @@ $(document).ready(function() {
   }
 
   var reload = function() {
-    $(this).removeClass('error');
-    $(this).addClass('success');
-    $(this).fadeToggle('slow');
-    $(this).html("Successfully saved changes" + exception);
+    var message = $('#message');
+    message.removeClass('error');
+    message.addClass('success');
+    message.fadeToggle('slow');
+    message.html("Successfully saved changes.");
 
     var $tabs = $('#tabs').tabs();
     var sel = $tabs.tabs('option', 'selected')+1;
@@ -122,11 +123,12 @@ $(document).ready(function() {
     $(this).fadeToggle(400);
   });
 
-  $("#message").ajaxError(function(e, xhr, settings, exception) {
+  $('#message').ajaxError(function(e, xhr, settings, exception) {
     $(this).removeClass('success');
     $(this).addClass('error');
     $(this).fadeToggle('slow');
-    $(this).html("Error in: '" + settings.url + "' &nbsp;&nbsp;Exception: " + exception);
+    $('#error').text("Error in: '" + settings.url + "'");
+    $('#exception').text('Message: ' + exception);
   });
 });
 
