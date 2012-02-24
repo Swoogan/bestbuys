@@ -28,10 +28,12 @@ body {
 .error {
   background-color: #FF8C8C;
   border: 1px solid red;
+  color: #006B6B;
 }
 .success {
   background-color: #9BAAFF;
-  border: 1px solid blue;
+  border: 1px solid #4F6CFF;
+  color: #3F3600;
 }
 #tabs {
   margin: 10px auto;
