@@ -12,3 +12,4 @@ denormalizer/denormalizer
 denormalizer/denormalizer-server/denormalizer-server
 jquery-ui
 bestbuys/bestbuys
+query/query.log

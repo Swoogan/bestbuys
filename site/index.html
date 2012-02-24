@@ -25,10 +25,12 @@
       <div class="content financeInfo"></div>
       <br class="clear">
       <h2 class="header">Lands</h2>
-      <table class="content">
-        <tbody><tr><th>Name</th><th>Cost</th><th>Income</th></tr></tbody>
-        <tbody class="landsInfo">{{each lands}}</tbody>
-      </table>
+      <div class="content">
+        <table class="lands">
+          <tbody><tr><th>Name</th><th>Cost</th><th>Income</th></tr></tbody>
+          <tbody class="landsInfo"></tbody>
+        </table>
+      </div>
       <br class="clear">
       <h2 class="header">Structures</h2>
       <div class="content structureInfo"></div>
@@ -109,9 +111,9 @@
 
   <script id="landsTemplate" type="text/x-jquery-tmpl">
     <tr>
-      <td>{{format name}}</td> 
-      <td>{{format cost}}</td> 
-      <td>{{format income}}</td> 
+      <td>{{=name}}</td> 
+      <td style="text-align: right;">{{format cost}}</td> 
+      <td style="text-align: right;">{{format income}}</td> 
     </tr>
   </script>
 
