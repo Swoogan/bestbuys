@@ -9,7 +9,8 @@ import (
 
 type repository map[string]game
 
-func newRepository() repository {
+func newRepository(logger *log.Logger) repository {
+	logger.Println("wak")
 	return make(map[string]game, 3)
 }
 
