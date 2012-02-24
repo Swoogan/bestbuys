@@ -76,7 +76,7 @@ func createGame(data bestbuys.Data, repo repository, logger *log.Logger) *bestbu
 		lands = append(lands, land)
 	}
 
-	repo[id.Hex()] = game{
+	repo.games[id.Hex()] = game{
 		Id:      id,
 		Finance: finance{0, 0},
 		Monies:  monies{0, 0, 0},
@@ -91,7 +91,7 @@ func createGame(data bestbuys.Data, repo repository, logger *log.Logger) *bestbu
 func setIncome(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuys.Event {
 	id, game := getGame(data, repo)
 	game.Finance.Income = bestbuys.Money(data["income"].(float64))
-	repo[id] = game
+	repo.games[id] = game
 	hourly := game.Finance.hourly()
 	data["hourly"] = hourly
 	data["daily"] = game.Finance.daily(hourly)
@@ -101,7 +101,7 @@ func setIncome(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuy
 func setUpkeep(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuys.Event {
 	id, game := getGame(data, repo)
 	game.Finance.Upkeep = bestbuys.Money(data["upkeep"].(float64))
-	repo[id] = game
+	repo.games[id] = game
 	hourly := game.Finance.hourly()
 	data["hourly"] = hourly
 	data["daily"] = game.Finance.daily(hourly)
@@ -111,7 +111,7 @@ func setUpkeep(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuy
 func setBalance(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuys.Event {
 	id, game := getGame(data, repo)
 	game.Monies.Balance = bestbuys.Money(data["balance"].(float64))
-	repo[id] = game
+	repo.games[id] = game
 	data["totalMonies"] = game.Monies.total()
 	return createEvent("balanceSet", data)
 }
@@ -119,7 +119,7 @@ func setBalance(data bestbuys.Data, repo repository, logger *log.Logger) *bestbu
 func setWallet(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuys.Event {
 	id, game := getGame(data, repo)
 	game.Monies.Wallet = bestbuys.Money(data["wallet"].(float64))
-	repo[id] = game
+	repo.games[id] = game
 	data["totalMonies"] = game.Monies.total()
 	return createEvent("walletSet", data)
 }
@@ -127,7 +127,7 @@ func setWallet(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuy
 func setLandIncome(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuys.Event {
 	id, game := getGame(data, repo)
 	game.Monies.Lands = bestbuys.Money(data["landIncome"].(float64))
-	repo[id] = game
+	repo.games[id] = game
 	data["totalMonies"] = game.Monies.total()
 	return createEvent("landIncomeSet", data)
 }
@@ -138,7 +138,7 @@ func setLandIncome(data bestbuys.Data, repo repository, logger *log.Logger) *bes
 
 func getGame(data bestbuys.Data, repo repository) (string, game) {
 	id := data["game"].(string)
-	game := repo[id]
+	game := repo.games[id]
 	return id, game
 }
 
