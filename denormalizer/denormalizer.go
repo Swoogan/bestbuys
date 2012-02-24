@@ -8,7 +8,7 @@ import (
 	"launchpad.net/gobson/bson"
 )
 
-type handler func(mgo.Database, bestbuys.Data) (err os.Error)
+type handler func(mgo.Database, bestbuys.Data, *log.Logger) (err os.Error)
 type handlerPool map[string]handler
 
 type Denormalizer struct {
@@ -17,7 +17,7 @@ type Denormalizer struct {
 	log      *log.Logger
 }
 
-func New(database mgo.Database) *Denormalizer {
+func New(database mgo.Database, logger *log.Logger) *Denormalizer {
 	pool := handlerPool{
 		"gameCreated":   gameCreated,
 		"walletSet":     walletSet,
@@ -27,25 +27,24 @@ func New(database mgo.Database) *Denormalizer {
 		"landIncomeSet": landIncomeSet,
 	}
 
-	return &Denormalizer{database, pool}
+	return &Denormalizer{database, pool, logger}
 }
 
 func (d *Denormalizer) HandleEvent(e *bestbuys.Event, i *int) os.Error {
 	if handler, ok := d.pool[e.Name]; ok {
-		return handler(d.database, e.Data)
+		return handler(d.database, e.Data, d.log)
 	}
 
-	log.Printf("No handler specified for event: %v", e.Name)
+	d.log.Println("No handler specified for event:", e.Name)
 	return nil
 }
 
 // 
 // Handlers
 //
-
-func gameCreated(database mgo.Database, data bestbuys.Data) (err os.Error) {
-	log.Println("Handling Event: gameCreated")
-	log.Println("Game id is:", data["id"])
+func gameCreated(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+	logger.Println("Handling Event: gameCreated")
+	logger.Println("Game id is:", data["id"])
 	id := bson.ObjectIdHex(data["id"].(string))
 	info := bson.M{
 		"_id":         id,
@@ -61,14 +60,14 @@ func gameCreated(database mgo.Database, data bestbuys.Data) (err os.Error) {
 		"daily":       0,
 	}
 	if err = database.C("games").Insert(info); err != nil {
-		log.Println("Could not insert game in the datastore, ", err, ": ", data["name"])
+		logger.Println("Could not insert game in the datastore, ", err, ": ", data["name"])
 	}
 	return
 
 }
 
-func incomeSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
-	log.Println("Handling Event: incomeSet")
+func incomeSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+	logger.Println("Handling Event: incomeSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
 	change := bson.M{"$set": bson.M{
@@ -77,13 +76,13 @@ func incomeSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
 		"daily":  data["daily"],
 	}}
 	if err = database.C("games").Update(selector, change); err != nil {
-		log.Println("Could not update the datastore, ", err, ": ", data["game"])
+		logger.Println("Could not update the datastore, ", err, ": ", data["game"])
 	}
 	return
 }
 
-func upkeepSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
-	log.Println("Handling Event: upkeepSet")
+func upkeepSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+	logger.Println("Handling Event: upkeepSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
 	change := bson.M{"$set": bson.M{
@@ -92,13 +91,13 @@ func upkeepSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
 		"daily":  data["daily"],
 	}}
 	if err = database.C("games").Update(selector, change); err != nil {
-		log.Println("Could not update the datastore, ", err, ": ", data["game"])
+		logger.Println("Could not update the datastore, ", err, ": ", data["game"])
 	}
 	return
 }
 
-func walletSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
-	log.Println("Handling Event: walletSet")
+func walletSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+	logger.Println("Handling Event: walletSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
 	change := bson.M{"$set": bson.M{
@@ -106,13 +105,13 @@ func walletSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
 		"totalMonies": data["totalMonies"],
 	}}
 	if err = database.C("games").Update(selector, change); err != nil {
-		log.Println("Could not update the datastore, ", err, ": ", data["game"])
+		logger.Println("Could not update the datastore, ", err, ": ", data["game"])
 	}
 	return
 }
 
-func balanceSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
-	log.Println("Handling Event: balanceSet")
+func balanceSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+	logger.Println("Handling Event: balanceSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
 	change := bson.M{"$set": bson.M{
@@ -120,13 +119,13 @@ func balanceSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
 		"totalMonies": data["totalMonies"],
 	}}
 	if err = database.C("games").Update(selector, change); err != nil {
-		log.Println("Could not update the datastore, ", err, ": ", data["game"])
+		logger.Println("Could not update the datastore, ", err, ": ", data["game"])
 	}
 	return
 }
 
-func landIncomeSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
-	log.Println("Handling Event: landIncomeSet")
+func landIncomeSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+	logger.Println("Handling Event: landIncomeSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
 	change := bson.M{"$set": bson.M{
@@ -134,7 +133,7 @@ func landIncomeSet(database mgo.Database, data bestbuys.Data) (err os.Error) {
 		"totalMonies": data["totalMonies"],
 	}}
 	if err = database.C("games").Update(selector, change); err != nil {
-		log.Println("Could not update the datastore, ", err, ": ", data["game"])
+		logger.Println("Could not update the datastore, ", err, ": ", data["game"])
 	}
 	return
 }
