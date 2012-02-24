@@ -32,8 +32,7 @@ func main() {
 	defer session.Close()
 
 	db := session.DB(*dbname)
-
-	denorm := denormalizer.New(db)
+	denorm := denormalizer.New(db, logger)
 
 	rpc.Register(denorm)
 	rpc.HandleHTTP()

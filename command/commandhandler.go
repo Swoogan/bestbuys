@@ -80,7 +80,7 @@ func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
 		Id:      id,
 		Finance: finance{0, 0},
 		Monies:  monies{0, 0, 0},
-		Lands: lands,
+		Lands:   lands,
 	}
 
 	log.Println("Created game:", data["name"])
