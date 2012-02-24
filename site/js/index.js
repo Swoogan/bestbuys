@@ -113,8 +113,12 @@ $(document).ready(function() {
 
   bindBehaviors();
 
-  $("div.log").ajaxError(function(e, xhr, settings, exception) {
-    $(this).text('error in: ' + settings.url + ' ' + exception);
+  $('#message').toggle();
+
+  $("#message").ajaxError(function(e, xhr, settings, exception) {
+    $(this).toggle();
+    $(this).toggleClass('error');
+    $(this).html("Error in: '" + settings.url + "' &nbsp;&nbsp;Exception: " + exception);
   });
 });
 
