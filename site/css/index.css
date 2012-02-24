@@ -25,6 +25,10 @@ body {
   cursor: pointer;
   display: none;
 }
+#exception {
+  float: right;
+  margin-left: 15px;
+}
 .error {
   background-color: #FF8C8C;
   border: 1px solid red;

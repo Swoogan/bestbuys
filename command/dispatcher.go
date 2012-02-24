@@ -1,22 +1,25 @@
 package main
 
 import (
-	"log"
-	"rpc"
+	"net"
 	"bestbuys"
+	"rpc/jsonrpc"
 )
 
 func rpcCall(address string, method string, e *bestbuys.Event) {
-	client, err := rpc.DialHTTP("tcp", address)
+	conn, err := net.Dial("tcp", address)
 	if err != nil {
-		log.Println("OMG connect failed need to queue this!1!!")
+		logger.Println("OMG connect failed need to queue this!1!!")
 		return
 	}
+	defer conn.Close()
+
+	client := jsonrpc.NewClient(conn)
 	defer client.Close()
 
 	var reply int
 	if err = client.Call(method, e, &reply); err != nil {
-		log.Println("OMG call failed, need to queue this!!!")
+		logger.Println("OMG call failed, need to queue this!!!")
 	}
 }
 
@@ -31,5 +34,5 @@ func schedule(e *bestbuys.Event) {
 func dispatch(e *bestbuys.Event) {
 	denormalize(e)
 	//	schedule(e)
-	log.Printf("Dispatched event: %v", e.Name)
+	logger.Printf("Dispatched event: %v", e.Name)
 }

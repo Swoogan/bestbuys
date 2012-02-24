@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func NewLogger(logfile string) *log.Logger {
+func NewLogger(logfile string, prefix string) *log.Logger {
 	output := os.Stderr
 	if logfile != "" {
 		var err os.Error
@@ -14,5 +14,5 @@ func NewLogger(logfile string) *log.Logger {
 			log.Fatal(err)
 		}
 	}
-	return log.New(output, "", log.LstdFlags)
+	return log.New(output, prefix, log.LstdFlags)
 }
