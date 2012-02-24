@@ -1,16 +1,18 @@
-Make logger a global variable (command)
 Error and success reporting on the page
+	Show success messages
+Make logger a global variable (command)
 Implement periodic snapshotting and event replay
 Refactor denormalizer event handlers
-Order the games coming out so they stay consistent
 ?Only post if data actually changed?
 	I think using double-click to enter edit mode would work
+Order the games coming out so they stay consistent
 Add config files to servers
 	goinstall goconf.googlecode.com/hg
 Implement the scheduler
 Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
 DONE:
+Add "click to hide" text on error div
 Add log files to servers
 Improve logging statements
 Use jquery toggleclass to show/hide shadow
