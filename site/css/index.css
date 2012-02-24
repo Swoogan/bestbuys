@@ -5,7 +5,7 @@ body {
 }
 #title {
   margin: 10px auto;
-  width: 870px;
+  width: 862px;
   background-color: #373430;
   font-size: 18pt;
   color: #FFFFFF;
@@ -14,6 +14,7 @@ body {
   padding-bottom: 20px;
   border-radius: 5px;
   box-shadow: 2px 2px 2px 2px #ccc;
+  border: 3px solid #635E59;
 }
 #message {
   padding: 5px 10px 5px 10px;
@@ -21,6 +22,8 @@ body {
   width: 400px;
   border-radius: 3px;
   box-shadow: 2px 2px 2px 2px #ccc;
+  cursor: pointer;
+  display: none;
 }
 .error {
   background-color: #FF8C8C;

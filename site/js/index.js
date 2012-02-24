@@ -113,11 +113,13 @@ $(document).ready(function() {
 
   bindBehaviors();
 
-  $('#message').toggle();
+  $('#message').click(function(event) {
+    $(this).fadeToggle(400);
+  });
 
   $("#message").ajaxError(function(e, xhr, settings, exception) {
-    $(this).toggle();
-    $(this).toggleClass('error');
+    $(this).fadeToggle('slow');
+    $(this).addClass('error');
     $(this).html("Error in: '" + settings.url + "' &nbsp;&nbsp;Exception: " + exception);
   });
 });
