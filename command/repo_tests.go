@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"log"
 	"launchpad.net/mgo"
 	"launchpad.net/gobson/bson"
@@ -15,8 +16,8 @@ func StoreTest() {
 	defer session.Close()
 
 	db := session.DB("command")
-
-	repo := newRepository()
+	logger := log.New(os.Stderr, "", log.LstdFlags)
+	repo := newRepository(logger)
 	id := bson.NewObjectId()
 	log.Println("New id is:", id.Hex())
 	repo[id.Hex()] = game{
@@ -38,8 +39,8 @@ func LoadTest() {
 	defer session.Close()
 
 	db := session.DB("command")
-
-	repo := newRepository()
+	logger := log.New(os.Stderr, "", log.LstdFlags)
+	repo := newRepository(logger)
 	repo.rebuild(db)
 
 	for id, game := range repo {

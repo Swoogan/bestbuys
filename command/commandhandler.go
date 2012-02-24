@@ -9,16 +9,17 @@ import (
 )
 
 //type data map[string]interface{}
-type handler func(data bestbuys.Data, repo repository) *bestbuys.Event
+type handler func(bestbuys.Data, repository, *log.Logger) *bestbuys.Event
 type handlerPool map[string]handler
 
 type commandHandler struct {
 	pool handlerPool
 	repo repository
 	col  mgo.Collection
+	log *log.Logger
 }
 
-func newCommandHandler(repo repository, col mgo.Collection) commandHandler {
+func newCommandHandler(repo repository, col mgo.Collection, logger *log.Logger) commandHandler {
 	pool := handlerPool{
 		"createGame":    createGame,
 		"setWallet":     setWallet,
@@ -27,7 +28,7 @@ func newCommandHandler(repo repository, col mgo.Collection) commandHandler {
 		"setIncome":     setIncome,
 		"setLandIncome": setLandIncome,
 	}
-	return commandHandler{pool, repo, col}
+	return commandHandler{pool, repo, col, logger}
 }
 
 func (c commandHandler) Created(doc mongorest.Document) {
@@ -35,12 +36,12 @@ func (c commandHandler) Created(doc mongorest.Document) {
 	if handler, ok := c.pool[name]; ok {
 		data := doc["data"].(map[string]interface{})
 		edata := bestbuys.Data(data)
-		log.Println("Handling command:", name)
-		event := handler(edata, c.repo)
+		c.log.Println("Handling command:", name)
+		event := handler(edata, c.repo, c.log)
 		c.store(event)
 		dispatch(event)
 	} else {
-		log.Printf("No handler specified for command: %v", name)
+		c.log.Println("No handler specified for command:", name)
 	}
 }
 
@@ -55,8 +56,7 @@ func (c commandHandler) store(e *bestbuys.Event) {
 //
 // HANDLERS
 //
-func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
-	log.Println("In here")
+func createGame(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuys.Event {
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
 
@@ -83,12 +83,12 @@ func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
 		Lands:   lands,
 	}
 
-	log.Println("Created game:", data["name"])
+	logger.Println("Created game:", data["name"])
 
 	return createEvent("gameCreated", data)
 }
 
-func setIncome(data bestbuys.Data, repo repository) *bestbuys.Event {
+func setIncome(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuys.Event {
 	id, game := getGame(data, repo)
 	game.Finance.Income = bestbuys.Money(data["income"].(float64))
 	repo[id] = game
@@ -98,7 +98,7 @@ func setIncome(data bestbuys.Data, repo repository) *bestbuys.Event {
 	return createEvent("incomeSet", data)
 }
 
-func setUpkeep(data bestbuys.Data, repo repository) *bestbuys.Event {
+func setUpkeep(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuys.Event {
 	id, game := getGame(data, repo)
 	game.Finance.Upkeep = bestbuys.Money(data["upkeep"].(float64))
 	repo[id] = game
@@ -108,7 +108,7 @@ func setUpkeep(data bestbuys.Data, repo repository) *bestbuys.Event {
 	return createEvent("upkeepSet", data)
 }
 
-func setBalance(data bestbuys.Data, repo repository) *bestbuys.Event {
+func setBalance(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuys.Event {
 	id, game := getGame(data, repo)
 	game.Monies.Balance = bestbuys.Money(data["balance"].(float64))
 	repo[id] = game
@@ -116,7 +116,7 @@ func setBalance(data bestbuys.Data, repo repository) *bestbuys.Event {
 	return createEvent("balanceSet", data)
 }
 
-func setWallet(data bestbuys.Data, repo repository) *bestbuys.Event {
+func setWallet(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuys.Event {
 	id, game := getGame(data, repo)
 	game.Monies.Wallet = bestbuys.Money(data["wallet"].(float64))
 	repo[id] = game
@@ -124,7 +124,7 @@ func setWallet(data bestbuys.Data, repo repository) *bestbuys.Event {
 	return createEvent("walletSet", data)
 }
 
-func setLandIncome(data bestbuys.Data, repo repository) *bestbuys.Event {
+func setLandIncome(data bestbuys.Data, repo repository, logger *log.Logger) *bestbuys.Event {
 	id, game := getGame(data, repo)
 	game.Monies.Lands = bestbuys.Money(data["landIncome"].(float64))
 	repo[id] = game

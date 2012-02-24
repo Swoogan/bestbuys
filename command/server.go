@@ -39,11 +39,11 @@ func main() {
 	logger.Printf("Opening database %v", *dbname)
 	db := session.DB(*dbname)
 
-	repo := newRepository()
+	repo := newRepository(logger)
 	repo.rebuild(db)
 	defer repo.snapshot(db)
 
-	handler := newCommandHandler(repo, db.C("events"))
+	handler := newCommandHandler(repo, db.C("events"), logger)
 	commands := mongorest.Resource{DB: db, Name: "commands", Handler: handler}
 	mongorest.Attach(commands, logger)
 
