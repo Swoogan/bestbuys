@@ -45,6 +45,11 @@ $(document).ready(function() {
   }
 
   var reload = function() {
+    $(this).removeClass('error');
+    $(this).addClass('success');
+    $(this).fadeToggle('slow');
+    $(this).html("Successfully saved changes" + exception);
+
     var $tabs = $('#tabs').tabs();
     var sel = $tabs.tabs('option', 'selected')+1;
     load($('#tabs-'+sel));
@@ -118,8 +123,9 @@ $(document).ready(function() {
   });
 
   $("#message").ajaxError(function(e, xhr, settings, exception) {
-    $(this).fadeToggle('slow');
+    $(this).removeClass('success');
     $(this).addClass('error');
+    $(this).fadeToggle('slow');
     $(this).html("Error in: '" + settings.url + "' &nbsp;&nbsp;Exception: " + exception);
   });
 });
