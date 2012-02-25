@@ -27,7 +27,12 @@
       <h2 class="header">Lands</h2>
       <div class="content">
         <table class="lands">
-          <tbody><tr><th>Name</th><th>Cost</th><th>Income</th></tr></tbody>
+          <tbody>
+            <tr>
+              <th style="background-color: transparent; border: 0px"></th>
+              <th>Cost</th>
+              <th>Income</th></tr>
+          </tbody>
           <tbody class="landsInfo"></tbody>
         </table>
       </div>
@@ -36,7 +41,10 @@
       <div class="content">
         <table class="structures">
           <tbody>
-            <tr><th>Name</th><th>Cost</th><th>Increase</th><th>Income</th></tr>
+            <tr>
+              <th style="background-color: transparent; border: 0px"></th>
+              <th>Cost</th><th>Increase</th>
+              <th>Income</th></tr>
           </tbody>
           <tbody class="structuresInfo"></tbody>
         </table>
@@ -118,18 +126,18 @@
 
   <script id="landsTemplate" type="text/x-jquery-tmpl">
     <tr>
-      <td>{{=name}}</td> 
-      <td class="money">{{format cost}}</td> 
-      <td class="money">{{format income}}</td> 
+      <td style="border: 0px; font-weight: bold; text-align: right;">{{=name}}</td> 
+      <td class="money" style="background-color: lightgray;">{{format cost}}</td> 
+      <td class="money" style="background-color: lightgray;">{{format income}}</td> 
     </tr>
   </script>
 
   <script id="structuresTemplate" type="text/x-jquery-tmpl">
     <tr>
-      <td>{{=name}}</td> 
-      <td class="money editable" contentEditable="true">{{format cost}}</td> 
-      <td class="money">{{format increase}}</td> 
-      <td class="money">{{format income}}</td> 
+      <td style="border: 0px; font-weight: bold; text-align: right;">{{=name}}</td> 
+      <td class="money editable cost" contentEditable="true">{{format cost}}</td> 
+      <td class="money" style="background-color: lightgray;">{{format increase}}</td> 
+      <td class="money" style="background-color: lightgray;">{{format income}}</td> 
     </tr>
   </script>
 

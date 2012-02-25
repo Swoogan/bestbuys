@@ -73,24 +73,23 @@ body {
   margin: 0px 0px 10px 0px;
   padding: 10px 0px 10px 0px;
 }
-.lands {
+table {
   margin: auto;
-  width: 60%;
-  border-collapse: collapse;
-  font-size: 10pt;
-}
-.structures {
-  margin: auto;
-  width: 80%;
-  border-collapse: collapse;
   font-size: 10pt;
 }
 .money {
   text-align: right;
 }
-td, th{
-  border: 2px solid;
+th {
+  background-color: #373430;
+  color: white;
+  border: 2px solid #373430;
+}
+td{
+  border: 2px solid #373430;
   padding: 1px 5px 1px 5px;
+  height: 18px;
+  width: 130px;
 }
 .finance {
   float: left;
@@ -98,7 +97,7 @@ td, th{
   padding: 5px 10px 5px 10px;
   border-style: solid;
   border-width: medium;
-  margin-left: 100px;
+  margin-left: 130px;
 }
 .monies {
   float: right;
@@ -108,7 +107,7 @@ td, th{
   padding: 4px 10px 4px 10px;
   border-style: solid;
   border-width: medium;
-  margin-right: 100px;
+  margin-right: 130px;
 }
 .line {
   width: 100%;

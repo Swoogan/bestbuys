@@ -1,4 +1,9 @@
-Add structures
+Clean up the css for the new tables
+Implement command for changing structure cost
+Some way to indicate that the cost field in the structure table are editable and the others aren't
+Saved message dissrupts moving from one field to another
+	need it to hover or something
+	Shows success message when there is technically an error
 Do something about font-faces 
 Refactor denormalizer event handlers
 Make repo a global variable? (command)
@@ -13,6 +18,7 @@ Do some benchmarking
 Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
 DONE:
+Add structures
 Make denormalizer suspend on ctrl+z
 	make command and mongorestd do the same
 	CAN'T: limitation of Go signal handling
