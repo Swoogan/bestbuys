@@ -6,11 +6,12 @@ import (
 )
 
 type game struct {
-	Id        bson.ObjectId "hack" // this should be "_id" but then Upsert doesn't do anything
-	Finance   finance
-	Monies    monies
-	Lands     []land
-	LastSaved bson.Timestamp
+	Id         bson.ObjectId "hack" // this should be "_id" but then Upsert doesn't do anything
+	Finance    finance
+	Monies     monies
+	Lands      []land
+	Structures []structure
+	LastSaved  bson.Timestamp
 }
 
 type finance struct {
@@ -40,4 +41,11 @@ type land struct {
 	Name   string
 	Cost   bestbuys.Money
 	Income bestbuys.Money
+}
+
+type structure struct {
+	Name     string
+	Cost     bestbuys.Money
+	Increase bestbuys.Money
+	Income   bestbuys.Money
 }

@@ -81,6 +81,10 @@ $(document).ready(function() {
       $('.landsInfo').html(
         $('#landsTemplate').render(data['lands'])
       );
+
+      $('.structuresInfo').html(
+        $('#structuresTemplate').render(data['structures'])
+      );
   
       bindBehaviors();
     });

@@ -79,6 +79,15 @@ body {
   border-collapse: collapse;
   font-size: 10pt;
 }
+.structures {
+  margin: auto;
+  width: 80%;
+  border-collapse: collapse;
+  font-size: 10pt;
+}
+.money {
+  text-align: right;
+}
 td, th{
   border: 2px solid;
   padding: 1px 5px 1px 5px;
@@ -124,35 +133,26 @@ td, th{
   margin-right: 10px;
   padding-top: 2px;
   padding-bottom: 2px;
-  border-width: 2px;
-  border-style: solid;
-  border-color: transparent;
+  border: 2px solid transparent;
 }
 .data {
-  float: right;
-  width: 120px;
   height: 18px;
-  padding: 2px;
   background-color: white;
-  text-align: right;
-  border-radius: 2px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #373430;
-  overflow: hidden;
-  outline: none;
 }
 .readonly {
+  background-color: lightGray;
+}
+.textbox {
   float: right;
   width: 120px;
   padding: 2px;
-  background-color: lightGray;
   text-align: right;
   border-radius: 2px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #373430;
+  border: 2px solid #373430;
   overflow: hidden;
+}
+.editable {
+  outline: none;
 }
 .shadow {
   box-shadow: 2px 2px 5px 2px #666;
