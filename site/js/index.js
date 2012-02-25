@@ -27,7 +27,7 @@ $(document).ready(function() {
     focusout("balance", "setBalance");
     focusout("wallet", "setWallet");
     focusout("landIncome", "setLandIncome");
-    focusout("cost", "setStructureCost");
+    focusout("structureCost", "setStructureCost");
 
     $(".editable").keyup(function(e){ 
       var esc = e.which == 27;
