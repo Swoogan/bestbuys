@@ -18,7 +18,7 @@ $(document).ready(function() {
   }
 
   var bindBehaviors = function() {
-    $(".data").focus(function() { 
+    $(".editable").focus(function() { 
       $(this).toggleClass("shadow");
     });
 
@@ -27,8 +27,9 @@ $(document).ready(function() {
     focusout("balance", "setBalance");
     focusout("wallet", "setWallet");
     focusout("landIncome", "setLandIncome");
+    focusout("cost", "setStructureCost");
 
-    $(".data").keyup(function(e){ 
+    $(".editable").keyup(function(e){ 
       var esc = e.which == 27;
       var enter = e.which == 13;
 
