@@ -1,0 +1,32 @@
+{
+   "name":"createGame",
+   "data":{
+      "name":"Dark Galaxy",
+      "lands":[
+         {
+            "name":"Scorched Sands",
+            "cost":50000,
+            "income":500
+         },
+         {
+            "name":"Blistering Desert",
+            "cost":500000,
+            "income":3000
+         }
+      ],
+      "structures":[
+         {
+            "name":"Planetary Core Extraction Zone",
+            "cost":0,
+            "increase":15000,
+            "income":3000
+         },
+         {
+            "name":"Quad Core Nuclear Power Plant",
+            "cost":0,
+            "increase":75000,
+            "income":10000
+         }
+      ]
+   }
+}

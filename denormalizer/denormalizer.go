@@ -50,6 +50,7 @@ func gameCreated(database mgo.Database, data bestbuys.Data, logger *log.Logger) 
 		"_id":         id,
 		"name":        data["name"],
 		"lands":       data["lands"],
+		"structures":  data["structures"],
 		"wallet":      0,
 		"balance":     0,
 		"landIncome":  0,

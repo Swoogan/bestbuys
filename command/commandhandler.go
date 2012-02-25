@@ -74,11 +74,30 @@ func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
 		lands = append(lands, land)
 	}
 
+	var structures []structure
+	for _, sData := range data["structures"].([]interface{}) {
+		var structure structure
+		for key, value := range sData.(map[string]interface{}) {
+			switch key {
+			case "name":
+				structure.Name = value.(string)
+			case "cost":
+				structure.Cost = bestbuys.Money(value.(float64))
+			case "increase":
+				structure.Increase = bestbuys.Money(value.(float64))
+			case "income":
+				structure.Income = bestbuys.Money(value.(float64))
+			}
+		}
+		structures = append(structures, structure)
+	}
+
 	repo[id.Hex()] = game{
-		Id:      id,
-		Finance: finance{0, 0},
-		Monies:  monies{0, 0, 0},
-		Lands:   lands,
+		Id:         id,
+		Finance:    finance{0, 0},
+		Monies:     monies{0, 0, 0},
+		Lands:      lands,
+		Structures: structures,
 	}
 
 	logger.Println("Created game:", data["name"])

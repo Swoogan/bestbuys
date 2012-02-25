@@ -1,0 +1,42 @@
+{
+   "name":"createGame",
+   "data":{
+      "name":"Forces of War",
+      "lands":[
+         {
+            "name":"Small Complex",
+            "cost":50000,
+            "income":500
+         },
+         {
+            "name":"Industrial Field",
+            "cost":500000,
+            "income":3000
+         },
+         {
+            "name":"Ocean Platform",
+            "cost":10000000,
+            "income":20000
+         },
+         {
+            "name":"Small Island",
+            "cost":100000000,
+            "income":50000
+         }
+      ],
+      "structures":[
+         {
+            "name":"Supply Depot",
+            "cost":0,
+            "increase":15000,
+            "income":3000
+         },
+         {
+            "name":"Collection Outpost",
+            "cost":0,
+            "increase":75000,
+            "income":10000
+         }
+      ]
+   }
+}

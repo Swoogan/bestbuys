@@ -1,3 +1,4 @@
+Add structures
 Do something about font-faces 
 Refactor denormalizer event handlers
 Make repo a global variable? (command)
