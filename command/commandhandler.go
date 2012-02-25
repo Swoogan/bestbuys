@@ -25,6 +25,7 @@ func newCommandHandler(repo repository, col mgo.Collection) commandHandler {
 		"setBalance":    setBalance,
 		"setIncome":     setIncome,
 		"setLandIncome": setLandIncome,
+		"setStructureCost": setStructureCost,
 	}
 	return commandHandler{pool, repo, col}
 }
@@ -147,6 +148,13 @@ func setLandIncome(data bestbuys.Data, repo repository) *bestbuys.Event {
 	repo[id] = game
 	data["totalMonies"] = game.Monies.total()
 	return createEvent("landIncomeSet", data)
+}
+
+func setStructureCost(data bestbuys.Data, repo repository) *bestbuys.Event {
+	id, game := getGame(data, repo)
+	game.Monies.Lands = bestbuys.Money(data["structureCost"].(float64))
+	repo[id] = game
+	return createEvent("structureCostSet", data)
 }
 
 //
