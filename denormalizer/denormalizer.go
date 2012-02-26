@@ -19,12 +19,12 @@ type Denormalizer struct {
 
 func New(database mgo.Database, logger *log.Logger) *Denormalizer {
 	pool := handlerPool{
-		"gameCreated":   gameCreated,
-		"walletSet":     walletSet,
-		"upkeepSet":     upkeepSet,
-		"balanceSet":    balanceSet,
-		"incomeSet":     incomeSet,
-		"landIncomeSet": landIncomeSet,
+		"gameCreated":      gameCreated,
+		"walletSet":        walletSet,
+		"upkeepSet":        upkeepSet,
+		"balanceSet":       balanceSet,
+		"incomeSet":        incomeSet,
+		"landIncomeSet":    landIncomeSet,
 		"structureCostSet": structureCostSet,
 	}
 
@@ -144,9 +144,9 @@ func structureCostSet(database mgo.Database, data bestbuys.Data, logger *log.Log
 	logger.Println("Handling Event: structureCostSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	name := data["structureName"].(string)
-	selector := bson.M{"_id": id}
+	selector := bson.M{"_id": id, "land.name": name}
 	change := bson.M{"$set": bson.M{
-		"cost":  data["structureCost"],
+		"land.$.cost": data["structureCost"],
 	}}
 	if err = database.C("games").Update(selector, change); err != nil {
 		logger.Println("Could not update the datastore, ", err, ": ", data["game"])
