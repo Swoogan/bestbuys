@@ -19,12 +19,12 @@ type commandHandler struct {
 
 func newCommandHandler(repo repository, col mgo.Collection) commandHandler {
 	pool := handlerPool{
-		"createGame":    createGame,
-		"setWallet":     setWallet,
-		"setUpkeep":     setUpkeep,
-		"setBalance":    setBalance,
-		"setIncome":     setIncome,
-		"setLandIncome": setLandIncome,
+		"createGame":       createGame,
+		"setWallet":        setWallet,
+		"setUpkeep":        setUpkeep,
+		"setBalance":       setBalance,
+		"setIncome":        setIncome,
+		"setLandIncome":    setLandIncome,
 		"setStructureCost": setStructureCost,
 	}
 	return commandHandler{pool, repo, col}

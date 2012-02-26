@@ -10,11 +10,25 @@ $(document).ready(function() {
   var focusout = function(name, command) {
     $("."+name).focusout(function(event) {
       if (focusoutEnabled) { 
-        var id = $(this).parents(".gameInfo").attr('data-game') 
-        post(command, name, $(this).html(), id);
+        var id = $(this).parents(".gameInfo").attr('data-game') ;
+        var value = parseCurrency($(this).text());
+        var data = '{"'+name+'": '+value+', "game": "'+id+'"}';
+        post(command, data);
         blur(this);
       }
     });
+  }
+
+  var reload = function() {
+    var message = $('#message');
+    message.removeClass('error');
+    message.addClass('success');
+    message.fadeIn('slow');
+    message.html("Successfully saved changes.");
+
+    var $tabs = $('#tabs').tabs();
+    var sel = $tabs.tabs('option', 'selected')+1;
+    load($('#tabs-'+sel));
   }
 
   var bindBehaviors = function() {
@@ -27,7 +41,17 @@ $(document).ready(function() {
     focusout("balance", "setBalance");
     focusout("wallet", "setWallet");
     focusout("landIncome", "setLandIncome");
-    focusout("structureCost", "setStructureCost");
+
+    $(".structureCost").focusout(function(event) {
+      if (focusoutEnabled) { 
+        var id = $(this).parents(".gameInfo").attr('data-game') ;
+        var value = parseCurrency($(this).text());
+        var name = $(this).prev().text();
+        var data = '{"structureCost": '+value+', "structureName": '+name+', "game": "'+id+'"}';
+        post("setStructureCost", data);
+        blur(this);
+      }
+    });
 
     $(".editable").keyup(function(e){ 
       var esc = e.which == 27;
@@ -45,23 +69,11 @@ $(document).ready(function() {
     });
   }
 
-  var reload = function() {
-    var message = $('#message');
-    message.removeClass('error');
-    message.addClass('success');
-    message.fadeIn('slow');
-    message.html("Successfully saved changes.");
-
-    var $tabs = $('#tabs').tabs();
-    var sel = $tabs.tabs('option', 'selected')+1;
-    load($('#tabs-'+sel));
-  }
-
-  var post = function(command, name, value, game) {
+  var post = function(command, data) {
     $.ajax({
               url: "/commands/", 
               type: "POST",
-              data: '{ "name": "'+command+'", "data": {"'+name+'": '+parseCurrency(value)+', "game": "'+game+'"} }',
+              data: '{ "name": "'+command+'", "data": "'+data+'"}',
               contentType: "application/json",
               dataType: "text",
               success: reload
