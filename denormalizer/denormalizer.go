@@ -144,12 +144,12 @@ func structureCostSet(database mgo.Database, data bestbuys.Data, logger *log.Log
 	logger.Println("Handling Event: structureCostSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	name := data["structureName"].(string)
-	selector := bson.M{"_id": id, "land.name": name}
+	selector := bson.M{"_id": id, "structures.name": name}
 	change := bson.M{"$set": bson.M{
-		"land.$.cost": data["structureCost"],
+		"structures.$.cost": data["structureCost"],
 	}}
 	if err = database.C("games").Update(selector, change); err != nil {
-		logger.Println("Could not update the datastore, ", err, ": ", data["game"])
+		logger.Println("Could not update the datastore, ", err, ": ", selector)
 	}
 	return
 }

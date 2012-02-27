@@ -47,7 +47,7 @@ $(document).ready(function() {
         var id = $(this).parents(".gameInfo").attr('data-game') ;
         var value = parseCurrency($(this).text());
         var name = $(this).prev().text();
-        var data = '{"structureCost": '+value+', "structureName": '+name+', "game": "'+id+'"}';
+        var data = '{"structureCost": '+value+', "structureName": "'+name+'", "game": "'+id+'"}';
         post("setStructureCost", data);
         blur(this);
       }
@@ -73,7 +73,7 @@ $(document).ready(function() {
     $.ajax({
               url: "/commands/", 
               type: "POST",
-              data: '{ "name": "'+command+'", "data": "'+data+'"}',
+              data: '{ "name": "'+command+'", "data": '+data+'}',
               contentType: "application/json",
               dataType: "text",
               success: reload
