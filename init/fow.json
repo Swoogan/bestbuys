@@ -59,33 +59,32 @@
             "name":"Oil Refinery",
             "cost":0,
             "increase":24000000,
-            "income":15000000
+            "income":1500000
          },
          {
             "name":"Underwater Station",
             "cost":0,
             "increase":60000000,
-            "income":20000000
+            "income":2000000
          },
          {
             "name":"Underwater Power Generation",
             "cost":0,
             "increase":90000000,
-            "income":40000000
+            "income":4000000
          },
          {
             "name":"Nuclear Facility",
             "cost":0,
             "increase":150000000,
-            "income":60000000
+            "income":6000000
          },
          {
             "name":"Command Center",
             "cost":0,
             "increase":225000000,
-            "income":80000000
+            "income":8000000
          }
-
       ]
    }
 }
