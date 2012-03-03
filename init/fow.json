@@ -36,7 +36,56 @@
             "cost":0,
             "increase":75000,
             "income":10000
+         },
+         {
+            "name":"Ore Mine",
+            "cost":0,
+            "increase":300000,
+            "income":35000
+         },
+         {
+            "name":"Combat Training Facility",
+            "cost":0,
+            "increase":1500000,
+            "income":115000
+         },
+         {
+            "name":"Supply Airfield",
+            "cost":0,
+            "increase":7500000,
+            "income":500000
+         },
+         {
+            "name":"Oil Refinery",
+            "cost":0,
+            "increase":24000000,
+            "income":15000000
+         },
+         {
+            "name":"Underwater Station",
+            "cost":0,
+            "increase":60000000,
+            "income":20000000
+         },
+         {
+            "name":"Underwater Power Generation",
+            "cost":0,
+            "increase":90000000,
+            "income":40000000
+         },
+         {
+            "name":"Nuclear Facility",
+            "cost":0,
+            "increase":150000000,
+            "income":60000000
+         },
+         {
+            "name":"Command Center",
+            "cost":0,
+            "increase":225000000,
+            "income":80000000
          }
+
       ]
    }
 }
