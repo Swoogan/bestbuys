@@ -7,9 +7,7 @@ logic/logic
 query/query
 eventbus/eventbus
 command/command
-bestbuys/bestbuys
 scheduler/scheduler
-denormalizer/denormalizer
 denormalizer/denormalizer-server/denormalizer-server
 jquery-ui
 **/*.log
