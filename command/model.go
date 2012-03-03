@@ -41,6 +41,7 @@ type land struct {
 	Name   string
 	Cost   bestbuys.Money
 	Income bestbuys.Money
+	RetainAlways bool
 }
 
 type structure struct {
@@ -48,4 +49,5 @@ type structure struct {
 	Cost     bestbuys.Money
 	Increase bestbuys.Money
 	Income   bestbuys.Money
+	BuiltOn *land
 }

@@ -6,12 +6,14 @@
          {
             "name":"Scorched Sands",
             "cost":50000,
-            "income":500
+            "income":500,
+            "retainAlways":true
          },
          {
             "name":"Blistering Desert",
             "cost":500000,
-            "income":3000
+            "income":3000,
+            "retainAlways":true
          }
       ],
       "structures":[

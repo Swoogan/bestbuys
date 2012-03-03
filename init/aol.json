@@ -6,22 +6,26 @@
          {
             "name":"Rocky Coast",
             "cost":50000,
-            "income":500
+            "income":500,
+            "retainAlways":true
          },
          {
             "name":"Fertile Valley",
             "cost":500000,
-            "income":3000
+            "income":3000,
+            "retainAlways":true
          },
          {
             "name":"Rustic Forest",
             "cost":10000000,
-            "income":20000
+            "income":20000,
+            "retainAlways":true
          },
          {
             "name":"Ancient Highlands",
             "cost":100000000,
-            "income":50000
+            "income":50000,
+            "retainAlways":false
          }
       ],
       "structures":[
