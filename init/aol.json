@@ -48,6 +48,48 @@
             "cost":0,
             "increase":1500000,
             "income":115000
+         },
+         {
+            "name":"Lumber Mill",
+            "cost":0,
+            "increase":7500000,
+            "income":500000
+         },
+         {
+            "name":"Foundry",
+            "cost":0,
+            "increase":24000000,
+            "income":15000000
+         },
+         {
+            "name":"Workshop",
+            "cost":0,
+            "increase":36000000,
+            "income":20000000
+         },
+         {
+            "name":"Barracks",
+            "cost":0,
+            "increase":60000000,
+            "income":30000000
+         },
+         {
+            "name":"Blacksmith",
+            "cost":0,
+            "increase":90000000,
+            "income":40000000
+         },
+         {
+            "name":"King's Altar",
+            "cost":0,
+            "increase":150000000,
+            "income":60000000
+         },
+         {
+            "name":"Temple",
+            "cost":0,
+            "increase":225000000,
+            "income":80000000
          }
       ]
    }

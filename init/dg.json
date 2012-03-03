@@ -26,7 +26,20 @@
             "cost":0,
             "increase":75000,
             "income":10000
+         },
+         {
+            "name":"Inter System Comm Center",
+            "cost":0,
+            "increase":300000,
+            "income":35000
+         },
+         {
+            "name":"Advanced Weapons Armory",
+            "cost":0,
+            "increase":1500000,
+            "income":115000
          }
+
       ]
    }
 }
