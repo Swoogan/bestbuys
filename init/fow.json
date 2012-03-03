@@ -6,22 +6,26 @@
          {
             "name":"Small Complex",
             "cost":50000,
-            "income":500
+            "income":500,
+            "retainAlways":true
          },
          {
             "name":"Industrial Field",
             "cost":500000,
-            "income":3000
+            "income":3000,
+            "retainAlways":true
          },
          {
             "name":"Ocean Platform",
             "cost":10000000,
-            "income":20000
+            "income":20000,
+            "retainAlways":true
          },
          {
             "name":"Small Island",
             "cost":100000000,
-            "income":50000
+            "income":50000,
+            "retainAlways":false
          }
       ],
       "structures":[
