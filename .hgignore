@@ -4,12 +4,12 @@ syntax: glob
 *.go.swp
 _linux_amd64_.6
 logic/logic
-eventbus/eventbus
 query/query
+eventbus/eventbus
 command/command
+bestbuys/bestbuys
 scheduler/scheduler
 denormalizer/denormalizer
 denormalizer/denormalizer-server/denormalizer-server
 jquery-ui
-bestbuys/bestbuys
-query/query.log
+**/*.log
