@@ -1,4 +1,3 @@
-Implement event for changing structure cost
 Clean up the css for the new tables
 Saved message dissrupts moving from one field to another
 	need it to hover or something
@@ -17,6 +16,10 @@ Do some benchmarking
 Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
 DONE:
+Make script to clean databases
+Create script to run all the servers
+Push code to bitbucket.org
+Implement event for changing structure cost
 Implement command for changing structure cost
 Some way to indicate that the cost field in the structure table are editable and the others aren't
 Add structures
