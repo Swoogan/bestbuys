@@ -21,25 +21,29 @@
             "name":"Planetary Core Extraction Zone",
             "cost":0,
             "increase":15000,
-            "income":3000
+            "income":3000,
+            "builtOn":"Scorched Sands"
          },
          {
             "name":"Quad Core Nuclear Power Plant",
             "cost":0,
             "increase":75000,
-            "income":10000
+            "income":10000,
+            "builtOn":"Scorched Sands"
          },
          {
             "name":"Inter System Comm Center",
             "cost":0,
             "increase":300000,
-            "income":35000
+            "income":35000,
+            "builtOn":"Blistering Desert"
          },
          {
             "name":"Advanced Weapons Armory",
             "cost":0,
             "increase":1500000,
-            "income":115000
+            "income":115000,
+            "builtOn":"Blistering Desert"
          }
       ]
    }

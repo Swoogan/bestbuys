@@ -33,61 +33,78 @@
             "name":"Supply Depot",
             "cost":0,
             "increase":15000,
-            "income":3000
+            "income":3000,
+            "builtOn":"Small Complex"
          },
          {
             "name":"Collection Outpost",
             "cost":0,
             "increase":75000,
-            "income":10000
+            "income":10000,
+            "builtOn":"Small Complex"
          },
          {
             "name":"Ore Mine",
             "cost":0,
             "increase":300000,
-            "income":35000
+            "income":35000,
+            "builtOn":"Industrial Field"
          },
          {
             "name":"Combat Training Facility",
             "cost":0,
             "increase":1500000,
-            "income":115000
+            "income":115000,
+            "builtOn":"Industrial Field"
          },
          {
             "name":"Supply Airfield",
             "cost":0,
             "increase":7500000,
-            "income":500000
+            "income":500000,
+            "builtOn":"Industrial Field"
          },
          {
             "name":"Oil Refinery",
             "cost":0,
             "increase":24000000,
-            "income":1500000
+            "income":1500000,
+            "builtOn":"Ocean Platform"
          },
          {
             "name":"Underwater Station",
             "cost":0,
             "increase":60000000,
-            "income":2000000
+            "income":2000000,
+            "builtOn":"Ocean Platform"
          },
          {
             "name":"Underwater Power Generation",
             "cost":0,
             "increase":90000000,
-            "income":4000000
+            "income":4000000,
+            "builtOn":"Ocean Platform"
          },
          {
             "name":"Nuclear Facility",
             "cost":0,
             "increase":150000000,
-            "income":6000000
+            "income":6000000,
+            "builtOn":"Small Island"
          },
          {
             "name":"Command Center",
             "cost":0,
             "increase":225000000,
-            "income":8000000
+            "income":8000000,
+            "builtOn":"Small Island"
+         },
+         {
+            "name":"Bio Lab",
+            "cost":0,
+            "increase":375000000,
+            "income":12000000,
+            "builtOn":"Small Island"
          }
       ]
    }
