@@ -58,7 +58,7 @@ func createGame(data domain.Data, repo repository) *domain.Event {
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
 
-	var lands map[string]*domain.Land
+	lands := make(map[string]*domain.Land)
 	for _, landData := range data["lands"].([]interface{}) {
 		var land domain.Land
 		for key, value := range landData.(map[string]interface{}) {
