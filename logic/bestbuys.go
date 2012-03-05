@@ -7,8 +7,6 @@ import (
 	"launchpad.net/mgo"
 )
 
-type money float64
-
 func main() {
 	// get the flags
 	session, err := mgo.Mongo("localhost")
@@ -42,7 +40,3 @@ func main() {
 	*/
 }
 
-type Result struct {
-	path  string
-	ratio uint64
-}
