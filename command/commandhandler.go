@@ -7,7 +7,6 @@ import (
 	"bitbucket.org/Swoogan/mongorest"
 )
 
-//type data map[string]interface{}
 type handler func(bestbuys.Data, repository) *bestbuys.Event
 type handlerPool map[string]handler
 
@@ -59,7 +58,7 @@ func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
 
-	var lands []land
+	var lands map[string]*land
 	for _, landData := range data["lands"].([]interface{}) {
 		var land land
 		for key, value := range landData.(map[string]interface{}) {
@@ -72,7 +71,7 @@ func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
 				land.Income = bestbuys.Money(value.(float64))
 			}
 		}
-		lands = append(lands, land)
+		lands[land.Name] = &land
 	}
 
 	var structures []structure
@@ -88,6 +87,9 @@ func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
 				structure.Increase = bestbuys.Money(value.(float64))
 			case "income":
 				structure.Income = bestbuys.Money(value.(float64))
+			case "builtOn":
+				land := value.(string)
+				structure.BuiltOn = lands[land]
 			}
 		}
 		structures = append(structures, structure)
@@ -97,7 +99,6 @@ func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
 		Id:         id,
 		Finance:    finance{0, 0},
 		Monies:     monies{0, 0, 0},
-		Lands:      lands,
 		Structures: structures,
 	}
 
