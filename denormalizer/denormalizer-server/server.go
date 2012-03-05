@@ -7,7 +7,7 @@ import (
 	"net"
 	"flag"
 	"syscall"
-	"bestbuys"
+	"domain"
 	"os/signal"
 	"rpc/jsonrpc"
 	"denormalizer"
@@ -24,7 +24,7 @@ var logger *log.Logger
 func main() {
 	flag.Parse()
 
-	logger = bestbuys.NewLogger(*logfile, "Denormalizer\t")
+	logger = domain.NewLogger(*logfile, "Denormalizer\t")
 
 	logger.Printf("Connecting to mongodb")
 	session, err := mgo.Mongo(*mongo)

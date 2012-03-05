@@ -7,7 +7,7 @@ import (
 	"flag"
 	"http"
 	"syscall"
-	"bestbuys"
+	"domain"
 	"os/signal"
 	"launchpad.net/mgo"
 	"bitbucket.org/Swoogan/mongorest"
@@ -29,7 +29,7 @@ var logger *log.Logger
 func main() {
 	flag.Parse()
 
-	logger = bestbuys.NewLogger(*logfile, "Command Handler\t")
+	logger = domain.NewLogger(*logfile, "Command Handler\t")
 
 	logger.Println("Connecting to mongodb")
 	session, err := mgo.Mongo(*mongo)

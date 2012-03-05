@@ -1,4 +1,4 @@
-package bestbuys
+package domain
 
 import "launchpad.net/gobson/bson"
 

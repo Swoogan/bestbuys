@@ -2,11 +2,11 @@ package main
 
 import (
 	"net"
-	"bestbuys"
+	"domain"
 	"rpc/jsonrpc"
 )
 
-func rpcCall(address string, method string, e *bestbuys.Event) {
+func rpcCall(address string, method string, e *domain.Event) {
 	conn, err := net.Dial("tcp", address)
 	if err != nil {
 		logger.Println("OMG connect failed need to queue this!1!!")
@@ -23,15 +23,15 @@ func rpcCall(address string, method string, e *bestbuys.Event) {
 	}
 }
 
-func denormalize(e *bestbuys.Event) {
+func denormalize(e *domain.Event) {
 	rpcCall(":4042", "Denormalizer.HandleEvent", e)
 }
 
-func schedule(e *bestbuys.Event) {
+func schedule(e *domain.Event) {
 	rpcCall(":4043", "Scheduler.HandleEvent", e)
 }
 
-func dispatch(e *bestbuys.Event) {
+func dispatch(e *domain.Event) {
 	denormalize(e)
 	//	schedule(e)
 	logger.Printf("Dispatched event: %v", e.Name)

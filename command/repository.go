@@ -2,19 +2,20 @@ package main
 
 import (
 	"os"
+	"domain"
 	"launchpad.net/mgo"
 	"launchpad.net/gobson/bson"
 )
 
-type repository map[string]game
+type repository map[string]domain.Game
 
 func newRepository() repository {
-	return make(map[string]game, 3)
+	return make(map[string]domain.Game, 3)
 }
 
 func (r repository) rebuild(d mgo.Database) {
 	logger.Println("Loading snapshots")
-	var result []game
+	var result []domain.Game
 	err := d.C("snapshots").Find(nil).All(&result)
 	if err != nil {
 		logger.Println("Could not load snapshots:", err)
