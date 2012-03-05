@@ -1,52 +1,51 @@
-package main
+package domain
 
 import (
-	"bestbuys"
 	"launchpad.net/gobson/bson"
 )
 
-type game struct {
+type Game struct {
 	Id         bson.ObjectId "hack" // this should be "_id" but then Upsert doesn't do anything
-	Finance    finance
-	Monies     monies
-	Structures []structure
+	Finance    Finance
+	Monies     Monies
+	Structures []Structure
 	LastSaved  bson.Timestamp
 }
 
-type finance struct {
-	Income bestbuys.Money
-	Upkeep bestbuys.Money
+type Finance struct {
+	Income Money
+	Upkeep Money
 }
 
-func (f finance) hourly() bestbuys.Money {
+func (f Finance) Hourly() Money {
 	return f.Income - f.Upkeep
 }
 
-func (f finance) daily(hourly bestbuys.Money) bestbuys.Money {
+func (f Finance) Daily(hourly Money) Money {
 	return hourly * 24
 }
 
-type monies struct {
-	Balance bestbuys.Money
-	Wallet  bestbuys.Money
-	Lands   bestbuys.Money
+type Monies struct {
+	Balance Money
+	Wallet  Money
+	Lands   Money
 }
 
-func (m monies) total() bestbuys.Money {
+func (m Monies) Total() Money {
 	return m.Balance + m.Wallet + m.Lands
 }
 
-type land struct {
+type Land struct {
 	Name   string
-	Cost   bestbuys.Money
-	Income bestbuys.Money
+	Cost   Money
+	Income Money
 	RetainAlways bool
 }
 
-type structure struct {
+type Structure struct {
 	Name     string
-	Cost     bestbuys.Money
-	Increase bestbuys.Money
-	Income   bestbuys.Money
-	BuiltOn *land
+	Cost     Money
+	Increase Money
+	Income   Money
+	BuiltOn *Land
 }

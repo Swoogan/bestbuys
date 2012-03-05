@@ -1,4 +1,4 @@
-package bestbuys
+package domain
 
 import (
 	"os"

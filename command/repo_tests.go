@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"domain"
 	"launchpad.net/mgo"
 	"launchpad.net/gobson/bson"
 )
@@ -18,10 +19,10 @@ func StoreTest() {
 	repo := newRepository()
 	id := bson.NewObjectId()
 	log.Println("New id is:", id.Hex())
-	repo[id.Hex()] = game{
+	repo[id.Hex()] = domain.Game{
 		Id:      id,
-		Finance: finance{1, 0},
-		Monies:  monies{0, 1, 0},
+		Finance: domain.Finance{1, 0},
+		Monies:  domain.Monies{0, 1, 0},
 	}
 	log.Println("Finance income is:", repo[id.Hex()].Finance.Income)
 

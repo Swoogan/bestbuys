@@ -1,13 +1,13 @@
 package main
 
 import (
-	"bestbuys"
+	"domain"
 	"launchpad.net/mgo"
 	"launchpad.net/gobson/bson"
 	"bitbucket.org/Swoogan/mongorest"
 )
 
-type handler func(bestbuys.Data, repository) *bestbuys.Event
+type handler func(domain.Data, repository) *domain.Event
 type handlerPool map[string]handler
 
 type commandHandler struct {
@@ -33,7 +33,7 @@ func (c commandHandler) Created(doc mongorest.Document) {
 	name := doc["name"].(string)
 	if handler, ok := c.pool[name]; ok {
 		data := doc["data"].(map[string]interface{})
-		edata := bestbuys.Data(data)
+		edata := domain.Data(data)
 		logger.Println("Handling command:", name)
 		event := handler(edata, c.repo)
 		c.store(event)
@@ -43,7 +43,7 @@ func (c commandHandler) Created(doc mongorest.Document) {
 	}
 }
 
-func (c commandHandler) store(e *bestbuys.Event) {
+func (c commandHandler) store(e *domain.Event) {
 	e.Date = bson.Now()
 
 	if err := c.col.Insert(e); err != nil {
@@ -54,39 +54,39 @@ func (c commandHandler) store(e *bestbuys.Event) {
 //
 // HANDLERS
 //
-func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
+func createGame(data domain.Data, repo repository) *domain.Event {
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
 
-	var lands map[string]*land
+	var lands map[string]*domain.Land
 	for _, landData := range data["lands"].([]interface{}) {
-		var land land
+		var land domain.Land
 		for key, value := range landData.(map[string]interface{}) {
 			switch key {
 			case "name":
 				land.Name = value.(string)
 			case "cost":
-				land.Cost = bestbuys.Money(value.(float64))
+				land.Cost = domain.Money(value.(float64))
 			case "income":
-				land.Income = bestbuys.Money(value.(float64))
+				land.Income = domain.Money(value.(float64))
 			}
 		}
 		lands[land.Name] = &land
 	}
 
-	var structures []structure
+	var structures []domain.Structure
 	for _, sData := range data["structures"].([]interface{}) {
-		var structure structure
+		var structure domain.Structure
 		for key, value := range sData.(map[string]interface{}) {
 			switch key {
 			case "name":
 				structure.Name = value.(string)
 			case "cost":
-				structure.Cost = bestbuys.Money(value.(float64))
+				structure.Cost = domain.Money(value.(float64))
 			case "increase":
-				structure.Increase = bestbuys.Money(value.(float64))
+				structure.Increase = domain.Money(value.(float64))
 			case "income":
-				structure.Income = bestbuys.Money(value.(float64))
+				structure.Income = domain.Money(value.(float64))
 			case "builtOn":
 				land := value.(string)
 				structure.BuiltOn = lands[land]
@@ -95,10 +95,10 @@ func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
 		structures = append(structures, structure)
 	}
 
-	repo[id.Hex()] = game{
+	repo[id.Hex()] = domain.Game{
 		Id:         id,
-		Finance:    finance{0, 0},
-		Monies:     monies{0, 0, 0},
+		Finance:    domain.Finance{0, 0},
+		Monies:     domain.Monies{0, 0, 0},
 		Structures: structures,
 	}
 
@@ -107,53 +107,53 @@ func createGame(data bestbuys.Data, repo repository) *bestbuys.Event {
 	return createEvent("gameCreated", data)
 }
 
-func setIncome(data bestbuys.Data, repo repository) *bestbuys.Event {
+func setIncome(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
-	game.Finance.Income = bestbuys.Money(data["income"].(float64))
+	game.Finance.Income = domain.Money(data["income"].(float64))
 	repo[id] = game
-	hourly := game.Finance.hourly()
+	hourly := game.Finance.Hourly()
 	data["hourly"] = hourly
-	data["daily"] = game.Finance.daily(hourly)
+	data["daily"] = game.Finance.Daily(hourly)
 	return createEvent("incomeSet", data)
 }
 
-func setUpkeep(data bestbuys.Data, repo repository) *bestbuys.Event {
+func setUpkeep(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
-	game.Finance.Upkeep = bestbuys.Money(data["upkeep"].(float64))
+	game.Finance.Upkeep = domain.Money(data["upkeep"].(float64))
 	repo[id] = game
-	hourly := game.Finance.hourly()
+	hourly := game.Finance.Hourly()
 	data["hourly"] = hourly
-	data["daily"] = game.Finance.daily(hourly)
+	data["daily"] = game.Finance.Daily(hourly)
 	return createEvent("upkeepSet", data)
 }
 
-func setBalance(data bestbuys.Data, repo repository) *bestbuys.Event {
+func setBalance(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Balance = bestbuys.Money(data["balance"].(float64))
+	game.Monies.Balance = domain.Money(data["balance"].(float64))
 	repo[id] = game
-	data["totalMonies"] = game.Monies.total()
+	data["totalMonies"] = game.Monies.Total()
 	return createEvent("balanceSet", data)
 }
 
-func setWallet(data bestbuys.Data, repo repository) *bestbuys.Event {
+func setWallet(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Wallet = bestbuys.Money(data["wallet"].(float64))
+	game.Monies.Wallet = domain.Money(data["wallet"].(float64))
 	repo[id] = game
-	data["totalMonies"] = game.Monies.total()
+	data["totalMonies"] = game.Monies.Total()
 	return createEvent("walletSet", data)
 }
 
-func setLandIncome(data bestbuys.Data, repo repository) *bestbuys.Event {
+func setLandIncome(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Lands = bestbuys.Money(data["landIncome"].(float64))
+	game.Monies.Lands = domain.Money(data["landIncome"].(float64))
 	repo[id] = game
-	data["totalMonies"] = game.Monies.total()
+	data["totalMonies"] = game.Monies.Total()
 	return createEvent("landIncomeSet", data)
 }
 
-func setStructureCost(data bestbuys.Data, repo repository) *bestbuys.Event {
+func setStructureCost(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Lands = bestbuys.Money(data["structureCost"].(float64))
+	game.Monies.Lands = domain.Money(data["structureCost"].(float64))
 	repo[id] = game
 	return createEvent("structureCostSet", data)
 }
@@ -162,12 +162,12 @@ func setStructureCost(data bestbuys.Data, repo repository) *bestbuys.Event {
 // Helpers
 //
 
-func getGame(data bestbuys.Data, repo repository) (string, game) {
+func getGame(data domain.Data, repo repository) (string, domain.Game) {
 	id := data["game"].(string)
 	game := repo[id]
 	return id, game
 }
 
-func createEvent(name string, data bestbuys.Data) *bestbuys.Event {
-	return &bestbuys.Event{name, bson.Now(), data}
+func createEvent(name string, data domain.Data) *domain.Event {
+	return &domain.Event{name, bson.Now(), data}
 }

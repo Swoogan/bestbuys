@@ -3,12 +3,12 @@ package denormalizer
 import (
 	"os"
 	"log"
-	"bestbuys"
+	"domain"
 	"launchpad.net/mgo"
 	"launchpad.net/gobson/bson"
 )
 
-type handler func(mgo.Database, bestbuys.Data, *log.Logger) (err os.Error)
+type handler func(mgo.Database, domain.Data, *log.Logger) (err os.Error)
 type handlerPool map[string]handler
 
 type Denormalizer struct {
@@ -31,7 +31,7 @@ func New(database mgo.Database, logger *log.Logger) *Denormalizer {
 	return &Denormalizer{database, pool, logger}
 }
 
-func (d *Denormalizer) HandleEvent(e *bestbuys.Event, i *int) os.Error {
+func (d *Denormalizer) HandleEvent(e *domain.Event, i *int) os.Error {
 	if handler, ok := d.pool[e.Name]; ok {
 		return handler(d.database, e.Data, d.log)
 	}
@@ -43,7 +43,7 @@ func (d *Denormalizer) HandleEvent(e *bestbuys.Event, i *int) os.Error {
 // 
 // Handlers
 //
-func gameCreated(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+func gameCreated(database mgo.Database, data domain.Data, logger *log.Logger) (err os.Error) {
 	logger.Println("Handling Event: gameCreated")
 	logger.Println("Game id is:", data["id"])
 	id := bson.ObjectIdHex(data["id"].(string))
@@ -68,7 +68,7 @@ func gameCreated(database mgo.Database, data bestbuys.Data, logger *log.Logger) 
 
 }
 
-func incomeSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+func incomeSet(database mgo.Database, data domain.Data, logger *log.Logger) (err os.Error) {
 	logger.Println("Handling Event: incomeSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
@@ -83,7 +83,7 @@ func incomeSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (e
 	return
 }
 
-func upkeepSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+func upkeepSet(database mgo.Database, data domain.Data, logger *log.Logger) (err os.Error) {
 	logger.Println("Handling Event: upkeepSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
@@ -98,7 +98,7 @@ func upkeepSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (e
 	return
 }
 
-func walletSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+func walletSet(database mgo.Database, data domain.Data, logger *log.Logger) (err os.Error) {
 	logger.Println("Handling Event: walletSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
@@ -112,7 +112,7 @@ func walletSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (e
 	return
 }
 
-func balanceSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+func balanceSet(database mgo.Database, data domain.Data, logger *log.Logger) (err os.Error) {
 	logger.Println("Handling Event: balanceSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
@@ -126,7 +126,7 @@ func balanceSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (
 	return
 }
 
-func landIncomeSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+func landIncomeSet(database mgo.Database, data domain.Data, logger *log.Logger) (err os.Error) {
 	logger.Println("Handling Event: landIncomeSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	selector := bson.M{"_id": id}
@@ -140,7 +140,7 @@ func landIncomeSet(database mgo.Database, data bestbuys.Data, logger *log.Logger
 	return
 }
 
-func structureCostSet(database mgo.Database, data bestbuys.Data, logger *log.Logger) (err os.Error) {
+func structureCostSet(database mgo.Database, data domain.Data, logger *log.Logger) (err os.Error) {
 	logger.Println("Handling Event: structureCostSet")
 	id := bson.ObjectIdHex(data["game"].(string))
 	name := data["structureName"].(string)
