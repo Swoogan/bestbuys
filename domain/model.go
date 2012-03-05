@@ -41,11 +41,3 @@ type Land struct {
 	Income Money
 	RetainAlways bool
 }
-
-type Structure struct {
-	Name     string
-	Cost     Money
-	Increase Money
-	Income   Money
-	BuiltOn *Land
-}
