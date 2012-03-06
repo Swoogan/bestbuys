@@ -2,6 +2,8 @@ package domain
 
 import "launchpad.net/gobson/bson"
 
+const CollectionTime = 1
+
 type Money float64
 
 type Data map[string]interface{}
@@ -18,20 +20,21 @@ type Result struct {
 }
 
 type PurchaseResult struct {
-    Name string
-    Hours int
-    Quantity int
-    Cost domain.Money
-    Ratio domain.Money
-    Finance domain.Finance
-    IncomeIncrease domain.Money
+	Name string
+	Hours int
+	Quantity int
+	Cost Money
+	Ratio Money
+	Finance Finance
+	Monies Monies
+	IncomeIncrease Money
 }
 
 type FullPurchase struct {
-    First PurchaseResult
-    Second PurchaseResult
-    IncomeIncrease domain.Money
-    Quantity int
-    Finance domain.Finance
-    TotalHours int
+	First PurchaseResult
+	Second PurchaseResult
+	IncomeIncrease Money
+	Quantity int
+	Finance Finance
+	TotalHours int
 }
