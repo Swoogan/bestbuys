@@ -12,6 +12,25 @@ type Structure struct {
 	BuiltOn *Land
 }
 
+func (s Structure) CalcualatePurchase(finance Finance) logic.FullPurchase {
+	var result FullPurchase
+	quantity := s.quantityToPurchase(finance.Income)
+
+	if s.BuiltOn.RetainAlways {
+		structure := s.CalcualatePurchase(finance, s.Name, s.Cost, s.Income, quantity)
+		var land = CalcualatePurchase(structure.Finance, _builtOn.Name, _builtOn.Cost, _builtOn.Income, quantity);
+
+		result = FullPurchase{structure, land, structure.IncomeIncrease, quantity}
+	} else {
+		land := CalcualatePurchase(finance, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity);
+		structure := CalcualatePurchase(land.Finance, s.Name, s.Cost, s.Income, quantity);
+		result = FullPurchase{land, structure, structure.IncomeIncrease, quantity}
+    }
+
+    return result
+}
+
+
 func (s Structure) IncreasePrice(quantity Money) {
 	s.Cost += s.Increase * quantity
 }
