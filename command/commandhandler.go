@@ -25,6 +25,7 @@ func newCommandHandler(repo repository, col mgo.Collection) commandHandler {
 		"setIncome":        setIncome,
 		"setLandIncome":    setLandIncome,
 		"setStructureCost": setStructureCost,
+		"generatePurchases": generatePurchases,
 	}
 	return commandHandler{pool, repo, col}
 }
@@ -54,6 +55,13 @@ func (c commandHandler) store(e *domain.Event) {
 //
 // HANDLERS
 //
+func generatePurchases(data domain.Data, repo repository) *domain.Event {
+	id, game := getGame(data, repo)
+	// do stuff here
+	repo[id] = game
+	return createEvent("purchasesGenerated", data)
+}
+
 func createGame(data domain.Data, repo repository) *domain.Event {
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
