@@ -16,7 +16,7 @@ type Event struct {
 
 type Result struct {
 	path  string
-	ratio uint64
+	ratio Money
 }
 
 type PurchaseResult struct {
