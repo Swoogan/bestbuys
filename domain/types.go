@@ -36,5 +36,6 @@ type FullPurchase struct {
 	IncomeIncrease Money
 	Quantity int
 	Finance Finance
+	Monies Monies
 	TotalHours int
 }

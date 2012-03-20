@@ -26,7 +26,7 @@ func (t treeNode) addChild(index int, st Structure) treeNode {
 	return t.Children[index]
 }
 
-func (t treeNode) calculateValues(finance Finance, monies Monies) {
+func (t treeNode) calculate(finance Finance, monies Monies) {
 	t.Result = t.structure.CalcualatePurchase(finance, monies)
 }
 

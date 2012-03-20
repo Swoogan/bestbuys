@@ -19,6 +19,17 @@ func (st structureTree) findBestPath(depth int) Result {
 	return findBest(results)
 }
 
+func (st structureTree) createNodes(numberOfBuys int, structures []Structure, finance Finance, monies Monies) {
+	for i := 0; i < st.numberOfStructs; i++ {
+		child := st.root.addChild(i, structures[i])
+		child.calculate(finance, monies)
+		var cloned []Structure
+		copy(cloned, structures)
+		cloned[i].increasePrice(child.Result.Quantity)
+		createNodes(child, cloned, numberOfBuys - 1);
+	}
+}
+
 func findBestPath(node treeNode, depth int, path string, hours int, cii Money) Result {
 	hours += node.Result.TotalHours;
 	cii += node.Result.IncomeIncrease;
@@ -29,12 +40,27 @@ func findBestPath(node treeNode, depth int, path string, hours int, cii Money) R
 		return Result { path, ratio }
 	}
 
-	var results []Result
-	for _, child := range node.Children {
-		results = append(results, findBestPath(child, depth-1, path, hours, cii));
+	results := make([]Result, len(node.Children))
+	for index, child := range node.Children {
+		results[index] = findBestPath(child, depth-1, path, hours, cii);
 	}
 
 	return findBest(results)
+}
+
+func createNodes(node treeNode, structures []Structure, numberOfBuys int) {
+	if numberOfBuys == 0 {
+		return
+	}
+
+	for i := 0; i < len(structures); i++ {
+		child := node.addChild(i, structures[i])
+		child.calculate(node.Result.Finance, node.Result.Monies)
+		var cloned []Structure
+		copy(cloned, structures)
+		cloned[i].increasePrice(child.Result.Quantity)
+		createNodes(child, cloned, numberOfBuys - 1)
+	}
 }
 
 func calcRatio(hours int, cii Money) Money {
