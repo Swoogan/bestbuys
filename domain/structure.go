@@ -95,8 +95,8 @@ func calculate(p purchase) PurchaseResult {
 	return result
 }
 
-func (s Structure) IncreasePrice(quantity Money) {
-	s.Cost += s.Increase * quantity
+func (s Structure) increasePrice(quantity int) {
+	s.Cost += s.Increase * Money(quantity)
 }
 
 func (s Structure) timeToPurchase(quantity int, income, cost Money) Money {
