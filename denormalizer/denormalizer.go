@@ -26,6 +26,7 @@ func New(database mgo.Database, logger *log.Logger) *Denormalizer {
 		"incomeSet":        incomeSet,
 		"landIncomeSet":    landIncomeSet,
 		"structureCostSet": structureCostSet,
+		"purchasesGenerated": purchasesGenerated,
 	}
 
 	return &Denormalizer{database, pool, logger}
@@ -152,4 +153,12 @@ func structureCostSet(database mgo.Database, data domain.Data, logger *log.Logge
 		logger.Println("Could not update the datastore, ", err, ": ", selector)
 	}
 	return
+}
+
+func purchasesGenerated(database mgo.Database, data domain.Data, logger *log.Logger) (err os.Error) {
+	logger.Println("Handling Event: purchasesGenerated")
+	//id := bson.ObjectIdHex(data["game"].(string))
+	purchases := data["purchases"].(domain.Result)
+	logger.Println("Purchases: ", purchases)
+	return nil
 }

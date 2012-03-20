@@ -57,16 +57,6 @@ func (c commandHandler) store(e *domain.Event) {
 //
 // HANDLERS
 //
-func generatePurchases(data domain.Data, repo repository) *domain.Event {
-	id, game := getGame(data, repo)
-	tree := domain.NewStructureTree(len(game.Structures))
-	tree.CreateNodes(numberOfBuys, game.Structures, game.Finance, game.Monies)
-	best := tree.FindBestPath(numberOfBuys) // just do last for now
-	game.Purchases = best
-	repo[id] = game
-	return createEvent("purchasesGenerated", data)
-}
-
 func createGame(data domain.Data, repo repository) *domain.Event {
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
@@ -169,6 +159,18 @@ func setStructureCost(data domain.Data, repo repository) *domain.Event {
 	game.Monies.Lands = domain.Money(data["structureCost"].(float64))
 	repo[id] = game
 	return createEvent("structureCostSet", data)
+}
+
+func generatePurchases(data domain.Data, repo repository) *domain.Event {
+	id, game := getGame(data, repo)
+	tree := domain.NewStructureTree(len(game.Structures))
+	tree.CreateNodes(numberOfBuys, game.Structures, game.Finance, game.Monies)
+	best := tree.FindBestPath(numberOfBuys) // just do last for now
+	data["purchases"] = best
+	// following lines probably aren't needed
+	game.Purchases = best
+	repo[id] = game
+	return createEvent("purchasesGenerated", data)
 }
 
 //
