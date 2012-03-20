@@ -2,7 +2,7 @@ package domain
 
 import "launchpad.net/gobson/bson"
 
-const CollectionTime = 1
+const CollectionTime = 24
 
 type Money float64
 
@@ -15,8 +15,8 @@ type Event struct {
 }
 
 type Result struct {
-	path  string
-	ratio Money
+	Path  string
+	Ratio Money
 }
 
 type PurchaseResult struct {

@@ -1,27 +1,28 @@
 package domain
 
 type structureTree struct {
-	root treeNode
-	numberOfStructs int
+	Root treeNode
 }
 
-func newStructureTree(numberOfStructs int) structureTree {
-	return structureTree{ newRootNode(numberOfStructs), numberOfStructs }
+func NewStructureTree(size int) structureTree {
+	return structureTree{ newRootNode(size) }
 }
 
-func (st structureTree) findBestPath(depth int) Result {
-	results := make([]Result, st.numberOfStructs)
+func (st structureTree) FindBestPath(depth int) Result {
+	size := len(st.Root.Children)
+	results := make([]Result, size)
 
-	for i := 0; i< st.numberOfStructs; i++ {
-		results[i] = findBestPath(st.root.Children[i], depth, "", 0, 0)
+	for i := 0; i< size; i++ {
+		results[i] = findBestPath(st.Root.Children[i], depth, "", 0, 0)
 	}
 
 	return findBest(results)
 }
 
-func (st structureTree) createNodes(numberOfBuys int, structures []Structure, finance Finance, monies Monies) {
-	for i := 0; i < st.numberOfStructs; i++ {
-		child := st.root.addChild(i, structures[i])
+func (st structureTree) CreateNodes(numberOfBuys int, structures []Structure, finance Finance, monies Monies) {
+	size := len(st.Root.Children)
+	for i := 0; i < size; i++ {
+		child := st.Root.addChild(i, structures[i])
 		child.calculate(finance, monies)
 		var cloned []Structure
 		copy(cloned, structures)
@@ -76,7 +77,7 @@ func findBest(results []Result) Result {
 	var best Result
 
 	for _, result := range results {
-		if result.ratio > best.ratio {
+		if result.Ratio > best.Ratio {
 			best = result
 		}
 	}

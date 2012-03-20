@@ -9,6 +9,7 @@ type Game struct {
 	Finance    Finance
 	Monies     Monies
 	Structures []Structure
+	Purchases Result
 	LastSaved  bson.Timestamp
 }
 

@@ -5,7 +5,7 @@ import (
 )
 
 type treeNode struct {
-	structure Structure
+	Structure Structure
 	Children []treeNode
 	Result FullPurchase
 }
@@ -13,7 +13,7 @@ type treeNode struct {
 func newTreeNode(size int, st Structure) treeNode {
 	return treeNode {
 		Children: make([]treeNode, size),
-		structure: st,
+		Structure: st,
 	}
 }
 
@@ -27,7 +27,7 @@ func (t treeNode) addChild(index int, st Structure) treeNode {
 }
 
 func (t treeNode) calculate(finance Finance, monies Monies) {
-	t.Result = t.structure.CalcualatePurchase(finance, monies)
+	t.Result = t.Structure.CalcualatePurchase(finance, monies)
 }
 
 func (t treeNode) String() string {
