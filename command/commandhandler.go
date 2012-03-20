@@ -7,6 +7,8 @@ import (
 	"bitbucket.org/Swoogan/mongorest"
 )
 
+const numberOfBuys = 6
+
 type handler func(domain.Data, repository) *domain.Event
 type handlerPool map[string]handler
 
@@ -57,7 +59,10 @@ func (c commandHandler) store(e *domain.Event) {
 //
 func generatePurchases(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
-	// do stuff here
+	tree := domain.NewStructureTree(len(game.Structures))
+	tree.CreateNodes(numberOfBuys, game.Structures, game.Finance, game.Monies)
+	best := tree.FindBestPath(numberOfBuys) // just do last for now
+	game.Purchases = best
 	repo[id] = game
 	return createEvent("purchasesGenerated", data)
 }
