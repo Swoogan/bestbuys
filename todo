@@ -1,3 +1,4 @@
+Make logger and database global in denormalizer
 Expanding purchases doesn't make the whole accordian div grow
 Style the generate button
 Clean up the css for the new tables
