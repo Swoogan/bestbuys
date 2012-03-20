@@ -17,6 +17,10 @@ func newTreeNode(size int, st Structure) treeNode {
 	}
 }
 
+func newRootNode(size int) treeNode {
+	return treeNode { Children: make([]treeNode, size) }
+}
+
 func (t treeNode) addChild(index int, st Structure) treeNode {
 	t.Children[index] = newTreeNode(len(t.Children), st)
 	return t.Children[index]
