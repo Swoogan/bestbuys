@@ -21,20 +21,20 @@ func FindBestChild(node treeNode, depth int, path string, hours int, cii Money) 
 	results := make([]Result, node.Size)
 
 	for i, child := range node.Children {
-		results[i] = findBestPath(child, depth, path, hours, cii);
+		results[i] = findBestPath(child, depth, path, hours, cii)
 	}
 
 	return findBest(results)
 }
 
 func findBestPath(node treeNode, depth int, path string, hours int, cii Money) Result {
-	hours += node.Result.TotalHours;
-	cii += node.Result.IncomeIncrease;
-	path += node.String();
+	hours += node.Result.TotalHours
+	cii += node.Result.IncomeIncrease
+	path += node.String()
 	ratio := calcRatio(hours, cii)
 
 	if depth == 1 {
-		return Result { path, ratio }
+		return Result{path, ratio}
 	}
 
 	return FindBestChild(node, depth-1, path, hours, cii)

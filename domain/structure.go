@@ -5,11 +5,11 @@ import (
 )
 
 type purchase struct {
-	finance Finance
-	monies Monies
-	name string
-	cost Money
-	income Money
+	finance  Finance
+	monies   Monies
+	name     string
+	cost     Money
+	income   Money
 	quantity int
 }
 
@@ -18,7 +18,7 @@ type Structure struct {
 	Cost     Money
 	Increase Money
 	Income   Money
-	BuiltOn *Land
+	BuiltOn  *Land
 }
 
 func (s Structure) purchase(finance Finance, monies Monies) FullPurchase {
@@ -31,10 +31,10 @@ func (s Structure) purchase(finance Finance, monies Monies) FullPurchase {
 		p = purchase{structure.Finance, structure.Monies, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
 		land := calculate(p)
 		result = FullPurchase{
-			First: structure,
-			Second: land,
+			First:          structure,
+			Second:         land,
 			IncomeIncrease: structure.IncomeIncrease,
-			Quantity: quantity,
+			Quantity:       quantity,
 		}
 	} else {
 		p := purchase{finance, monies, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
@@ -43,25 +43,25 @@ func (s Structure) purchase(finance Finance, monies Monies) FullPurchase {
 		structure := calculate(p)
 
 		result = FullPurchase{
-			First: land,
-			Second: structure,
+			First:          land,
+			Second:         structure,
 			IncomeIncrease: structure.IncomeIncrease,
-			Quantity: quantity,
+			Quantity:       quantity,
 		}
-    }
+	}
 
-    return result
+	return result
 }
 
 func calculate(p purchase) PurchaseResult {
-	result := PurchaseResult {
-			Finance: p.finance,
-			Monies: p.monies,
-			Name: p.name,
-			Quantity: p.quantity,
-			Cost: Money(p.quantity) * p.cost,
-			IncomeIncrease: p.income * Money(p.quantity),
-		}
+	result := PurchaseResult{
+		Finance:        p.finance,
+		Monies:         p.monies,
+		Name:           p.name,
+		Quantity:       p.quantity,
+		Cost:           Money(p.quantity) * p.cost,
+		IncomeIncrease: p.income * Money(p.quantity),
+	}
 
 	result.Finance.Income += result.IncomeIncrease
 
@@ -83,7 +83,7 @@ func calculate(p purchase) PurchaseResult {
 			remainderWithFee := (amountRemaining - withdrawl) * Money(1.1)
 
 			result.Cost = dailyIncome + (amountRemaining * Money(1.1))
-			result.Hours = CollectionTime + int(ceil(remainderWithFee / p.finance.Income))
+			result.Hours = CollectionTime + int(ceil(remainderWithFee/p.finance.Income))
 			result.Monies.Balance += p.monies.Wallet * Money(0.9)
 			result.Monies.Wallet = Money(0)
 			result.Monies.Balance -= withdrawl
@@ -122,7 +122,7 @@ func (s Structure) quantityToPurchase(income Money) int {
 	count := 2
 	cci := Money(0)
 	for count <= 10 {
-		cci += Money(count - 1) * s.Increase
+		cci += Money(count-1) * s.Increase
 		totalHours := s.timeToPurchase(count, income, s.Cost)
 		potentialIncome := s.opportunityCost(income, totalHours)
 		if potentialIncome > cci {
@@ -130,7 +130,7 @@ func (s Structure) quantityToPurchase(income Money) int {
 		}
 		count++
 	}
-	return imax(count - 1, 1)
+	return imax(count-1, 1)
 }
 
 func (s Structure) opportunityCost(income, totalHours Money) Money {
@@ -141,7 +141,7 @@ func (s Structure) opportunityCost(income, totalHours Money) Money {
 	for hours < totalHours {
 		income += s.Income
 		n := numberOfProperties - 1
-		delta := mmax(totalHours - hours, 0)
+		delta := mmax(totalHours-hours, 0)
 		opportunityCost += delta * s.Income
 		totalCost := s.Cost * (n * s.Increase)
 		hours += s.timeToPurchase(1, income, totalCost)

@@ -9,7 +9,7 @@ type Game struct {
 	Finance    Finance
 	Monies     Monies
 	Structures []Structure
-	Purchases Result
+	Purchases  Result
 	LastSaved  bson.Timestamp
 }
 
@@ -37,8 +37,8 @@ func (m Monies) Total() Money {
 }
 
 type Land struct {
-	Name   string
-	Cost   Money
-	Income Money
+	Name         string
+	Cost         Money
+	Income       Money
 	RetainAlways bool
 }
