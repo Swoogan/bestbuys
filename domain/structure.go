@@ -21,7 +21,7 @@ type Structure struct {
 	BuiltOn *Land
 }
 
-func (s Structure) CalcualatePurchase(finance Finance, monies Monies) FullPurchase {
+func (s Structure) purchase(finance Finance, monies Monies) FullPurchase {
 	var result FullPurchase
 	quantity := s.quantityToPurchase(finance.Income)
 

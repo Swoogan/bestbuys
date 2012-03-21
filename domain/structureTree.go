@@ -1,46 +1,24 @@
 package domain
 
-type structureTree struct {
-	Root treeNode
-}
-
-func NewStructureTree(size int) structureTree {
-	return structureTree{ newRootNode(size) }
-}
-
-func (st structureTree) CreateNodes(numberOfBuys int, structures []Structure, finance Finance, monies Monies) {
-	size := len(st.Root.Children)
-	for i := 0; i < size; i++ {
-		child := st.Root.addChild(i, structures[i])
-		child.calculate(finance, monies)
-		var cloned []Structure
-		copy(cloned, structures)
-		cloned[i].increasePrice(child.Result.Quantity)
-		createNodes(child, cloned, numberOfBuys - 1);
-	}
-}
-
-func CreateNodes(node treeNode, structures []Structure, numberOfBuys int, finance Finance, monies Monies) {
+func CreateNodes(node treeNode, structures []Structure, numberOfBuys int) {
 	if numberOfBuys == 0 {
 		return
 	}
 
 	for i := 0; i < len(structures); i++ {
-		child := node.addChild(i, structures[i])
-		child.calculate(node.Result.Finance, node.Result.Monies)
+		child := node.addChild(i, structures[i], node.Finance, node.Monies)
+		child.calculate()
 		var cloned []Structure
 		copy(cloned, structures)
 		cloned[i].increasePrice(child.Result.Quantity)
-		createNodes(child, cloned, numberOfBuys - 1)
+		CreateNodes(child, cloned, numberOfBuys - 1)
 	}
 }
+func FindBestChild(node treeNode, depth int, path string, hours int, cii Money) Result {
+	results := make([]Result, node.Size)
 
-func (st structureTree) FindBestPath(depth int) Result {
-	size := len(st.Root.Children)
-	results := make([]Result, size)
-
-	for i := 0; i< size; i++ {
-		results[i] = findBestPath(st.Root.Children[i], depth, "", 0, 0)
+	for i, child := range node.Children {
+		results[i] = findBestPath(child, depth, path, hours, cii);
 	}
 
 	return findBest(results)
@@ -56,12 +34,7 @@ func findBestPath(node treeNode, depth int, path string, hours int, cii Money) R
 		return Result { path, ratio }
 	}
 
-	results := make([]Result, len(node.Children))
-	for index, child := range node.Children {
-		results[index] = findBestPath(child, depth-1, path, hours, cii);
-	}
-
-	return findBest(results)
+	return FindBestChild(node, depth-1, path, hours, cii)
 }
 
 func calcRatio(hours int, cii Money) Money {
