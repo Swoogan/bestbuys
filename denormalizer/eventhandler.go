@@ -10,13 +10,13 @@ import (
 type handler func(mgo.Database, domain.Data, *log.Logger) (err os.Error)
 type handlerPool map[string]handler
 
-type Denormalizer struct {
+type EventHandler struct {
 	database mgo.Database
 	pool     handlerPool
 	log      *log.Logger
 }
 
-func New(database mgo.Database, logger *log.Logger) *Denormalizer {
+func New(database mgo.Database, logger *log.Logger) *EventHandler {
 	pool := handlerPool{
 		"gameCreated":      gameCreated,
 		"walletSet":        walletSet,
@@ -28,14 +28,14 @@ func New(database mgo.Database, logger *log.Logger) *Denormalizer {
 		"purchasesGenerated": purchasesGenerated,
 	}
 
-	return &Denormalizer{database, pool, logger}
+	return &EventHandler{database, pool, logger}
 }
 
-func (d *Denormalizer) HandleEvent(e *domain.Event, i *int) os.Error {
-	if handler, ok := d.pool[e.Name]; ok {
-		return handler(d.database, e.Data, d.log)
+func (eh *EventHandler) HandleEvent(e *domain.Event, i *int) os.Error {
+	if handler, ok := eh.pool[e.Name]; ok {
+		return handler(eh.database, e.Data, eh.log)
 	}
 
-	d.log.Println("No handler specified for event:", e.Name)
+	eh.log.Println("No handler specified for event:", e.Name)
 	return nil
 }

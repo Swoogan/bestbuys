@@ -34,9 +34,9 @@ func main() {
 	defer session.Close()
 
 	db := session.DB(*dbname)
-	denorm := denormalizer.New(db, logger)
+	eh := denormalizer.New(db, logger)
 
-	rpc.Register(denorm)
+	rpc.Register(eh)
 	go serve()
 
 	for {
