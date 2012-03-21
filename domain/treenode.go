@@ -6,35 +6,32 @@ import (
 
 type treeNode struct {
 	Structure Structure
-	Children []treeNode
-	Finance Finance
-	Monies Monies
-	Result FullPurchase
-	Size int
+	Children  []treeNode
+	Finance   Finance
+	Monies    Monies
+	Result    FullPurchase
+	Size      int
 }
 
-func newTreeNode(size int, st Structure, f Finance, m Monies) treeNode {
-	return }
-
 func NewRootNode(size int, f Finance, m Monies) treeNode {
-	return treeNode { 
-		Children: make([]treeNode, size), 
-		Size: size,
-		Finance: f,
-		Monies: m,
+	return treeNode{
+		Children: make([]treeNode, size),
+		Size:     size,
+		Finance:  f,
+		Monies:   m,
 	}
 }
 
 func (t treeNode) addChild(i int, st Structure, f Finance, m Monies) treeNode {
-	child := treeNode {
-		Children: make([]treeNode, t.Size),
+	child := treeNode{
+		Children:  make([]treeNode, t.Size),
 		Structure: st,
-		Finance: f,
-		Monies: m,
-		Size: t.Size,
+		Finance:   f,
+		Monies:    m,
+		Size:      t.Size,
 	}
 
-	t.Children[[i] = child
+	t.Children[i] = child
 
 	return child
 }
@@ -48,7 +45,8 @@ func (t treeNode) String() string {
 	f := t.Result.First
 	s := t.Result.Second
 
-	return fmt.Sprintf(format, shorten(f.Name), f.Quantity, f.Cost, f.Hours, f.Finance.Income, f.Ratio) + fmt.Sprintf(format, shorten(s.Name), s.Quantity, s.Cost, s.Hours, s.Finance.Income, s.Ratio)
+	return fmt.Sprintf(format, shorten(f.Name), f.Quantity, f.Cost, f.Hours, f.Finance.Income, f.Ratio) +
+		fmt.Sprintf(format, shorten(s.Name), s.Quantity, s.Cost, s.Hours, s.Finance.Income, s.Ratio)
 }
 
 func shorten(name string) string {

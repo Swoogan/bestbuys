@@ -20,22 +20,22 @@ type Result struct {
 }
 
 type PurchaseResult struct {
-	Name string
-	Hours int
-	Quantity int
-	Cost Money
-	Ratio Money
-	Finance Finance
-	Monies Monies
+	Name           string
+	Hours          int
+	Quantity       int
+	Cost           Money
+	Ratio          Money
+	Finance        Finance
+	Monies         Monies
 	IncomeIncrease Money
 }
 
 type FullPurchase struct {
-	First PurchaseResult
-	Second PurchaseResult
+	First          PurchaseResult
+	Second         PurchaseResult
 	IncomeIncrease Money
-	Quantity int
-	Finance Finance
-	Monies Monies
-	TotalHours int
+	Quantity       int
+	Finance        Finance
+	Monies         Monies
+	TotalHours     int
 }
