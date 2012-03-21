@@ -20,7 +20,7 @@ func createGame(data domain.Data, repo repository) *domain.Event {
 				land.Cost = domain.Money(value.(float64))
 			case "income":
 				land.Income = domain.Money(value.(float64))
-			case "retainalways":
+			case "retainAlways":
 				land.RetainAlways = value.(bool)
 			}
 		}
