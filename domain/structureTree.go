@@ -1,19 +1,22 @@
 package domain
 
+//import "fmt"
+
 func CreateNodes(node treeNode, structures []Structure, numberOfBuys int) {
 	if numberOfBuys == 0 {
 		return
 	}
 
-	for i := 0; i < len(structures); i++ {
+	for i := 0; i < node.Size; i++ {
 		child := node.addChild(i, structures[i], node.Finance, node.Monies)
 		child.calculate()
-		var cloned []Structure
-		copy(cloned, structures)
-		cloned[i].increasePrice(child.Result.Quantity)
-		CreateNodes(child, cloned, numberOfBuys - 1)
+		//cloned := make([]Structure, node.Size)
+		//copy(cloned, structures)
+		//cloned[i].increasePrice(child.Result.Quantity)
+		//CreateNodes(child, cloned, numberOfBuys - 1)
 	}
 }
+
 func FindBestChild(node treeNode, depth int, path string, hours int, cii Money) Result {
 	results := make([]Result, node.Size)
 

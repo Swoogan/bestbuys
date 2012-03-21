@@ -31,11 +31,12 @@ func New(database mgo.Database, logger *log.Logger) *EventHandler {
 	return &EventHandler{database, pool, logger}
 }
 
-func (eh *EventHandler) HandleEvent(e *domain.Event, i *int) os.Error {
-	if handler, ok := eh.pool[e.Name]; ok {
-		return handler(eh.database, e.Data, eh.log)
+func (d *EventHandler) HandleEvent(e *domain.Event, i *int) os.Error {
+	if handler, ok := d.pool[e.Name]; ok {
+		return handler(d.database, e.Data, d.log)
 	}
 
-	eh.log.Println("No handler specified for event:", e.Name)
+	d.log.Println("No handler specified for event:", e.Name)
 	return nil
 }
+
