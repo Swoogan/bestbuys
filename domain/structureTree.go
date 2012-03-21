@@ -8,17 +8,6 @@ func NewStructureTree(size int) structureTree {
 	return structureTree{ newRootNode(size) }
 }
 
-func (st structureTree) FindBestPath(depth int) Result {
-	size := len(st.Root.Children)
-	results := make([]Result, size)
-
-	for i := 0; i< size; i++ {
-		results[i] = findBestPath(st.Root.Children[i], depth, "", 0, 0)
-	}
-
-	return findBest(results)
-}
-
 func (st structureTree) CreateNodes(numberOfBuys int, structures []Structure, finance Finance, monies Monies) {
 	size := len(st.Root.Children)
 	for i := 0; i < size; i++ {
@@ -29,6 +18,32 @@ func (st structureTree) CreateNodes(numberOfBuys int, structures []Structure, fi
 		cloned[i].increasePrice(child.Result.Quantity)
 		createNodes(child, cloned, numberOfBuys - 1);
 	}
+}
+
+func CreateNodes(node treeNode, structures []Structure, numberOfBuys int, finance Finance, monies Monies) {
+	if numberOfBuys == 0 {
+		return
+	}
+
+	for i := 0; i < len(structures); i++ {
+		child := node.addChild(i, structures[i])
+		child.calculate(node.Result.Finance, node.Result.Monies)
+		var cloned []Structure
+		copy(cloned, structures)
+		cloned[i].increasePrice(child.Result.Quantity)
+		createNodes(child, cloned, numberOfBuys - 1)
+	}
+}
+
+func (st structureTree) FindBestPath(depth int) Result {
+	size := len(st.Root.Children)
+	results := make([]Result, size)
+
+	for i := 0; i< size; i++ {
+		results[i] = findBestPath(st.Root.Children[i], depth, "", 0, 0)
+	}
+
+	return findBest(results)
 }
 
 func findBestPath(node treeNode, depth int, path string, hours int, cii Money) Result {
@@ -47,21 +62,6 @@ func findBestPath(node treeNode, depth int, path string, hours int, cii Money) R
 	}
 
 	return findBest(results)
-}
-
-func createNodes(node treeNode, structures []Structure, numberOfBuys int) {
-	if numberOfBuys == 0 {
-		return
-	}
-
-	for i := 0; i < len(structures); i++ {
-		child := node.addChild(i, structures[i])
-		child.calculate(node.Result.Finance, node.Result.Monies)
-		var cloned []Structure
-		copy(cloned, structures)
-		cloned[i].increasePrice(child.Result.Quantity)
-		createNodes(child, cloned, numberOfBuys - 1)
-	}
 }
 
 func calcRatio(hours int, cii Money) Money {
