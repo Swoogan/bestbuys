@@ -44,6 +44,13 @@
             "increase":1500000,
             "income":115000,
             "builtOn":"Blistering Desert"
+         },
+         {
+            "name":"Rich Mineral Pool",
+            "cost":0,
+            "increase":7500000,
+            "income":500000,
+            "builtOn":"Blistering Desert"
          }
       ]
    }

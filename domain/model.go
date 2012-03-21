@@ -8,7 +8,7 @@ type Game struct {
 	Id         bson.ObjectId "hack" // this should be "_id" but then Upsert doesn't do anything
 	Finance    Finance
 	Monies     Monies
-	Structures []Structure
+	Structures map[string]Structure
 	Purchases  Result
 	LastSaved  bson.Timestamp
 }

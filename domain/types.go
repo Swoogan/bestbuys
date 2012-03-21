@@ -35,7 +35,8 @@ type FullPurchase struct {
 	Second         PurchaseResult
 	IncomeIncrease Money
 	Quantity       int
-	Finance        Finance
-	Monies         Monies
-	TotalHours     int
+}
+
+func (f FullPurchase) Hours() int {
+	return f.First.Hours + f.Second.Hours
 }

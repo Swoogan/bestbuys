@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -28,8 +29,10 @@ func (s Structure) purchase(finance Finance, monies Monies) FullPurchase {
 	if s.BuiltOn.RetainAlways {
 		p := purchase{finance, monies, s.Name, s.Cost, s.Income, quantity}
 		structure := calculate(p)
+
 		p = purchase{structure.Finance, structure.Monies, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
 		land := calculate(p)
+
 		result = FullPurchase{
 			First:          structure,
 			Second:         land,
@@ -37,8 +40,11 @@ func (s Structure) purchase(finance Finance, monies Monies) FullPurchase {
 			Quantity:       quantity,
 		}
 	} else {
+		fmt.Println("Cost", s.Cost)
+		fmt.Println("Name", s.Name)
 		p := purchase{finance, monies, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
 		land := calculate(p)
+
 		p = purchase{land.Finance, land.Monies, s.Name, s.Cost, s.Income, quantity}
 		structure := calculate(p)
 
@@ -101,6 +107,8 @@ func (s Structure) increasePrice(quantity int) {
 
 func (s Structure) timeToPurchase(quantity int, income, cost Money) Money {
 	landHours := Money(0)
+
+	fmt.Println("structure:", s)
 
 	if !s.BuiltOn.RetainAlways {
 		landHours = (s.BuiltOn.Cost * Money(quantity)) / income
