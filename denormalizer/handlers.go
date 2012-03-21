@@ -122,7 +122,7 @@ func structureCostSet(database mgo.Database, data domain.Data, logger *log.Logge
 func purchasesGenerated(database mgo.Database, data domain.Data, logger *log.Logger) (err os.Error) {
 	logger.Println("Handling Event: purchasesGenerated")
 	//id := bson.ObjectIdHex(data["game"].(string))
-	purchases := data["purchases"].(domain.Result)
+	purchases := data["purchases"]
 	logger.Println("Purchases: ", purchases)
 	return nil
 }

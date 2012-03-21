@@ -14,14 +14,7 @@ type treeNode struct {
 }
 
 func newTreeNode(size int, st Structure, f Finance, m Monies) treeNode {
-	return treeNode {
-		Children: make([]treeNode, size),
-		Structure: st,
-		Finance: f,
-		Monies: m,
-		Size: size,
-	}
-}
+	return }
 
 func NewRootNode(size int, f Finance, m Monies) treeNode {
 	return treeNode { 
@@ -33,8 +26,17 @@ func NewRootNode(size int, f Finance, m Monies) treeNode {
 }
 
 func (t treeNode) addChild(i int, st Structure, f Finance, m Monies) treeNode {
-	t.Children[i] = newTreeNode(t.Size, st, f, m)
-	return t.Children[i]
+	child := treeNode {
+		Children: make([]treeNode, t.Size),
+		Structure: st,
+		Finance: f,
+		Monies: m,
+		Size: t.Size,
+	}
+
+	t.Children[[i] = child
+
+	return child
 }
 
 func (t treeNode) calculate() {
