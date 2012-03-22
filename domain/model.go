@@ -23,7 +23,7 @@ func (f Finance) Hourly() Money {
 }
 
 func (f Finance) Daily(hourly Money) Money {
-	return hourly * 24
+	return hourly * CollectionTime
 }
 
 type Monies struct {

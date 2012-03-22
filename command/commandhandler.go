@@ -7,7 +7,7 @@ import (
 	"bitbucket.org/Swoogan/mongorest"
 )
 
-const numberOfBuys = 6
+const numberOfBuys = 2
 
 type handler func(domain.Data, repository) *domain.Event
 type handlerPool map[string]handler
