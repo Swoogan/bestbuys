@@ -108,8 +108,6 @@ func (s Structure) increasePrice(quantity int) {
 func (s Structure) timeToPurchase(quantity int, income, cost Money) Money {
 	landHours := Money(0)
 
-	fmt.Println("structure:", s)
-
 	if !s.BuiltOn.RetainAlways {
 		landHours = (s.BuiltOn.Cost * Money(quantity)) / income
 		income += s.BuiltOn.Income * Money(quantity)
