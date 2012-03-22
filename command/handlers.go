@@ -27,25 +27,25 @@ func setUpkeep(data domain.Data, repo repository) *domain.Event {
 
 func setBalance(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Balance = domain.Money(data["balance"].(float64))
+	game.Finance.Balance = domain.Money(data["balance"].(float64))
 	repo[id] = game
-	data["totalMonies"] = game.Monies.Total()
+	data["totalFinance"] = game.Finance.TotalMoney()
 	return createEvent("balanceSet", data)
 }
 
 func setWallet(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Wallet = domain.Money(data["wallet"].(float64))
+	game.Finance.Wallet = domain.Money(data["wallet"].(float64))
 	repo[id] = game
-	data["totalMonies"] = game.Monies.Total()
+	data["totalFinance"] = game.Finance.TotalMoney()
 	return createEvent("walletSet", data)
 }
 
 func setLandIncome(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Lands = domain.Money(data["landIncome"].(float64))
+	game.Finance.Lands = domain.Money(data["landIncome"].(float64))
 	repo[id] = game
-	data["totalMonies"] = game.Monies.Total()
+	data["totalFinance"] = game.Finance.TotalMoney()
 	return createEvent("landIncomeSet", data)
 }
 
@@ -61,10 +61,10 @@ func setStructureCost(data domain.Data, repo repository) *domain.Event {
 
 func generatePurchases(data domain.Data, repo repository) *domain.Event {
 	_, game := getGame(data, repo)
-	root := domain.NewRootNode(len(game.Structures), game.Finance, game.Monies)
-	domain.CreateNodes(root, game.Structures, numberOfBuys)
-	domain.Pprint(root, numberOfBuys)
-	//best := domain.FindBestChild(root, numberOfBuys, "", 0, 0)
+	root := domain.NewTree(len(game.Structures))
+	root.Build(game.Structures, game.Finance, numberOfBuys)
+	root.Print(logger)
+	//_ = root.FindBestPath(numberOfBuys, "", 0, 0)
 	//logger.Println("best:", best)
 	//data["purchases"] = best
 

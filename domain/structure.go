@@ -1,13 +1,12 @@
 package domain
 
 import (
-//	"fmt"
+	"fmt"
 	"math"
 )
 
 type purchase struct {
 	finance  Finance
-	monies   Monies
 	name     string
 	cost     Money
 	income   Money
@@ -22,15 +21,15 @@ type Structure struct {
 	BuiltOn  *Land
 }
 
-func (s Structure) purchase(finance Finance, monies Monies) FullPurchase {
+func (s Structure) purchase(finance Finance) FullPurchase {
 	var result FullPurchase
 	quantity := s.quantityToPurchase(finance.Income)
 
 	if s.BuiltOn.RetainAlways {
-		p := purchase{finance, monies, s.Name, s.Cost, s.Income, quantity}
+		p := purchase{finance, s.Name, s.Cost, s.Income, quantity}
 		structure := calculate(p)
 
-		p = purchase{structure.Finance, structure.Monies, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
+		p = purchase{structure.Finance, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
 		land := calculate(p)
 
 		result = FullPurchase{
@@ -40,10 +39,10 @@ func (s Structure) purchase(finance Finance, monies Monies) FullPurchase {
 			Quantity:       quantity,
 		}
 	} else {
-		p := purchase{finance, monies, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
+		p := purchase{finance, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
 		land := calculate(p)
 
-		p = purchase{land.Finance, land.Monies, s.Name, s.Cost, s.Income, quantity}
+		p = purchase{land.Finance, s.Name, s.Cost, s.Income, quantity}
 		structure := calculate(p)
 
 		result = FullPurchase{
@@ -60,7 +59,6 @@ func (s Structure) purchase(finance Finance, monies Monies) FullPurchase {
 func calculate(p purchase) PurchaseResult {
 	result := PurchaseResult{
 		Finance:        p.finance,
-		Monies:         p.monies,
 		Name:           p.name,
 		Quantity:       p.quantity,
 		Cost:           Money(p.quantity) * p.cost,
@@ -69,8 +67,8 @@ func calculate(p purchase) PurchaseResult {
 
 	result.Finance.Income += result.IncomeIncrease
 
-	if result.Cost <= p.monies.Wallet {
-		result.Monies.Wallet -= result.Cost
+	if result.Cost <= p.finance.Wallet {
+		result.Finance.Wallet -= result.Cost
 		result.Hours = 0
 		result.Ratio = (result.IncomeIncrease * p.finance.Income) / result.Cost
 	} else {
@@ -78,19 +76,19 @@ func calculate(p purchase) PurchaseResult {
 		// Buy outright
 		if result.Hours <= CollectionTime {
 			moneyLeft := (Money(result.Hours) * p.finance.Income) - result.Cost
-			result.Monies.Balance += p.monies.Wallet * Money(0.9)
-			result.Monies.Wallet = moneyLeft
+			result.Finance.Balance += p.finance.Wallet * Money(0.9)
+			result.Finance.Wallet = moneyLeft
 		} else { // Save to purchase
 			dailyIncome := p.finance.Income * CollectionTime
 			amountRemaining := result.Cost - dailyIncome
-			withdrawl := min(p.monies.Balance, amountRemaining)
+			withdrawl := min(p.finance.Balance, amountRemaining)
 			remainderWithFee := (amountRemaining - withdrawl) * Money(1.1)
 
 			result.Cost = dailyIncome + (amountRemaining * Money(1.1))
 			result.Hours = CollectionTime + int(ceil(remainderWithFee/p.finance.Income))
-			result.Monies.Balance += p.monies.Wallet * Money(0.9)
-			result.Monies.Wallet = Money(0)
-			result.Monies.Balance -= withdrawl
+			result.Finance.Balance += p.finance.Wallet * Money(0.9)
+			result.Finance.Wallet = Money(0)
+			result.Finance.Balance -= withdrawl
 		}
 
 		result.Ratio = result.IncomeIncrease / Money(result.Hours)
@@ -153,6 +151,15 @@ func (s Structure) opportunityCost(income, totalHours Money) Money {
 	}
 	return opportunityCost
 }
+
+func (s *Structure) String() string {
+	format := "%v\t\t %f\t %f\t %f\t"
+	return fmt.Sprintf(format, s.Name, s.Cost, s.Increase, s.Income)
+}
+
+//
+// Helpers
+//
 
 func mmax(x Money, y float64) Money {
 	return Money(math.Fmax(float64(x), y))

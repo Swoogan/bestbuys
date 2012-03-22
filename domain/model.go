@@ -7,7 +7,6 @@ import (
 type Game struct {
 	Id         bson.ObjectId "hack" // this should be "_id" but then Upsert doesn't do anything
 	Finance    Finance
-	Monies     Monies
 	Structures map[string]Structure
 	Purchases  Result
 	LastSaved  bson.Timestamp
@@ -16,6 +15,10 @@ type Game struct {
 type Finance struct {
 	Income Money
 	Upkeep Money
+
+	Balance Money
+	Wallet  Money
+	Lands   Money
 }
 
 func (f Finance) Hourly() Money {
@@ -26,14 +29,8 @@ func (f Finance) Daily(hourly Money) Money {
 	return hourly * CollectionTime
 }
 
-type Monies struct {
-	Balance Money
-	Wallet  Money
-	Lands   Money
-}
-
-func (m Monies) Total() Money {
-	return m.Balance + m.Wallet + m.Lands
+func (f Finance) TotalMoney() Money {
+	return f.Balance + f.Wallet + f.Lands
 }
 
 type Land struct {

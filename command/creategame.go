@@ -27,7 +27,7 @@ func createGame(data domain.Data, repo repository) *domain.Event {
 		lands[land.Name] = &land
 	}
 
-	structures := make(map[string]domain.Structure)
+	structures := make(domain.Structures)
 	for _, sData := range data["structures"].([]interface{}) {
 		var structure domain.Structure
 		for key, value := range sData.(map[string]interface{}) {
@@ -50,8 +50,7 @@ func createGame(data domain.Data, repo repository) *domain.Event {
 
 	repo[id.Hex()] = domain.Game{
 		Id:         id,
-		Finance:    domain.Finance{0, 0},
-		Monies:     domain.Monies{0, 0, 0},
+		Finance:    domain.Finance{0, 0, 0, 0, 0},
 		Structures: structures,
 	}
 
