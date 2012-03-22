@@ -14,6 +14,8 @@ type Event struct {
 	Data Data
 }
 
+type Structures map[string]Structure
+
 type Result struct {
 	Path  string
 	Ratio Money
@@ -26,7 +28,6 @@ type PurchaseResult struct {
 	Cost           Money
 	Ratio          Money
 	Finance        Finance
-	Monies         Monies
 	IncomeIncrease Money
 }
 

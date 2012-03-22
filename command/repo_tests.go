@@ -21,8 +21,7 @@ func StoreTest() {
 	log.Println("New id is:", id.Hex())
 	repo[id.Hex()] = domain.Game{
 		Id:      id,
-		Finance: domain.Finance{1, 0},
-		Monies:  domain.Monies{0, 1, 0},
+		Finance: domain.Finance{1, 0, 0, 1, 0},
 	}
 	log.Println("Finance income is:", repo[id.Hex()].Finance.Income)
 
