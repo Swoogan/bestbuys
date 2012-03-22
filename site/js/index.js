@@ -19,6 +19,19 @@ $(document).ready(function() {
     });
   }
 
+  $(".generate").click(function() { 
+    var id = $(this).parents(".gameInfo").attr('data-game') ;
+    var data = '{"game": "'+id+'"}';
+    $.ajax({
+            url: "/commands/", 
+            type: "POST",
+            data: '{"name":"generatePurchases", "data":'+data+'}',
+            contentType: "application/json",
+            dataType: "text",
+            //success: reload
+          }); 
+  });
+
   var reload = function() {
     var message = $('#message');
     message.removeClass('error');
@@ -36,20 +49,7 @@ $(document).ready(function() {
       $(this).toggleClass("shadow");
     });
 
-    $(".generate").click(function() { 
-      var id = $(this).parents(".gameInfo").attr('data-game') ;
-      var data = '{"game": "'+id+'"}';
-      $.ajax({
-              url: "/commands/", 
-              type: "POST",
-              data: '{"name":"generatePurchases", "data":'+data+'}',
-              contentType: "application/json",
-              dataType: "text",
-              //success: reload
-            }); 
-    });
-
-    focusout("income", "setIncome");
+   focusout("income", "setIncome");
     focusout("upkeep", "setUpkeep");
     focusout("balance", "setBalance");
     focusout("wallet", "setWallet");
