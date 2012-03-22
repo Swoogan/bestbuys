@@ -25,7 +25,7 @@
             "name":"Ancient Highlands",
             "cost":100000000,
             "income":50000,
-            "retainAlways":false
+            "retainAlways":true
          }
       ],
       "structures":[

@@ -24,7 +24,7 @@ func rpcCall(address string, method string, e *domain.Event) {
 }
 
 func denormalize(e *domain.Event) {
-	rpcCall(":4042", "Denormalizer.HandleEvent", e)
+	rpcCall(":4042", "EventHandler.HandleEvent", e)
 }
 
 func schedule(e *domain.Event) {

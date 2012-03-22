@@ -5,9 +5,6 @@ import (
 	"launchpad.net/gobson/bson"
 )
 
-//
-// HANDLERS
-//
 func createGame(data domain.Data, repo repository) *domain.Event {
 	id := bson.NewObjectId()
 	data["id"] = id.Hex()
@@ -23,12 +20,14 @@ func createGame(data domain.Data, repo repository) *domain.Event {
 				land.Cost = domain.Money(value.(float64))
 			case "income":
 				land.Income = domain.Money(value.(float64))
+			case "retainalways":
+				land.RetainAlways = value.(bool)
 			}
 		}
 		lands[land.Name] = &land
 	}
 
-	var structures []domain.Structure
+	structures := make(map[string]domain.Structure)
 	for _, sData := range data["structures"].([]interface{}) {
 		var structure domain.Structure
 		for key, value := range sData.(map[string]interface{}) {
@@ -46,7 +45,7 @@ func createGame(data domain.Data, repo repository) *domain.Event {
 				structure.BuiltOn = lands[land]
 			}
 		}
-		structures = append(structures, structure)
+		structures[structure.Name] = structure
 	}
 
 	repo[id.Hex()] = domain.Game{
@@ -107,21 +106,23 @@ func setLandIncome(data domain.Data, repo repository) *domain.Event {
 
 func setStructureCost(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
-	game.Monies.Lands = domain.Money(data["structureCost"].(float64))
+	name := data["structureName"].(string)
+	st := game.Structures[name]
+	st.Cost = domain.Money(data["structureCost"].(float64))
+	game.Structures[name] = st
 	repo[id] = game
 	return createEvent("structureCostSet", data)
 }
 
 func generatePurchases(data domain.Data, repo repository) *domain.Event {
-	id, g := getGame(data, repo)
-	root := domain.NewRootNode(len(g.Structures), g.Finance, g.Monies)
-	domain.CreateNodes(root, g.Structures, numberOfBuys) 
-	// just do last for now
+	_, game := getGame(data, repo)
+	root := domain.NewRootNode(len(game.Structures), game.Finance, game.Monies)
+	domain.CreateNodes(root, game.Structures, numberOfBuys)
+
 	best := domain.FindBestChild(root, numberOfBuys, "", 0, 0)
-	data["purchases"] = best
-	// following lines probably aren't needed
-	g.Purchases = best
-	repo[id] = g
+	logger.Println("best:", best)
+	//data["purchases"] = best
+
 	return createEvent("purchasesGenerated", data)
 }
 

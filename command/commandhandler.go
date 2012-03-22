@@ -20,13 +20,13 @@ type commandHandler struct {
 
 func newCommandHandler(repo repository, col mgo.Collection) commandHandler {
 	pool := handlerPool{
-		"createGame":       createGame,
-		"setWallet":        setWallet,
-		"setUpkeep":        setUpkeep,
-		"setBalance":       setBalance,
-		"setIncome":        setIncome,
-		"setLandIncome":    setLandIncome,
-		"setStructureCost": setStructureCost,
+		"createGame":        createGame,
+		"setWallet":         setWallet,
+		"setUpkeep":         setUpkeep,
+		"setBalance":        setBalance,
+		"setIncome":         setIncome,
+		"setLandIncome":     setLandIncome,
+		"setStructureCost":  setStructureCost,
 		"generatePurchases": generatePurchases,
 	}
 	return commandHandler{pool, repo, col}
@@ -53,4 +53,3 @@ func (c commandHandler) store(e *domain.Event) {
 		logger.Println("Could not save to datastore:", err)
 	}
 }
-

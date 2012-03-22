@@ -1,5 +1,4 @@
-Make logger and database global in denormalizer
-Expanding purchases doesn't make the whole accordian div grow
+Figure out why retain always is always false?!?!?
 Style the generate button
 Clean up the css for the new tables
 Saved message dissrupts moving from one field to another
@@ -19,6 +18,7 @@ Do some benchmarking
 Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
 DONE:
+Expanding purchases doesn't make the whole accordian div grow
 Make script to clean databases
 Create script to run all the servers
 Push code to bitbucket.org

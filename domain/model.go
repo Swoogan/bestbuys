@@ -8,8 +8,8 @@ type Game struct {
 	Id         bson.ObjectId "hack" // this should be "_id" but then Upsert doesn't do anything
 	Finance    Finance
 	Monies     Monies
-	Structures []Structure
-	Purchases Result
+	Structures map[string]Structure
+	Purchases  Result
 	LastSaved  bson.Timestamp
 }
 
@@ -37,8 +37,8 @@ func (m Monies) Total() Money {
 }
 
 type Land struct {
-	Name   string
-	Cost   Money
-	Income Money
+	Name         string
+	Cost         Money
+	Income       Money
 	RetainAlways bool
 }
