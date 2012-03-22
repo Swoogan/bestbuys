@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"fmt"
+//	"fmt"
 	"math"
 )
 
@@ -40,8 +40,6 @@ func (s Structure) purchase(finance Finance, monies Monies) FullPurchase {
 			Quantity:       quantity,
 		}
 	} else {
-		fmt.Println("Cost", s.Cost)
-		fmt.Println("Name", s.Name)
 		p := purchase{finance, monies, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
 		land := calculate(p)
 
