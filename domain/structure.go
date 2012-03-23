@@ -2,7 +2,6 @@ package domain
 
 import (
 	"fmt"
-	"math"
 )
 
 type Structure struct {
