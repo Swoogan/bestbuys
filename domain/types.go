@@ -20,4 +20,3 @@ type Result struct {
 	Path  string
 	Ratio Money
 }
-
