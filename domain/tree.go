@@ -19,7 +19,8 @@ func (t *Tree) Build(structures Structures, f Finance, depth int) {
 		child := newNode(purchase)
 		structures[key].increasePrice(purchase.Quantity)
 		child.addChildren(t.Size, structures, f, depth-1)
-		t.Children[i] = child; i++
+		t.Children[i] = child
+		i++
 		//log.Println("created", child, depth)
 	}
 }
@@ -51,4 +52,3 @@ func findBest(results []Result) Result {
 
 	return best
 }
-

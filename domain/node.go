@@ -7,22 +7,11 @@ import (
 
 type node struct {
 	Children []*node
-
-	First    PurchaseResult
-	Second   PurchaseResult
-	Increase Money
-	Quantity int
-	Hours    int
+	Purchase FullPurchase
 }
 
 func newNode(purchase FullPurchase) *node {
-	return &node{
-		First:    purchase.First,
-		Second:   purchase.Second,
-		Increase: purchase.Increase,
-		Quantity: purchase.Quantity,
-		Hours:    purchase.First.Hours + purchase.Second.Hours,
-	}
+	return &node{Purchase: purchase}
 }
 
 func (n *node) addChildren(size int, structures Structures, f Finance, depth int) {
@@ -34,9 +23,10 @@ func (n *node) addChildren(size int, structures Structures, f Finance, depth int
 
 	i := 0
 	for key, st := range structures {
-		purchase := st.purchase(f)
+		purchase := FullPurchase{}
+		purchase.Purchase(st, f)
 		child := newNode(purchase)
-		structures[key].increasePrice(purchase.Quantity)
+		structures[key].IncreasePrice()
 		child.addChildren(size, structures, f, depth-1)
 		n.Children[i] = child
 		i++
@@ -44,7 +34,7 @@ func (n *node) addChildren(size int, structures Structures, f Finance, depth int
 }
 
 func (n *node) findBestPath(depth int, path string, hours int, cii Money) Result {
-	hours += n.Hours
+	hours += n.Result.Hours
 	cii += n.Increase
 	path += n.String()
 	ratio := calcRatio(hours, cii)
@@ -72,8 +62,8 @@ func calcRatio(hours int, cii Money) Money {
 }
 
 func (n *node) String() string {
-	f := n.First
-	s := n.Second
+	f := n.Purchase.First
+	s := n.Purchase.Second
 
 	format := "%v\t\t %v\t $%f\t %v\t $%f\t %f\n"
 	return fmt.Sprintf(format, shorten(f.Name), f.Quantity, f.Cost, f.Hours, f.NewIncome, f.Ratio) +

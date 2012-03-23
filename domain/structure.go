@@ -12,12 +12,11 @@ type Structure struct {
 	BuiltOn  *Land
 }
 
-func (s *Structure) IncreasePrice() {
+func (s Structure) IncreasePrice() {
 	s.Cost += s.Increase * Quantity
 }
 
-func (s *Structure) String() string {
+func (s Structure) String() string {
 	format := "%v\t\t %f\t %f\t %f\t"
 	return fmt.Sprintf(format, s.Name, s.Cost, s.Increase, s.Income)
 }
-
