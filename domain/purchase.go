@@ -20,11 +20,11 @@ type Purchase struct {
 }
 
 func NewPurchase(name string, cost Money, income Money, finance Finance) *Purchase {
-	return &Purchase{name, cost, income, finance}
+	return &Purchase{Name: name, UnitCost: cost, Income: income, FinanceIn: finance}
 }
 
 func (p *Purchase) Calculate() {
-	p.TotalCost = p.cost * Quantity
+	p.TotalCost = p.UnitCost * Quantity
 	p.Increase = p.Income * Quantity
 
 	p.FinanceOut = p.FinanceIn
@@ -39,15 +39,15 @@ func (p *Purchase) Calculate() {
 		// Buy outright
 		if p.Hours <= CollectionTime {
 			moneyLeft := (Money(p.Hours) * p.FinanceIn.Income) - p.TotalCost
-			result.FinanceOut.Balance += p.FinanceIn.Wallet * Money(0.9)
-			result.FinanceOut.Wallet = moneyLeft
+			p.FinanceOut.Balance += p.FinanceIn.Wallet * Money(0.9)
+			p.FinanceOut.Wallet = moneyLeft
 		} else { // Save to purchase
 			dailyIncome := p.FinanceIn.Income * CollectionTime
 			amountRemaining := p.TotalCost - dailyIncome
 			withdrawl := min(p.FinanceIn.Balance, amountRemaining)
 			remainderWithFee := (amountRemaining - withdrawl) * Money(1.1)
 
-			p.ToatlCost = dailyIncome + (amountRemaining * Money(1.1))
+			p.TotalCost = dailyIncome + (amountRemaining * Money(1.1))
 			p.Hours = CollectionTime + int(ceil(remainderWithFee/p.FinanceIn.Income))
 			p.FinanceOut.Balance += p.FinanceIn.Wallet * Money(0.9)
 			p.FinanceOut.Wallet = Money(0)
