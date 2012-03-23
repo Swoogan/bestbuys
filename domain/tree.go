@@ -19,7 +19,7 @@ func (t *Tree) Build(structures Structures, f Finance, depth int) {
 		child := newNode(purchase)
 		structures[key].increasePrice(purchase.Quantity)
 		child.addChildren(t.Size, structures, f, depth-1)
-		t.Children[i++] = child
+		t.Children[i] = child; i++
 		//log.Println("created", child, depth)
 	}
 }

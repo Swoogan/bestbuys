@@ -1,63 +1,28 @@
 package domain
 
-//import "fmt"
+import(
+	"math"
+)
 
 const Quantity = 10
 
 type Purchase struct {
 	Name     string
 	Cost     Money
-	Quantity int
+	Income Money
 
 	FinanceIn  Finance
 	FinanceOut  Finance
+	Increase     Money
 	Hours     int
 	Ratio     Money
-	NewIncome Money
 }
 
-type FullPurchase struct {
-	First    Purchase
-	Second   Purchase
-	Increase Money
+func NewPurchase(name string, cost Money, income Money, finance Finance) *Purchase {
+	return &Purchase{name, cost, income, finance}
 }
 
-func (s Structure) purchase(finance Finance) FullPurchase {
-	var result FullPurchase
-	quantity := s.quantityToPurchase(finance.Income)
-
-	if s.BuiltOn.RetainAlways {
-		p := purchase{finance, s.Name, s.Cost, s.Income, quantity}
-		structure := calculate(p)
-
-		p = purchase{structure.Finance, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
-		land := calculate(p)
-
-		result = FullPurchase{
-			First:    structure,
-			Second:   land,
-			Increase: structure.Increase,
-			Quantity: quantity,
-		}
-	} else {
-		p := purchase{finance, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
-		land := calculate(p)
-
-		p = purchase{land.Finance, s.Name, s.Cost, s.Income, quantity}
-		structure := calculate(p)
-
-		result = FullPurchase{
-			First:          land,
-			Second:         structure,
-			IncomeIncrease: structure.IncomeIncrease,
-			Quantity:       quantity,
-		}
-	}
-
-	return result
-}
-
-func calculate(p purchase) PurchaseResult {
+func (p *Purchase) Calculate() {
 	result := PurchaseResult{
 		Name:     p.name,
 		Quantity: p.quantity,
@@ -97,15 +62,15 @@ func calculate(p purchase) PurchaseResult {
 	return result
 }
 
-func (s Structure) timeToPurchase(quantity int, income, cost Money) Money {
+func (p Purchase) Duration(s Structure) Money {
 	landHours := Money(0)
 
 	if !s.BuiltOn.RetainAlways {
-		landHours = (s.BuiltOn.Cost * Money(quantity)) / income
-		income += s.BuiltOn.Income * Money(quantity)
+		landHours = (s.BuiltOn.Cost * Quantity) / p.Income
+		income += s.BuiltOn.Income * Quantity
 	}
 
-	structureHours := (s.Cost * Money(quantity)) / income
+	structureHours := (s.Cost * Quantity) / p.Income
 	total := landHours + structureHours
 	adjustedTotal := ceil(landHours) + ceil(structureHours)
 
@@ -115,6 +80,7 @@ func (s Structure) timeToPurchase(quantity int, income, cost Money) Money {
 
 	return adjustedTotal
 }
+
 
 //
 // Helpers
