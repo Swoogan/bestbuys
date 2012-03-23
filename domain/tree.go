@@ -16,8 +16,9 @@ func (t *Tree) Build(structures Structures, f Finance, depth int) {
 
 	i := 0
 	for key, st := range structures {
-		child := newNode(st, f)
-		structures[key].increasePrice(child.Result.Quantity)
+		purchase := st.purchase(f)
+		child := newNode(purchase)
+		structures[key].increasePrice(purchase.Quantity)
 		child.addChildren(t.Size, structures, f, depth-1)
 		t.Children[i] = child
 		i++
