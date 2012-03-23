@@ -28,14 +28,13 @@ func (n *node) addChildren(size int, structures Structures, f Finance, depth int
 		child := newNode(purchase)
 		structures[key].IncreasePrice()
 		child.addChildren(size, structures, f, depth-1)
-		n.Children[i] = child
-		i++
+		n.Children[i] = child; i++
 	}
 }
 
 func (n *node) findBestPath(depth int, path string, hours int, cii Money) Result {
-	hours += n.Result.Hours
-	cii += n.Increase
+	hours += n.Purchase.Hours
+	cii += n.Purchase.Increase
 	path += n.String()
 	ratio := calcRatio(hours, cii)
 
@@ -46,7 +45,7 @@ func (n *node) findBestPath(depth int, path string, hours int, cii Money) Result
 	results := make([]Result, len(n.Children))
 
 	for i, child := range n.Children {
-		results[i] = child.findBestPath(depth, path, hours, cii)
+		results[i] = child.findBestPath(depth-1, path, hours, cii)
 	}
 
 	return findBest(results)
@@ -65,9 +64,9 @@ func (n *node) String() string {
 	f := n.Purchase.First
 	s := n.Purchase.Second
 
-	format := "%v\t\t %v\t $%f\t %v\t $%f\t %f\n"
-	return fmt.Sprintf(format, shorten(f.Name), f.Quantity, f.Cost, f.Hours, f.NewIncome, f.Ratio) +
-		fmt.Sprintf(format, shorten(s.Name), s.Quantity, s.Cost, s.Hours, s.NewIncome, s.Ratio)
+	format := "%v\t\t $%f\t %v\t $%f\t %f\n"
+	return fmt.Sprintf(format, shorten(f.Name), f.TotalCost, f.Hours, f.FinanceOut.Income, f.Ratio) +
+		fmt.Sprintf(format, shorten(s.Name), s.TotalCost, s.Hours, s.FinanceOut.Income, s.Ratio)
 }
 
 func shorten(name string) string {
@@ -79,7 +78,8 @@ func shorten(name string) string {
 }
 
 func (n *node) Print(logger *log.Logger) {
-	logger.Printf("%v %v %f %d %d", n.First, n.Second, n.Increase, n.Quantity, n.Hours)
+	p := n.Purchase
+	logger.Printf("Print: %v %v %f %d", p.First, p.Second, p.Increase, p.Hours)
 
 	for _, child := range n.Children {
 		child.Print(logger)

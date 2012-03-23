@@ -17,6 +17,6 @@ func (s Structure) IncreasePrice() {
 }
 
 func (s Structure) String() string {
-	format := "%v\t\t %f\t %f\t %f\t"
+	format := "Structure: %v\t\t %f\t %f\t %f\t"
 	return fmt.Sprintf(format, s.Name, s.Cost, s.Increase, s.Income)
 }

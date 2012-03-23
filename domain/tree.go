@@ -15,13 +15,12 @@ func (t *Tree) Build(structures Structures, f Finance, depth int) {
 	i := 0
 	t.Children = make([]*node, t.Size)
 	for key, st := range structures {
-		purchase := st.purchase(f)
+		purchase := FullPurchase{}
+		purchase.Purchase(st, f)
 		child := newNode(purchase)
-		structures[key].increasePrice(purchase.Quantity)
+		structures[key].IncreasePrice()
 		child.addChildren(t.Size, structures, f, depth-1)
-		t.Children[i] = child
-		i++
-		//log.Println("created", child, depth)
+		t.Children[i] = child; i++
 	}
 }
 
