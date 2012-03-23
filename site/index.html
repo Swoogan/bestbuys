@@ -53,6 +53,7 @@
       <h2 class="header">Purchases</h2>
       <div class="content">
         <input type="submit" class="generate" value="Generate">
+        <div class="purchasesInfo"></div>
       </div>
       <br class="clear">
     </div>
@@ -142,6 +143,11 @@
       <td class="money" style="background-color: lightgray;">{{format increase}}</td> 
       <td class="money" style="background-color: lightgray;">{{format income}}</td> 
     </tr>
+  </script>
+
+  <script id="purchasesTemplate" type="text/x-jquery-tmpl">
+    <p>{{=Path}}</p> 
+    <p>{{=Ratio}}</p> 
   </script>
 
   <header id="title">

@@ -113,6 +113,10 @@ $(document).ready(function() {
         $('#structuresTemplate').render(data['structures'])
       );
   
+      $('.purchasesInfo').html(
+        $('#purchasesTemplate').render(data['purchases'])
+      );
+  
       bindBehaviors();
     });
   }
