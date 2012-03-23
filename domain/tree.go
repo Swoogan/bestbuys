@@ -20,7 +20,8 @@ func (t *Tree) Build(structures Structures, f Finance, depth int) {
 		child := newNode(purchase)
 		structures[key].IncreasePrice()
 		child.addChildren(t.Size, structures, f, depth-1)
-		t.Children[i] = child; i++
+		t.Children[i] = child
+		i++
 	}
 }
 
@@ -30,11 +31,11 @@ func (t *Tree) Print(logger *log.Logger) {
 	}
 }
 
-func (t *Tree) FindBestPath(depth int, path string, hours int, cii Money) Result {
+func (t *Tree) FindBestPath(depth int, buys []Buy, hours int, cii Money) Result {
 	results := make([]Result, t.Size)
 
 	for i, child := range t.Children {
-		results[i] = child.findBestPath(depth, path, hours, cii)
+		results[i] = child.findBestPath(depth, buys, hours, cii)
 	}
 
 	return findBest(results)

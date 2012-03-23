@@ -63,7 +63,8 @@ func generatePurchases(data domain.Data, repo repository) *domain.Event {
 	_, game := getGame(data, repo)
 	root := domain.NewTree(len(game.Structures))
 	root.Build(game.Structures, game.Finance, numberOfBuys)
-	best := root.FindBestPath(numberOfBuys, "", 0, 0)
+	var buys []domain.Buy
+	best := root.FindBestPath(numberOfBuys, buys, 0, 0)
 	data["purchases"] = best
 	return createEvent("purchasesGenerated", data)
 }

@@ -1,3 +1,5 @@
+Find out why the keys in the purchases are title case but not in the structures (query side)
+Fix format so that it handles decimal places
 Verify the findbest algorithm is operating correctly
 Improve the findbest data structure
 Figure out why the generate button causes multiple posts

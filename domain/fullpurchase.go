@@ -1,11 +1,11 @@
 package domain
 
 type FullPurchase struct {
-	First    *Purchase
-	Second   *Purchase
-//	Structure *Purchase
+	First  *Purchase
+	Second *Purchase
+	//	Structure *Purchase
 	Increase Money
-	Hours int
+	Hours    int
 }
 
 func (f *FullPurchase) Purchase(s Structure, finance Finance) {
