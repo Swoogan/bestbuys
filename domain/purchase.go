@@ -58,6 +58,14 @@ func (p *Purchase) Calculate() {
 	}
 }
 
+func (p *Purchase) ShortName() string {
+	if len(p.Name) < 25 {
+		return p.Name
+	}
+
+	return p.Name[0:22] + "..."
+}
+
 //
 // Helpers
 //

@@ -147,7 +147,11 @@
 
   <script id="purchasesTemplate" type="text/x-jquery-tmpl">
     <pre>{{=Path}}</pre> 
-    <p>{{=Ratio}}</p> 
+    <p>{{format Ratio}}</p> 
+  </script>
+
+  <script id="pathTemplate" type="text/x-jquery-tmpl">
+    <td>{{=name}}</td><td>{{=price}}</td><td>{{=hours}}</td><td>{{=newIncomeJ}}</td><td>{{incomePerHour}}</td>
   </script>
 
   <header id="title">
