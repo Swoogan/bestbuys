@@ -12,17 +12,15 @@ func NewTree(size int) *Tree {
 }
 
 func (t *Tree) Build(structures Structures, f Finance, depth int) {
-	t.Children = make([]*node, t.Size)
-
 	i := 0
+	t.Children = make([]*node, t.Size)
 	for key, st := range structures {
 		purchase := st.purchase(f)
 		child := newNode(purchase)
 		structures[key].increasePrice(purchase.Quantity)
 		child.addChildren(t.Size, structures, f, depth-1)
-		t.Children[i] = child
-		i++
-		//		log.Println("created", child, depth)
+		t.Children[i++] = child
+		//log.Println("created", child, depth)
 	}
 }
 
@@ -53,3 +51,4 @@ func findBest(results []Result) Result {
 
 	return best
 }
+

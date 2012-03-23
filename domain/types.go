@@ -21,18 +21,3 @@ type Result struct {
 	Ratio Money
 }
 
-type PurchaseResult struct {
-	Name      string
-	Hours     int
-	Quantity  int
-	Cost      Money
-	Ratio     Money
-	NewIncome Money
-}
-
-type FullPurchase struct {
-	First    PurchaseResult
-	Second   PurchaseResult
-	Increase Money
-	Quantity int
-}
