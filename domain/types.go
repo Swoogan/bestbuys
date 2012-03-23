@@ -22,22 +22,17 @@ type Result struct {
 }
 
 type PurchaseResult struct {
-	Name           string
-	Hours          int
-	Quantity       int
-	Cost           Money
-	Ratio          Money
-	Finance        Finance
-	IncomeIncrease Money
+	Name      string
+	Hours     int
+	Quantity  int
+	Cost      Money
+	Ratio     Money
+	NewIncome Money
 }
 
 type FullPurchase struct {
-	First          PurchaseResult
-	Second         PurchaseResult
-	IncomeIncrease Money
-	Quantity       int
-}
-
-func (f FullPurchase) Hours() int {
-	return f.First.Hours + f.Second.Hours
+	First    PurchaseResult
+	Second   PurchaseResult
+	Increase Money
+	Quantity int
 }

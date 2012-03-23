@@ -5,6 +5,8 @@ import (
 	"math"
 )
 
+const Quantity = 10
+
 type purchase struct {
 	finance  Finance
 	name     string
@@ -33,10 +35,10 @@ func (s Structure) purchase(finance Finance) FullPurchase {
 		land := calculate(p)
 
 		result = FullPurchase{
-			First:          structure,
-			Second:         land,
-			IncomeIncrease: structure.IncomeIncrease,
-			Quantity:       quantity,
+			First:    structure,
+			Second:   land,
+			Increase: structure.Increase,
+			Quantity: quantity,
 		}
 	} else {
 		p := purchase{finance, s.BuiltOn.Name, s.BuiltOn.Cost, s.BuiltOn.Income, quantity}
@@ -58,14 +60,13 @@ func (s Structure) purchase(finance Finance) FullPurchase {
 
 func calculate(p purchase) PurchaseResult {
 	result := PurchaseResult{
-		Finance:        p.finance,
-		Name:           p.name,
-		Quantity:       p.quantity,
-		Cost:           Money(p.quantity) * p.cost,
-		IncomeIncrease: p.income * Money(p.quantity),
+		Name:     p.name,
+		Quantity: p.quantity,
+		Cost:     Money(p.quantity) * p.cost,
+		Increase: p.income * Money(p.quantity),
 	}
 
-	result.Finance.Income += result.IncomeIncrease
+	result.Income += result.Increase
 
 	if result.Cost <= p.finance.Wallet {
 		result.Finance.Wallet -= result.Cost
@@ -121,6 +122,8 @@ func (s Structure) timeToPurchase(quantity int, income, cost Money) Money {
 }
 
 func (s Structure) quantityToPurchase(income Money) int {
+	return Quantity
+/*
 	count := 2
 	cci := Money(0)
 	for count <= 10 {
@@ -133,8 +136,10 @@ func (s Structure) quantityToPurchase(income Money) int {
 		count++
 	}
 	return imax(count-1, 1)
+*/
 }
 
+/*
 func (s Structure) opportunityCost(income, totalHours Money) Money {
 	hours := s.timeToPurchase(1, income, s.Cost)
 	numberOfProperties := Money(2)
@@ -151,6 +156,7 @@ func (s Structure) opportunityCost(income, totalHours Money) Money {
 	}
 	return opportunityCost
 }
+*/
 
 func (s *Structure) String() string {
 	format := "%v\t\t %f\t %f\t %f\t"
