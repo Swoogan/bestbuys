@@ -4,7 +4,7 @@ import (
 	"os"
 	"log"
 	"domain"
-	"launchpad.net/mgo"
+	"labix.org/v2/mgo"
 )
 
 type handler func(mgo.Database, domain.Data, *log.Logger) (err os.Error)

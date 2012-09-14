@@ -3,7 +3,7 @@ package main
 import (
 	"net"
 	"domain"
-	"rpc/jsonrpc"
+	"net/rpc/jsonrpc"
 )
 
 func rpcCall(address string, method string, e *domain.Event) {

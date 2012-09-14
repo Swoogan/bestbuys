@@ -3,15 +3,15 @@ package main
 import (
 	"os"
 	"log"
-	"rpc"
 	"net"
 	"flag"
-	"syscall"
 	"domain"
+	"syscall"
+	"net/rpc"
 	"os/signal"
-	"rpc/jsonrpc"
 	"denormalizer"
-	"launchpad.net/mgo"
+	"net/rpc/jsonrpc"
+	"labix.org/v2/mgo"
 )
 
 var mongo *string = flag.String("m", "localhost", "Mongo server address")

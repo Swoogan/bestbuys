@@ -2,7 +2,7 @@ package main
 
 import (
 	"domain"
-	"launchpad.net/gobson/bson"
+	"labix.org/v2/mgo/bson"
 )
 
 func createGame(data domain.Data, repo repository) *domain.Event {

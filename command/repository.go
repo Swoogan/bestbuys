@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 	"domain"
-	"launchpad.net/mgo"
-	"launchpad.net/gobson/bson"
+	"labix.org/v2/mgo"
+	"labix.org/v2/mgo/bson"
 )
 
 type repository map[string]domain.Game

@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"launchpad.net/gobson/bson"
+	"labix.org/v2/mgo/bson"
 )
 
 type Game struct {
@@ -9,7 +9,7 @@ type Game struct {
 	Finance    Finance
 	Structures map[string]Structure
 	Purchases  Result
-	LastSaved  bson.Timestamp
+	LastSaved  bson.MongoTimestamp
 }
 
 type Finance struct {

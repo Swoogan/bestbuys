@@ -4,8 +4,8 @@ import (
 	"os"
 	"log"
 	"domain"
-	"launchpad.net/mgo"
-	"launchpad.net/gobson/bson"
+	"labix.org/v2/mgo"
+	"labix.org/v2/mgo/bson"
 )
 
 func gameCreated(database mgo.Database, data domain.Data, logger *log.Logger) (err os.Error) {
