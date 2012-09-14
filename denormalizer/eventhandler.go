@@ -3,8 +3,8 @@ package denormalizer
 import (
 	"os"
 	"log"
-	"domain"
 	"labix.org/v2/mgo"
+	"bestbuys_go/domain"
 )
 
 type handler func(mgo.Database, domain.Data, *log.Logger) (err os.Error)

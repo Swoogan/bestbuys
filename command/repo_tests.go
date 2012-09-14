@@ -2,13 +2,13 @@ package main
 
 import (
 	"log"
-	"domain"
+	"bestbuys_go/domain"
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 )
 
 func StoreTest() {
-	session, err := mgo.Mongo("localhost")
+	session, err := mgo.Dial("localhost")
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -29,7 +29,7 @@ func StoreTest() {
 }
 
 func LoadTest() {
-	session, err := mgo.Mongo("localhost")
+	session, err := mgo.Dial("localhost")
 	if err != nil {
 		log.Fatal(err)
 		return

@@ -1,8 +1,7 @@
 package main
 
 import (
-	"os"
-	"domain"
+	"bestbuys_go/domain"
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 )
@@ -27,7 +26,7 @@ func (r repository) rebuild(d mgo.Database) {
 	}
 }
 
-func (r repository) snapshot(d mgo.Database) os.Error {
+func (r repository) snapshot(d mgo.Database) error {
 	logger.Println("Saving snapshots")
 	for id, game := range r {
 		game.LastSaved = bson.Now() // what if save fails???
