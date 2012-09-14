@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 	"domain"
-	"launchpad.net/mgo"
-	"launchpad.net/gobson/bson"
+	"labix.org/v2/mgo"
+	"labix.org/v2/mgo/bson"
 )
 
 func StoreTest() {

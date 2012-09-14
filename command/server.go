@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"log"
 	"flag"
-	"http"
+	"net/http"
 	"syscall"
 	"domain"
 	"os/signal"
-	"launchpad.net/mgo"
+	"labix.org/v2/mgo"
 	"bitbucket.org/Swoogan/mongorest"
 )
 
