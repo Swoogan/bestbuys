@@ -1,6 +1,8 @@
 package domain
 
-import "labix.org/v2/mgo/bson"
+import (
+	"time"
+)
 
 const CollectionTime = 24
 
@@ -10,7 +12,7 @@ type Data map[string]interface{}
 
 type Event struct {
 	Name string
-	Date bson.MongoTimestamp
+	Date time.Time
 	Data Data
 }
 

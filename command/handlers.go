@@ -1,7 +1,7 @@
 package main
 
 import (
-	"domain"
+	"bestbuys_go/domain"
 	"labix.org/v2/mgo/bson"
 )
 

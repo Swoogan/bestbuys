@@ -7,9 +7,9 @@ import (
 	"flag"
 	"net/http"
 	"syscall"
-	"domain"
 	"os/signal"
 	"labix.org/v2/mgo"
+	"bestbuys_go/domain"
 	"bitbucket.org/Swoogan/mongorest"
 )
 
@@ -32,7 +32,7 @@ func main() {
 	logger = domain.NewLogger(*logfile, "Command Handler\t")
 
 	logger.Println("Connecting to mongodb")
-	session, err := mgo.Mongo(*mongo)
+	session, err := mgo.Dial(*mongo)
 	if err != nil {
 		logger.Fatal(err)
 		return

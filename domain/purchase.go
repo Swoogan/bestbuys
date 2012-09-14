@@ -71,15 +71,15 @@ func (p *Purchase) ShortName() string {
 //
 
 func mmax(x Money, y float64) Money {
-	return Money(math.Fmax(float64(x), y))
+	return Money(math.Max(float64(x), y))
 }
 
 func imax(x int, y float64) int {
-	return int(math.Fmax(float64(x), y))
+	return int(math.Max(float64(x), y))
 }
 
 func min(x Money, y Money) Money {
-	return Money(math.Fmin(float64(x), float64(y)))
+	return Money(math.Min(float64(x), float64(y)))
 }
 
 func ceil(x Money) Money {

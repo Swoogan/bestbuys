@@ -2,7 +2,7 @@ package main
 
 import (
 	"net"
-	"domain"
+	"bestbuys_go/domain"
 	"net/rpc/jsonrpc"
 )
 
