@@ -16,8 +16,19 @@ type Event struct {
 
 type Structures map[string]Structure
 
-type Result struct {
-	Path  string
-	Ratio Money
+type Buy struct {
+	Name string
+	Price Money
+	Hours int
+	NewIncome Money
+	IncomePerHour Money
 }
 
+func NewBuy(p *Purchase) Buy {
+	return Buy { p.Name, p.TotalCost, p.Hours, p.FinanceOut.Income, p.Ratio }
+}
+
+type Result struct {
+	Path  []Buy
+	Ratio Money
+}

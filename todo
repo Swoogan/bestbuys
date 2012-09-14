@@ -1,3 +1,10 @@
+Find out why the keys in the purchases are title case but not in the structures (query side)
+Fix format so that it handles decimal places
+Verify the findbest algorithm is operating correctly
+Improve the findbest data structure
+Figure out why the generate button causes multiple posts
+Thread findbest to stop it from blocking the server.
+Have Finance and Structure accordians open by default
 Style the generate button
 Clean up the css for the new tables
 Saved message dissrupts moving from one field to another
@@ -17,6 +24,7 @@ Do some benchmarking
 Test the Go 1.0 implementation of mgo to see if the "_id" upsert bug still exists
 
 DONE:
+Get findbest results returning to browser
 merge monies and finance structs together
 Figure out why retain always is always false?!?!?
 Expanding purchases doesn't make the whole accordian div grow

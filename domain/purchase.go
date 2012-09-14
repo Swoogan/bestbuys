@@ -1,86 +1,70 @@
 package domain
 
-import(
+import (
 	"math"
 )
 
 const Quantity = 10
 
 type Purchase struct {
-	Name     string
-	Cost     Money
-	Income Money
+	Name      string
+	UnitCost  Money
+	Income    Money
+	FinanceIn Finance
 
-	FinanceIn  Finance
-	FinanceOut  Finance
-	Increase     Money
-	Hours     int
-	Ratio     Money
+	FinanceOut Finance
+	TotalCost  Money
+	Increase   Money
+	Hours      int
+	Ratio      Money
 }
 
 func NewPurchase(name string, cost Money, income Money, finance Finance) *Purchase {
-	return &Purchase{name, cost, income, finance}
+	return &Purchase{Name: name, UnitCost: cost, Income: income, FinanceIn: finance}
 }
 
 func (p *Purchase) Calculate() {
-	result := PurchaseResult{
-		Name:     p.name,
-		Quantity: p.quantity,
-		Cost:     Money(p.quantity) * p.cost,
-		Increase: p.income * Money(p.quantity),
-	}
+	p.TotalCost = p.UnitCost * Quantity
+	p.Increase = p.Income * Quantity
 
-	result.Income += result.Increase
+	p.FinanceOut = p.FinanceIn
+	p.FinanceOut.Income += p.Increase
 
-	if result.Cost <= p.finance.Wallet {
-		result.Finance.Wallet -= result.Cost
-		result.Hours = 0
-		result.Ratio = (result.IncomeIncrease * p.finance.Income) / result.Cost
+	if p.TotalCost <= p.FinanceIn.Wallet {
+		p.FinanceOut.Wallet -= p.TotalCost
+		p.Hours = 0
+		p.Ratio = (p.Increase * p.FinanceIn.Income) / p.TotalCost
 	} else {
-		result.Hours = int(ceil(result.Cost / p.finance.Income))
+		p.Hours = int(ceil(p.TotalCost / p.FinanceIn.Income))
 		// Buy outright
-		if result.Hours <= CollectionTime {
-			moneyLeft := (Money(result.Hours) * p.finance.Income) - result.Cost
-			result.Finance.Balance += p.finance.Wallet * Money(0.9)
-			result.Finance.Wallet = moneyLeft
+		if p.Hours <= CollectionTime {
+			moneyLeft := (Money(p.Hours) * p.FinanceIn.Income) - p.TotalCost
+			p.FinanceOut.Balance += p.FinanceIn.Wallet * Money(0.9)
+			p.FinanceOut.Wallet = moneyLeft
 		} else { // Save to purchase
-			dailyIncome := p.finance.Income * CollectionTime
-			amountRemaining := result.Cost - dailyIncome
-			withdrawl := min(p.finance.Balance, amountRemaining)
+			dailyIncome := p.FinanceIn.Income * CollectionTime
+			amountRemaining := p.TotalCost - dailyIncome
+			withdrawl := min(p.FinanceIn.Balance, amountRemaining)
 			remainderWithFee := (amountRemaining - withdrawl) * Money(1.1)
 
-			result.Cost = dailyIncome + (amountRemaining * Money(1.1))
-			result.Hours = CollectionTime + int(ceil(remainderWithFee/p.finance.Income))
-			result.Finance.Balance += p.finance.Wallet * Money(0.9)
-			result.Finance.Wallet = Money(0)
-			result.Finance.Balance -= withdrawl
+			p.TotalCost = dailyIncome + (amountRemaining * Money(1.1))
+			p.Hours = CollectionTime + int(ceil(remainderWithFee/p.FinanceIn.Income))
+			p.FinanceOut.Balance += p.FinanceIn.Wallet * Money(0.9)
+			p.FinanceOut.Wallet = Money(0)
+			p.FinanceOut.Balance -= withdrawl
 		}
 
-		result.Ratio = result.IncomeIncrease / Money(result.Hours)
+		p.Ratio = p.Increase / Money(p.Hours)
 	}
-
-	return result
 }
 
-func (p Purchase) Duration(s Structure) Money {
-	landHours := Money(0)
-
-	if !s.BuiltOn.RetainAlways {
-		landHours = (s.BuiltOn.Cost * Quantity) / p.Income
-		income += s.BuiltOn.Income * Quantity
+func (p *Purchase) ShortName() string {
+	if len(p.Name) < 25 {
+		return p.Name
 	}
 
-	structureHours := (s.Cost * Quantity) / p.Income
-	total := landHours + structureHours
-	adjustedTotal := ceil(landHours) + ceil(structureHours)
-
-	if total <= 1 {
-		return 1
-	}
-
-	return adjustedTotal
+	return p.Name[0:22] + "..."
 }
-
 
 //
 // Helpers
