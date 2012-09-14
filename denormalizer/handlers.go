@@ -121,8 +121,13 @@ func structureCostSet(database mgo.Database, data domain.Data, logger *log.Logge
 
 func purchasesGenerated(database mgo.Database, data domain.Data, logger *log.Logger) (err os.Error) {
 	logger.Println("Handling Event: purchasesGenerated")
-	//id := bson.ObjectIdHex(data["game"].(string))
-	purchases := data["purchases"]
-	logger.Println("Purchases: ", purchases)
+	id := bson.ObjectIdHex(data["game"].(string))
+	selector := bson.M{"_id": id}
+	change := bson.M{"$set": bson.M{
+		"purchases": data["purchases"],
+	}}
+	if err = database.C("games").Update(selector, change); err != nil {
+		logger.Println("Could not update the datastore, ", err, ": ", selector)
+	}
 	return nil
 }
