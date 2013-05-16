@@ -12,7 +12,7 @@ func newRepository() repository {
 	return make(map[string]domain.Game, 3)
 }
 
-func (r repository) rebuild(d mgo.Database) {
+func (r repository) rebuild(d *mgo.Database) {
 	logger.Println("Loading snapshots")
 	var result []domain.Game
 	err := d.C("snapshots").Find(nil).All(&result)
@@ -26,7 +26,7 @@ func (r repository) rebuild(d mgo.Database) {
 	}
 }
 
-func (r repository) snapshot(d mgo.Database) error {
+func (r repository) snapshot(d *mgo.Database) error {
 	logger.Println("Saving snapshots")
 	for id, game := range r {
 		game.LastSaved = bson.Now() // what if save fails???

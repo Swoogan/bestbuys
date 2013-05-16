@@ -5,13 +5,13 @@ import (
 	"log"
 	"net"
 	"flag"
-	"domain"
 	"syscall"
 	"net/rpc"
 	"os/signal"
-	"denormalizer"
 	"net/rpc/jsonrpc"
 	"labix.org/v2/mgo"
+	"bestbuys_go/domain"
+	"bestbuys_go/denormalizer"
 )
 
 var mongo *string = flag.String("m", "localhost", "Mongo server address")

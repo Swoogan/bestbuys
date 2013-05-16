@@ -1,13 +1,12 @@
 package denormalizer
 
 import (
-	"os"
 	"log"
 	"labix.org/v2/mgo"
 	"bestbuys_go/domain"
 )
 
-type handler func(mgo.Database, domain.Data, *log.Logger) (err os.Error)
+type handler func(mgo.Database, domain.Data, *log.Logger) (err error)
 type handlerPool map[string]handler
 
 type EventHandler struct {
@@ -31,7 +30,7 @@ func New(database mgo.Database, logger *log.Logger) *EventHandler {
 	return &EventHandler{database, pool, logger}
 }
 
-func (d *EventHandler) HandleEvent(e *domain.Event, i *int) os.Error {
+func (d *EventHandler) HandleEvent(e *domain.Event, i *int) error {
 	if handler, ok := d.pool[e.Name]; ok {
 		return handler(d.database, e.Data, d.log)
 	}

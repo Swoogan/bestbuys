@@ -15,10 +15,10 @@ type handlerPool map[string]handler
 type commandHandler struct {
 	pool handlerPool
 	repo repository
-	col  mgo.Collection
+	col  *mgo.Collection
 }
 
-func newCommandHandler(repo repository, col mgo.Collection) commandHandler {
+func newCommandHandler(repo repository, col *mgo.Collection) commandHandler {
 	pool := handlerPool{
 		"createGame":        createGame,
 		"setWallet":         setWallet,
