@@ -5,7 +5,6 @@ import (
 	"log"
 	"net"
 	"flag"
-	"syscall"
 	"net/rpc"
 	"os/signal"
 	"net/rpc/jsonrpc"
@@ -27,7 +26,7 @@ func main() {
 	logger = domain.NewLogger(*logfile, "Denormalizer\t")
 
 	logger.Printf("Connecting to mongodb")
-	session, err := mgo.Mongo(*mongo)
+	session, err := mgo.Dial(*mongo)
 	if err != nil {
 		logger.Fatal(err)
 	}
@@ -39,18 +38,12 @@ func main() {
 	rpc.Register(eh)
 	go serve()
 
-	for {
-		select {
-		case sig := <-signal.Incoming:
-			logger.Println("***Caught", sig)
-			switch sig.(os.UnixSignal) {
-			case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
-				logger.Println("Shutting down...")
-				return
-			default:
-				continue
-			}
-		}
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+
+	for sig := range c {
+		logger.Printf("Received %v, shutting down...", sig)
+		os.Exit(1)
 	}
 }
 

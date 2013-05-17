@@ -6,16 +6,16 @@ import (
 	"bestbuys_go/domain"
 )
 
-type handler func(mgo.Database, domain.Data, *log.Logger) (err error)
+type handler func(*mgo.Database, domain.Data, *log.Logger) (err error)
 type handlerPool map[string]handler
 
 type EventHandler struct {
-	database mgo.Database
+	database *mgo.Database
 	pool     handlerPool
 	log      *log.Logger
 }
 
-func New(database mgo.Database, logger *log.Logger) *EventHandler {
+func New(database *mgo.Database, logger *log.Logger) *EventHandler {
 	pool := handlerPool{
 		"gameCreated":        gameCreated,
 		"walletSet":          walletSet,
