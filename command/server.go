@@ -2,11 +2,9 @@ package main
 
 import (
 	"os"
-	"fmt"
 	"log"
 	"flag"
 	"net/http"
-	"syscall"
 	"os/signal"
 	"labix.org/v2/mgo"
 	"bestbuys_go/domain"
@@ -58,13 +56,11 @@ func main() {
 		}
 	}()
 
-	select {
-	case sig := <-signal.Incoming:
-		fmt.Println("***Caught", sig)
-		switch sig.(os.UnixSignal) {
-		case syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT:
-			logger.Println("Shutting down...")
-			return
-		}
-	}
+	c := make(chan os.Signal, 1)
+        signal.Notify(c, os.Interrupt)
+
+        for sig := range c {
+                logger.Printf("Received %v, shutting down...", sig)
+                os.Exit(1)
+        }
 }
