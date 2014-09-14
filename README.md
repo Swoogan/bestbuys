@@ -7,6 +7,5 @@ Best Buys is an application for determining which lands/bases to buy, and in wha
 Technology
 ----------
 - The front-end UI is an HTML5 and javascript single page appliation. It using client-side templating and ajax.
-- The back-end using Go (Google's golang) and MongoDB to produced a REST based API that the front-end uses.
+- The back-end uses Go (Google's golang) and MongoDB to produce a REST API that the front-end uses.
 - The architecture of the system is CQRS (command query responsibility segregation). Event sourcing is employed such that all changes made in the UI are captured in an event database.
-
