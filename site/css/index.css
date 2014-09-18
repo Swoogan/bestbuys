@@ -44,9 +44,6 @@ body {
   width: 860px;
   box-shadow: 2px 2px 2px 2px #ccc;
 }
-.ui-tabs-panel {
-    display: inline !important;
-}
 .clear {
   clear: both;
 }
