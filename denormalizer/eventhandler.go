@@ -2,8 +2,10 @@ package denormalizer
 
 import (
 	"log"
-	"labix.org/v2/mgo"
-	"bestbuys_go/domain"
+
+        "gopkg.in/mgo.v2"
+
+        "bitbucket.org/Swoogan/bestbuys/domain"
 )
 
 type handler func(*mgo.Database, domain.Data, *log.Logger) (err error)

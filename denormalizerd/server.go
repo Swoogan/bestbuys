@@ -8,9 +8,11 @@ import (
 	"net/rpc"
 	"os/signal"
 	"net/rpc/jsonrpc"
-	"labix.org/v2/mgo"
-	"bestbuys_go/domain"
-	"bestbuys_go/denormalizer"
+
+        "gopkg.in/mgo.v2"
+
+        "bitbucket.org/Swoogan/bestbuys/domain"
+        "bitbucket.org/Swoogan/bestbuys/denormalizer"
 )
 
 var mongo *string = flag.String("m", "localhost", "Mongo server address")
