@@ -6,9 +6,11 @@ import (
 	"flag"
 	"net/http"
 	"os/signal"
-	"labix.org/v2/mgo"
-	"bestbuys_go/domain"
-	"bitbucket.org/Swoogan/mongorest"
+
+        "gopkg.in/mgo.v2"
+        "bitbucket.org/Swoogan/mongorest"
+
+        "bitbucket.org/Swoogan/bestbuys/domain"
 )
 
 /*

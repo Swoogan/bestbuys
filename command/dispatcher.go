@@ -2,8 +2,9 @@ package main
 
 import (
 	"net"
-	"bestbuys_go/domain"
 	"net/rpc/jsonrpc"
+
+        "bitbucket.org/Swoogan/bestbuys/domain"
 )
 
 func rpcCall(address string, method string, e *domain.Event) {

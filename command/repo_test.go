@@ -2,9 +2,11 @@ package main
 
 import (
 	"log"
-	"bestbuys_go/domain"
-	"labix.org/v2/mgo"
-	"labix.org/v2/mgo/bson"
+
+        "gopkg.in/mgo.v2"
+        "gopkg.in/mgo.v2/bson"
+
+        "bitbucket.org/Swoogan/bestbuys/domain"
 )
 
 func StoreTest() {
