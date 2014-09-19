@@ -1,22 +1,22 @@
 $(document).ready(function() {
   var focusoutEnabled = true;
 
+  var focusout = function(name, command) {
+    $("."+name).focusout(function(event) {      
+      if (focusoutEnabled) { 
+	var id = $(this).parents(".gameInfo").attr('data-game');
+	var value = parseCurrency($(this).text());
+	var data = '{"'+name+'": '+value+', "game": "'+id+'"}';
+	post(command, data);
+	blur(this);
+      }
+    });
+  }
+
   var blur = function(element) {
     $(element).toggleClass("shadow");
     var newVal = currencyFormat(parseCurrency($(element).html()));
     $(element).html(newVal);
-  }
-
-  var focusout = function(name, command) {
-    $("."+name).focusout(function(event) {
-      if (focusoutEnabled) { 
-        var id = $(this).parents(".gameInfo").attr('data-game') ;
-        var value = parseCurrency($(this).text());
-        var data = '{"'+name+'": '+value+', "game": "'+id+'"}';
-        post(command, data);
-        blur(this);
-      }
-    });
   }
 
 
@@ -97,7 +97,7 @@ $(document).ready(function() {
   var load = function(panel) {
     var id = $(panel).attr('data-game');
     $.getJSON('/games/'+id, function(data) {
-      $.views.registerTags({
+      $.views.helpers({
         format: currencyFormat
       });
   
