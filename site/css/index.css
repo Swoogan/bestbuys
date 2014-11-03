@@ -136,7 +136,7 @@ td{
   background-color: white;
 }
 .readonly {
-  background-color: Gray;
+  background-color: DarkGray;
 }
 .textbox {
   float: right;

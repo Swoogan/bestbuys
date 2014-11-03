@@ -121,8 +121,12 @@ $(document).ready(function() {
     });
   }
 
-  $('#tabs').bind('tabsselect', function(event, ui) {
-    load(ui.panel);
+  // This is sucky. Don't actually need to load the data after the first time.
+  // tabscreate cause same data for all three, hmmmm...
+  // commenting this out and the data still loads, looks like the page
+  // initialization is the real problem.
+  $("#tabs").on("tabsactivate", function(event, ui) {    
+    load(ui.newPanel);
   });
 
   var url = '/games/?selector=%7B%22name%22%3A%201%7D'

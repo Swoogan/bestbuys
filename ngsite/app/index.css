@@ -1,0 +1,145 @@
+body {
+  font-family: Verdana,Helvetica,sans-serif;
+  font-size: 10pt;
+  background-color: #FFF3E0;
+}
+
+#message {
+  padding: 5px 10px 5px 10px;
+  width: 500px;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px 2px #ccc;
+  cursor: pointer;
+  display: none;
+}
+
+#title {
+  width: 862px;
+  background-color: #373430;
+  font-size: 18pt;
+  color: #FFFFFF;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 2px #ccc;
+  border: 3px solid #635E59;
+}
+
+.block {  
+  width: 860px;
+  box-shadow: 2px 2px 2px 2px #ccc;
+}
+
+.center {
+  margin: 10px auto;
+}
+
+th {
+  background-color: #373430;
+  color: white;
+  border: 2px solid #373430;
+}
+
+td{
+  border: 2px solid #373430;
+  padding: 1px 5px 1px 5px;
+  height: 18px;
+  width: 130px;
+}
+
+table {
+  margin: auto;
+  font-size: 10pt;
+}
+
+.readonly {
+  background-color: DarkGray;
+}
+
+.money {
+  text-align: right;
+}
+
+.textbox {
+  float: right;
+  width: 120px;
+  padding: 2px;
+  text-align: right;
+  border-radius: 2px;
+  border: 2px solid #373430;
+  overflow: hidden;
+}
+
+.editable {
+  outline: none;
+}
+
+.clear {
+  clear: both;
+}
+
+/* finances */
+
+.finance {
+  float: left;
+  height: 160px;
+  padding: 5px 10px 5px 10px;
+  border-style: solid;
+  border-width: medium;
+  margin-left: 130px;
+}
+
+.line {
+  width: 100%;
+  float: left;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.input {
+  float: right;
+  font-size: 10pt;
+}
+
+.field {
+  float: left;
+  width: auto;
+  margin-right: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border: 2px solid transparent;
+}
+
+.operation {
+  float: left;
+  width: 30px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-right: 10px;
+}
+
+}
+.data {
+  height: 18px;
+  background-color: white;
+}
+
+.monies {
+  float: right;
+  height: 160px;
+  top: 60px;
+  left: 400px;
+  padding: 4px 10px 4px 10px;
+  border-style: solid;
+  border-width: medium;
+  margin-right: 130px;
+}
+
+/* /finances */
+
+/*
+
+
+
+*/
