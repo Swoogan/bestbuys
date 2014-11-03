@@ -10,3 +10,5 @@ scheduler/scheduler
 denormalizer/denormalizer-server/denormalizer-server
 jquery-ui
 **/*.log
+ngsite/node_modules
+ngsite/app/bower_components
