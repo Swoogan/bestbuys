@@ -1,5 +1,5 @@
 body {
-  font-family: Verdana,Helvetica,sans-serif;
+  font-family: Verdana,sans-serif;
   font-size: 10pt;
   background-color: #FFF3E0;
 }
@@ -41,11 +41,11 @@ th {
   border: 2px solid #373430;
 }
 
-td{
+td {
   border: 2px solid #373430;
   padding: 1px 5px 1px 5px;
   height: 18px;
-  width: 130px;
+  width: 150px;
 }
 
 table {
@@ -83,7 +83,7 @@ table {
 
 .finance {
   float: left;
-  height: 160px;
+  height: 175px;
   padding: 5px 10px 5px 10px;
   border-style: solid;
   border-width: medium;
@@ -127,7 +127,7 @@ table {
 
 .monies {
   float: right;
-  height: 160px;
+  height: 175px;
   top: 60px;
   left: 400px;
   padding: 4px 10px 4px 10px;
@@ -136,6 +136,22 @@ table {
   margin-right: 130px;
 }
 
+.vheader {
+  border: 0px; 
+  font-weight: bold; 
+  text-align: right;
+}
+
+.header {
+  margin: 1px;
+  color: #fff;
+  padding: 3px 10px;  
+  position: relative;
+  background-color: #E78F08;
+  border-radius: 5px 5px 5px 5px;
+  background: url("ui-lightness/images/ui-bg_gloss-wave_35_f6a828_500x100.png") repeat-x scroll 50% 50% #F6A828;
+  border: 1px solid #E78F08;
+}
 /* /finances */
 
 /*

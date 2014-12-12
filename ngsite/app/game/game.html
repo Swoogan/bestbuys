@@ -66,9 +66,10 @@
 	<div class="textbox readonly">{{finance.balance + finance.wallet + finance.lands | currency:undefined:0}}</div>
       </div>
     </div>
-  </div>
-
-  <h2>Structure</h2>
+  </div>  
+  <br class="clear"/>
+  <br />
+  <h2 class="header">Structure</h2>
   <table class="center">
     <tbody>
       <tr>
@@ -78,13 +79,13 @@
 	<th>Income</th>
       </tr>
       <tr ng-repeat="structure in structures">
-	<td style="border: 0px; font-weight: bold; text-align: right;">{{structure.name}}</td> 
+	<td class="vheader">{{structure.name}}</td> 
 	<td class="money editable" contentEditable="true">{{structure.cost | currency:undefined:0}}</td> 
 	<td class="money readonly">{{structure.increase | currency:undefined:0}}</td> 
 	<td class="money readonly">{{structure.income | currency:undefined:0}}</td> 
       </tr>
     </tbody>  
   </table>
-  
+  <br />
   <h2 class="header">Purchases</h2>
 </div>
