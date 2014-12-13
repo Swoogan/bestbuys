@@ -13,6 +13,7 @@ $(document).ready(function() {
     });
   }
 
+  /* done */
   var blur = function(element) {
     $(element).toggleClass("shadow");
     var newVal = currencyFormat(parseCurrency($(element).html()));
@@ -33,6 +34,7 @@ $(document).ready(function() {
   }
 
   var bindBehaviors = function() {
+    /* done */
     $(".editable").focus(function() { 
       $(this).toggleClass("shadow");
     });
@@ -142,7 +144,7 @@ $(document).ready(function() {
     }).next().hide();
 
     var $tabs = $('#tabs').tabs({
-      show: function(e,ui){
+      show: function(e, ui) {
         var $c = $(ui.panel), h = parseInt($(ui.tab).parent().outerHeight());
         while ( $c.length > 0 && $c.hasClass("gameInfo") ){
             h += ( $c.outerHeight(true) - $c.innerHeight() );

@@ -1,5 +1,5 @@
 body {
-  font-family: Verdana,sans-serif;
+  font-family: Verdana,Helvetica,sans-serif;
   font-size: 10pt;
   background-color: #FFF3E0;
 }
@@ -49,8 +49,8 @@ td {
 }
 
 table {
-  margin: auto;
-  font-size: 10pt;
+  border-collapse: separate;  
+  border-spacing: 2px;  
 }
 
 .readonly {
@@ -152,10 +152,7 @@ table {
   background: url("ui-lightness/images/ui-bg_gloss-wave_35_f6a828_500x100.png") repeat-x scroll 50% 50% #F6A828;
   border: 1px solid #E78F08;
 }
-/* /finances */
 
-/*
-
-
-
-*/
+.shadow {
+  box-shadow: 2px 2px 5px 2px #666;
+}
