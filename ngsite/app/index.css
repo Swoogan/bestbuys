@@ -4,14 +4,6 @@ body {
   background-color: #FFF3E0;
 }
 
-#message {
-  padding: 5px 10px 5px 10px;
-  width: 500px;
-  border-radius: 3px;
-  box-shadow: 2px 2px 2px 2px #ccc;
-  cursor: pointer;
-  display: none;
-}
 
 #title {
   width: 862px;
@@ -150,10 +142,43 @@ table {
   position: relative;
   background-color: #E78F08;
   border-radius: 5px 5px 5px 5px;
-  background: url("ui-lightness/images/ui-bg_gloss-wave_35_f6a828_500x100.png") repeat-x scroll 50% 50% #F6A828;
+  background: #F6A828;
   border: 1px solid #E78F08;
 }
 
 .shadow {
   box-shadow: 2px 2px 5px 2px #666;
+}
+
+.error {
+  background-color: #FF8C8C;
+  border: 1px solid red;
+  color: #006B6B;
+}
+
+#exception {
+  float: right;
+  margin-left: 15px;
+}
+
+#message {  
+  /* center */
+  margin: 10px auto;  
+  
+  /* message specific */
+  width: 820px;
+  padding: 5px 10px 5px 10px;  
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px 2px #ccc;
+  cursor: pointer;
+}
+
+.fade {
+  -webkit-transition: 1s linear all; /* Chrome */
+  transition: 1s linear all;
+  opacity: 0;
+}
+ 
+.fade.in {
+  opacity: 1;
 }

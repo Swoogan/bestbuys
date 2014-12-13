@@ -6,9 +6,11 @@ angular.module('bestbuys', [
   'bestbuys.game',
   'bestbuys.version'
 ]).
+
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/game'});
 }]).
+
 directive('bbEditbox', function ($filter) {
   return {
     link: function ($scope, element, attrs) {
@@ -45,8 +47,26 @@ directive('bbEditbox', function ($filter) {
       });
     }    
   }
-});
+}).
+directive('bbMessage', function () {
+  return {
+    link: function (scope, element, attrs) {      
+      element.bind('click', function () {
+	element.removeClass('in');
+	scope.showError = false;
+	scope.$apply();
+      });
+      
 
+      scope.$watch("error", function() {
+	if (scope.error != undefined) {	  
+	  element.removeClass('success');
+	  element.addClass('error');	  
+	}
+      });
+    }    
+  }
+});
 
 
 function parseCurrency(amount) {
