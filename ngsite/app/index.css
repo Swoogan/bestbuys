@@ -150,15 +150,15 @@ table {
   box-shadow: 2px 2px 5px 2px #666;
 }
 
+.right-justified {
+  float: right;
+  margin-left: 15px;
+}
+
 .error {
   background-color: #FF8C8C;
   border: 1px solid red;
   color: #006B6B;
-}
-
-#exception {
-  float: right;
-  margin-left: 15px;
 }
 
 #message {  
@@ -173,12 +173,14 @@ table {
   cursor: pointer;
 }
 
-.fade {
+.fade.ng-hide-add.ng-hide-add-active,
+.fade.ng-hide-remove {
   -webkit-transition: 1s linear all; /* Chrome */
   transition: 1s linear all;
   opacity: 0;
 }
  
-.fade.in {
+.fade.ng-hide-add,
+.fade.ng-hide-remove.ng-hide-remove-active {
   opacity: 1;
 }

@@ -10,31 +10,25 @@ angular.module('bestbuys.game', ['ngRoute'])
 }])
 
 .controller('GameCtrl', ['$scope', '$http', function($scope, $http) {
-  //$http.get('/games/54177f9ef047050f92000004').
-  $http.get('/games/54177f9ef047050f9200000').then(
+  //$http.get('/games/54177f9ef047050f9200000').
+  $http.get('/games/54177f9ef047050f92000004').then(
     function(result) {      
-      $scope.finance = result.data;
+      $scope.finance = result.data;      
     },
     
     function(error) {
-      console.log(error.statusText);
-      $scope.error = 'Error in: ' + error.config.url;
+      $scope.message = {};
+      
+      $scope.message.error = true;
+      $scope.message.text = 'Error in: ' + error.config.url;
       
       if (error.status == 404)	
-	$scope.exception = "The requested game data could not be found.";
+	$scope.message.details = "The requested game data could not be found.";
       else if (error.status == 502)
-	$scope.exception = "The game data service appears unavailable. Try again later.";
+	$scope.message.details = "The game data service appears unavailable. Try again later.";
       else
-	$scope.exception = error.statusText;
+	$scope.message.details = error.statusText;
       
-      $scope.showError = true;
-
-      /*
-      $(this).removeClass('success');
-      $(this).addClass('error');
-      $(this).fadeToggle('slow');
-      $('#error').text("Error in: '" + settings.url + "'");
-      $('#exception').text('Message: ' + exception);	  
-      */
+      $scope.message.show = true;
     });
 }]); 

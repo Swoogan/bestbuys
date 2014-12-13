@@ -1,14 +1,13 @@
 <div ng-controller="GameCtrl">
   
-  <div bb-message id="message" ng-show="showError" title="Click to dismiss">    
-    <span id="error">{{error}}</span>
-    <span id="exception">{{exception}}</span>
+  <div bb-message id="message" class="fade" ng-show="message.show" title="Click to dismiss">    
+    <span>{{message.text}}</span>
+    <span class="right-justified">{{message.details}}</span>
   </div>
   
-  <div class="block center">
-  
+  <div class="block center">  
     <h2 class="header">Finance</h2>
-    
+    <br/>
     <div class="finance">
       <div class="line">
 	<div class="input">
@@ -77,6 +76,7 @@
     </div>  
     <br class="clear"/>
     <br />
+    
     <h2 class="header">Structure</h2>
     <table class="center">
       <tbody>
@@ -95,6 +95,7 @@
       </tbody>  
     </table>
     <br />
+    
     <h2 class="header">Purchases</h2>
   </div>
 </div>
