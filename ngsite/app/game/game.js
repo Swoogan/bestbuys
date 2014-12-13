@@ -33,4 +33,9 @@ angular.module('bestbuys.game', ['ngRoute'])
     'lands': 0
     
   };
+  
+  $scope.class = '';
+  $scope.editFocus = function() {    
+    $scope.class = 'shadow';
+  }
 }]); 

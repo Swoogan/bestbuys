@@ -5,7 +5,7 @@
     <div class="line">
       <div class="input">
 	<div class="field">Income</div>
-	<div class="textbox data editable income" contentEditable="true">{{finance.income | currency:undefined:0}}</div>
+	<div bb-Editbox class="textbox data editable income" contentEditable="true">{{finance.income | currency:undefined:0}}</div>
       </div>
     </div>
     <br/>
@@ -13,7 +13,7 @@
       <div class="operation" style="font-size: 14pt;">&ndash;</div>
       <div class="input">
 	<div class="field">Upkeep</div>
-	<div class="textbox data editable upkeep" contentEditable="true">{{finance.upkeep | currency:undefined:0}}</div>
+	<div bb-Editbox class="textbox data editable upkeep" contentEditable="true">{{finance.upkeep | currency:undefined:0}}</div>
       </div>
     </div>
     <br class="clear"/>
@@ -38,7 +38,7 @@
     <div class="line">
       <div class="input">
 	<div class="field">Balance</div>
-	<div class="textbox data editable balance" contentEditable="true">{{finance.balance | currency:undefined:0}}</div>
+	<div bb-Editbox class="textbox data editable balance" contentEditable="true">{{finance.balance | currency:undefined:0}}</div>
       </div>
     </div>
     <br/>
@@ -46,7 +46,7 @@
       <div class="operation" style="font-size: 14pt;">+</div>
       <div class="input">
 	<div class="field">Wallet</div>
-	<div class="textbox data editable wallet" contentEditable="true">{{finance.wallet | currency:undefined:0}}</div>
+	<div bb-Editbox class="textbox data editable wallet" contentEditable="true">{{finance.wallet | currency:undefined:0}}</div>
       </div>
     </div>
     <br/>
@@ -54,7 +54,7 @@
       <div class="operation" style="font-size: 14pt;">+</div>
       <div class="input">
 	<div class="field">Lands</div>
-	<div class="textbox data editable landIncome" contentEditable="true">{{finance.lands | currency:undefined:0}}</div>
+	<div bb-Editbox class="textbox data editable landIncome" contentEditable="true">{{finance.lands | currency:undefined:0}}</div>
       </div>
     </div>
     <br class="clear"/>
@@ -80,7 +80,7 @@
       </tr>
       <tr ng-repeat="structure in structures">
 	<td class="vheader">{{structure.name}}</td> 
-	<td class="money editable" contentEditable="true">{{structure.cost | currency:undefined:0}}</td> 
+	<td bb-Editbox class="money editable" contentEditable="true">{{structure.cost | currency:undefined:0}}</td> 
 	<td class="money readonly">{{structure.increase | currency:undefined:0}}</td> 
 	<td class="money readonly">{{structure.income | currency:undefined:0}}</td> 
       </tr>
