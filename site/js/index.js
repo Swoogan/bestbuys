@@ -69,6 +69,7 @@ $(document).ready(function() {
       }
     });
 
+    /* done */
     $(".editable").keyup(function(e){ 
       var esc = e.which == 27;
       var enter = e.which == 13;

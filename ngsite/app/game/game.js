@@ -9,33 +9,24 @@ angular.module('bestbuys.game', ['ngRoute'])
   });
 }])
 
-.controller('GameCtrl', ['$scope', function($scope) {
-   $scope.structures = [
-    {
-      'name': 'Supply Depot',
-      'cost': '2000000',
-      'increase': '15000',
-      'income': '3000'
+.controller('GameCtrl', ['$scope', '$http', function($scope, $http) {
+  //$http.get('/games/54177f9ef047050f92000004').
+  $http.get('/games/54177f9ef047050f9200000').then(
+    function(result) {
+      $scope.finance = result.data;
     },
-    {
-      'name': 'Collection Outpost',
-      'cost': '5000000',
-      'increase': '75000',
-      'income': '10000'
-    }
-  ];  
-  
-  $scope.finance = {
-    'income': 0,
-    'upkeep': 0,
-    'balance': 0,
-    'wallet': 0,
-    'lands': 0
-    
-  };
-  
-  $scope.class = '';
-  $scope.editFocus = function() {    
-    $scope.class = 'shadow';
-  }
+    function(error) {
+      console.log(error.statusText);
+      if (error.status == 404)
+	$scope.error = "The requested game data could not be found";
+      else
+	$scope.error = error.statusText;
+      /*
+      $(this).removeClass('success');
+      $(this).addClass('error');
+      $(this).fadeToggle('slow');
+      $('#error').text("Error in: '" + settings.url + "'");
+      $('#exception').text('Message: ' + exception);	  
+      */
+    });
 }]); 

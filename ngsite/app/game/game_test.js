@@ -12,14 +12,12 @@ describe('bestbuys.game module', function() {
       ctrl = $controller('GameCtrl', {$scope: scope});
     }));
 
-
     it('should ....', function() {
       expect(ctrl).toBeDefined();
     });
     
-    
     it('should create "structures" model with 2 structure', function() {
-      expect(scope.structures.length).toBe(2);
+      expect(scope.finance.structures.length).toBe(11);
     });
     
     it('should have finance', function() {

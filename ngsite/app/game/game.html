@@ -1,4 +1,5 @@
 <div ng-controller="GameCtrl">
+  <div>{{error}}</div>
   <h2 class="header">Finance</h2>
   
   <div class="finance">
@@ -54,7 +55,7 @@
       <div class="operation" style="font-size: 14pt;">+</div>
       <div class="input">
 	<div class="field">Lands</div>
-	<div bb-Editbox class="textbox data editable landIncome" contentEditable="true">{{finance.lands | currency:undefined:0}}</div>
+	<div bb-Editbox class="textbox data editable landIncome" contentEditable="true">{{finance.landIncome | currency:undefined:0}}</div>
       </div>
     </div>
     <br class="clear"/>
@@ -63,7 +64,7 @@
       <div class="operation" style="font-size: 14pt;">=</div>
       <div class="input">
 	<div class="field">Total</div>
-	<div class="textbox readonly">{{finance.balance + finance.wallet + finance.lands | currency:undefined:0}}</div>
+	<div class="textbox readonly">{{finance.balance + finance.wallet + finance.landIncome | currency:undefined:0}}</div>
       </div>
     </div>
   </div>  
@@ -78,7 +79,7 @@
 	<th>Increase</th>
 	<th>Income</th>
       </tr>
-      <tr ng-repeat="structure in structures">
+      <tr ng-repeat="structure in finance.structures">
 	<td class="vheader">{{structure.name}}</td> 
 	<td bb-Editbox class="money editable" contentEditable="true">{{structure.cost | currency:undefined:0}}</td> 
 	<td class="money readonly">{{structure.increase | currency:undefined:0}}</td> 
