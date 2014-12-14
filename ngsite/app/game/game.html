@@ -9,69 +9,54 @@
     <h2 class="header">Finance</h2>
     <br/>
     <div class="finance">
-      <div class="line">
-	<div class="input">
-	  <div class="field">Income</div>
-	  <div bb-Editbox class="textbox data editable income" contentEditable="true">{{finance.income | currency:undefined:0}}</div>
-	</div>
+      <div class="line">        
+        <bb-editbox name="income" value="finance.income" save="saveValue" />
       </div>
       <br/>
       <div class="line">
-	<div class="operation" style="font-size: 14pt;">&ndash;</div>
-	<div class="input">
-	  <div class="field">Upkeep</div>
-	  <div bb-Editbox class="textbox data editable upkeep" contentEditable="true">{{finance.upkeep | currency:undefined:0}}</div>
-	</div>
+        <div class="operation" style="font-size: 14pt;">&ndash;</div>
+        <bb-editbox name="upkeep" value="finance.upkeep" save="saveValue" />
       </div>
       <br class="clear"/>
       <hr/>
       <div class="line">
-	<div class="operation" style="font-size: 14pt;">=</div>
-	<div class="input">
-	  <div class="field">Hourly</div>
-	  <div class="textbox readonly">{{finance.income * finance.upkeep | currency:undefined:0}}</div>
-	</div>
+        <div class="operation" style="font-size: 14pt;">=</div>
+        <div class="input">
+          <div class="field">Hourly</div>          
+          <div class="textbox readonly">{{finance.income * finance.upkeep | currency:undefined:0}}</div>
+        </div>
       </div>
       <br class="clear"/>
       <div class="line">
-	<div class="operation">x 24</div>
-	<div class="input">
-	  <div class="field">Daily</div>
-	  <div class="textbox readonly">{{finance.income * finance.upkeep * 24 | currency:undefined:0}}</div>
-	</div>
+        <div class="operation">x 24</div>
+        <div class="input">
+          <div class="field">Daily</div>
+          <div class="textbox readonly">{{finance.income * finance.upkeep * 24 | currency:undefined:0}}</div>
+        </div>
       </div>
     </div>
     <div class="monies">
       <div class="line">
-	<div class="input">
-	  <div class="field">Balance</div>
-	  <div bb-Editbox class="textbox data editable balance" contentEditable="true">{{finance.balance | currency:undefined:0}}</div>
-	</div>
+        <bb-editbox name="balance" value="finance.balance" save="saveValue" />
       </div>
       <br/>
       <div class="line">
-	<div class="operation" style="font-size: 14pt;">+</div>
-	<div class="input">
-	  <div class="field">Wallet</div>
-	  <div bb-Editbox class="textbox data editable wallet" contentEditable="true">{{finance.wallet | currency:undefined:0}}</div>
-	</div>
+        <div class="operation" style="font-size: 14pt;">+</div>
+        <bb-editbox name="wallet" value="finance.wallet" save="saveValue" />
       </div>
       <br/>
       <div class="line">
-	<div class="operation" style="font-size: 14pt;">+</div>
-	<div class="input">
-	  <div class="field">Lands</div>
-	  <div bb-Editbox class="textbox data editable landIncome" contentEditable="true">{{finance.landIncome | currency:undefined:0}}</div>
-	</div>
+        <div class="operation" style="font-size: 14pt;">+</div>
+        <bb-editbox name="landIncome" value="finance.landIncome" save="saveValue" />
       </div>
       <br class="clear"/>
       <hr/>
       <div class="line">
-	<div class="operation" style="font-size: 14pt;">=</div>
-	<div class="input">
-	  <div class="field">Total</div>
-	  <div class="textbox readonly">{{finance.balance + finance.wallet + finance.landIncome | currency:undefined:0}}</div>
-	</div>
+        <div class="operation" style="font-size: 14pt;">=</div>
+        <div class="input">
+          <div class="field">Total</div>
+          <div class="textbox readonly">{{finance.balance + finance.wallet + finance.landIncome | currency:undefined:0}}</div>
+        </div>
       </div>
     </div>  
     <br class="clear"/>
@@ -80,18 +65,18 @@
     <h2 class="header">Structure</h2>
     <table class="center">
       <tbody>
-	<tr>
-	  <th style="background-color: transparent; border: 0px"></th>
-	  <th>Cost</th>
-	  <th>Increase</th>
-	  <th>Income</th>
-	</tr>
-	<tr ng-repeat="structure in finance.structures">
-	  <td class="vheader">{{structure.name}}</td> 
-	  <td bb-Editbox class="money editable" contentEditable="true">{{structure.cost | currency:undefined:0}}</td> 
-	  <td class="money readonly">{{structure.increase | currency:undefined:0}}</td> 
-	  <td class="money readonly">{{structure.income | currency:undefined:0}}</td> 
-	</tr>
+        <tr>
+          <th style="background-color: transparent; border: 0px"></th>
+          <th>Cost</th>
+          <th>Increase</th>
+          <th>Income</th>
+        </tr>
+        <tr ng-repeat="structure in finance.structures">
+          <td class="vheader">{{structure.name}}</td>
+          <td bb-cost cost="structure.cost" save="saveStructure"></td>
+          <td class="money readonly">{{structure.increase | currency:undefined:0}}</td> 
+          <td class="money readonly">{{structure.income | currency:undefined:0}}</td> 
+        </tr>
       </tbody>  
     </table>
     <br />

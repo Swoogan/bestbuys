@@ -1,6 +1,7 @@
 $(document).ready(function() {
   var focusoutEnabled = true;
 
+  /* done */
   var focusout = function(name, command) {
     $("."+name).focusout(function(event) {      
       if (focusoutEnabled) { 
@@ -97,6 +98,7 @@ $(document).ready(function() {
             }); 
   }
 
+  /* done */
   var load = function(panel) {
     var id = $(panel).attr('data-game');
     $.getJSON('/games/'+id, function(data) {
@@ -139,6 +141,7 @@ $(document).ready(function() {
       $('#tabBodyTemplate').render(data)
     );
 
+    /* n/a */
     $('.header').click(function() {
       $(this).next().slideToggle('slow');
       return false;
@@ -165,10 +168,12 @@ $(document).ready(function() {
 
   bindBehaviors();
 
+  /* done */
   $('#message').click(function(event) {
     $(this).fadeToggle(400);
   });
 
+  /* done */
   $('#message').ajaxError(function(e, xhr, settings, exception) {
     $(this).removeClass('success');
     $(this).addClass('error');
