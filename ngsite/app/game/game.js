@@ -45,7 +45,7 @@ angular.module('bestbuys.game', ['ngRoute'])
   
   $scope.saveStructure = function(name, value) {        
     var data = { structureCost: value, structureName: name, game: $scope.gameId };
-    $http.post('/commands/', {name: command, data: data}).then(
+    $http.post('/commands/', {name: 'setStructureCost', data: data}).then(
       function () {
 	$scope.message = {};
 	$scope.message.error = false;

@@ -1,0 +1,29 @@
+
+panic serving 127.0.0.1:36014: runtime error: assignment to entry in nil map
+goroutine 16 [running]:
+net/http.func·009()
+        /usr/lib/go/src/pkg/net/http/server.go:1093 +0xae
+runtime.panic(0x717ee0, 0xb02b9d)
+        /usr/lib/go/src/pkg/runtime/panic.c:248 +0x106
+main.setStructureCost(0xc210092930, 0xc21000a4e0, 0x2)
+        /home/swoogan/Software/golang/src/bitbucket.org/Swoogan/bestbuys/command/handlers.go:58 +0x2cf
+main.commandHandler.Created(0xc210092000, 0xc21000a4e0, 0xc21000ade0, 0xc210092900)
+        /home/swoogan/Software/golang/src/bitbucket.org/Swoogan/bestbuys/command/commandhandler.go:43 +0x240
+main.(*commandHandler).Created(0xc2100904a0, 0xc210092900)
+        /home/swoogan/Software/golang/src/bitbucket.org/Swoogan/bestbuys/command/commandhandler.go:1 +0x9c
+bitbucket.org/Swoogan/mongorest.(*MongoRest).insert(0xc210092060, 0x7f6e88c29b40, 0xc21000f8c0, 0xc210061a90, 0xc210092900)
+        /home/swoogan/Software/golang/src/bitbucket.org/Swoogan/mongorest/mongorest.go:290 +0x1df
+bitbucket.org/Swoogan/mongorest.(*MongoRest).Create(0xc210092060, 0x7f6e88c29b40, 0xc21000f8c0, 0xc210061a90)
+        /home/swoogan/Software/golang/src/bitbucket.org/Swoogan/mongorest/mongorest.go:161 +0x683
+github.com/Swoogan/rest.resourceHandler(0x7f6e88c29b40, 0xc21000f8c0, 0xc210061a90)
+        /home/swoogan/Software/golang/src/github.com/Swoogan/rest/server.go:75 +0x502
+net/http.HandlerFunc.ServeHTTP(0x825ac8, 0x7f6e88c29b40, 0xc21000f8c0, 0xc210061a90)
+        /usr/lib/go/src/pkg/net/http/server.go:1220 +0x40
+net/http.(*ServeMux).ServeHTTP(0xc21000a690, 0x7f6e88c29b40, 0xc21000f8c0, 0xc210061a90)
+        /usr/lib/go/src/pkg/net/http/server.go:1496 +0x163
+net/http.serverHandler.ServeHTTP(0xc21001ed20, 0x7f6e88c29b40, 0xc21000f8c0, 0xc210061a90)
+        /usr/lib/go/src/pkg/net/http/server.go:1597 +0x16e
+net/http.(*conn).serve(0xc210059800)
+        /usr/lib/go/src/pkg/net/http/server.go:1167 +0x7b7
+created by net/http.(*Server).Serve
+        /usr/lib/go/src/pkg/net/http/server.go:1644 +0x28b
