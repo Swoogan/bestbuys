@@ -1,4 +1,4 @@
 <div class="input">
-  <div class="field">{{name | capitalize}}</div>
+  <div class="field">{{(label || name) | capitalize}}</div>
   <div class="textbox data editable" contentEditable="true">{{value | currency:undefined:0}}</div>
 </div>

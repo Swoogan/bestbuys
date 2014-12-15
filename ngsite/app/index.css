@@ -155,12 +155,6 @@ table {
   margin-left: 15px;
 }
 
-.error {
-  background-color: #FF8C8C;
-  border: 1px solid red;
-  color: #006B6B;
-}
-
 #message {  
   /* center */
   margin: 10px auto;  
@@ -171,6 +165,18 @@ table {
   border-radius: 3px;
   box-shadow: 2px 2px 2px 2px #ccc;
   cursor: pointer;
+}
+
+.success {
+  background-color: #9BAAFF;
+  border: 1px solid #4F6CFF;
+  color: #3F3600;
+}
+
+.error {
+  background-color: #FF8C8C;
+  border: 1px solid red;
+  color: #006B6B;
 }
 
 .fade.ng-hide-add.ng-hide-add-active,

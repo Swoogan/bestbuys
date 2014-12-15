@@ -11,49 +11,55 @@ angular.module('bestbuys.game', ['ngRoute'])
 
 .controller('GameCtrl', ['$scope', '$http', function($scope, $http) {
   $scope.gameId = '54177f9ef047050f92000004';
-  //$scope.gameId = '54177f9ef047050f9200000';
+  //$scope.gameId = '54177f9ef047050f9200000'; 
   
-  $http.get('/games/' + $scope.gameId).then(
+  $http.get('/games/' + $scope.gameId).then(    
     function(result) {
       $scope.finance = result.data;      
     },    
     function(error) {
-      $scope.message = errorMessage(error);      
+      $scope.message = {};
+      $scope.message.show = true;
+      errorMessage($scope.message, error);
     }
   );
   
-  $scope.saveValue = function(field, value) {
-    var http = $http;
+  $scope.saveValue = function(field, value) {    
+    var command = 'set' + field.charAt(0).toUpperCase() + field.slice(1).toLowerCase()    
+    var data = { game: $scope.gameId };
+    data[field] = value;   
     
-    var command = 'set' + field.charAt(0).toUpperCase() + field.slice(1).toLowerCase()
+    $scope.message = {};
+    $scope.message.show = true;
     
-    //if (focusoutEnabled) {       
-      var data = { game: $scope.gameId };
-      data[field] = value;
-      post(http, command, data);
-    //}
+    $http.post('/commands/', {name: command, data: data}).then(
+      function () {	
+	$scope.message.error = false;	
+	$scope.message.text = 'Successfully saved changes.';	
+      },
+      function(error) {	
+	errorMessage($scope.message, error);
+      }
+    );
   }
   
-  $scope.saveStructure = function(name, value) {    
-    //if (focusoutEnabled) {       
-      var data = '{"structureCost": ' + value + ', "structureName": "' + name + '", "game": "' + $scope.gameId +'"}';
-      post(http, 'setStructureCost', data);      
-    //}    
+  $scope.saveStructure = function(name, value) {        
+    var data = { structureCost: value, structureName: name, game: $scope.gameId };
+    $http.post('/commands/', {name: command, data: data}).then(
+      function () {
+	$scope.message = {};
+	$scope.message.error = false;
+	$scope.message.show = true;
+	$scope.message.text = 'Successfully saved changes.';	
+      },
+      function(error) {	
+	errorMessage($scope.message, error);
+      }
+    );
   }
 }]); 
 
-function post(http, command, data) {
-  http.post('/commands/', {name: command, data: data}).then(
-    function(error) {
-      cosole.log(error);
-      //$scope.message = errorMessage(error);
-    }
-  );
-}
-
-function errorMessage(error) {
-  message = {};
-      
+function errorMessage(message, error) {
   message.error = true;
   message.text = 'Error in: ' + error.config.url;
   
@@ -63,8 +69,4 @@ function errorMessage(error) {
     message.details = "The game data service appears unavailable. Try again later.";
   else
     message.details = error.statusText;
-  
-  message.show = true;
-  
-  return message;
 }
