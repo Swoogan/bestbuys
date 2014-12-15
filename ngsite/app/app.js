@@ -16,7 +16,7 @@ bestbuyApp.directive('bbEditbox', function ($filter) {
   return {    
     restrict: 'E',
     replace: true,
-    scope: { value: "=", name: "@", command: "@", save: "=" },
+    scope: { value: '=', name: '@', label: '@', save: '=' },
     templateUrl: 'bb-editbox.html',
     link: function (scope, element, attrs) {
       // the second div is always the actual editbox (see the template)
@@ -49,7 +49,7 @@ bestbuyApp.directive('bbCost', function ($filter) {
   return {
     restrict: 'A',
     replace: true,
-    scope: { cost: "=", save: "=" },
+    scope: { cost: '=', structure: '@', save: '=' },
     template: '<td class="money editable" contentEditable="true">{{cost | currency:undefined:0}}</td>',
     link: function (scope, element, attrs) {
       /* On Focus */
@@ -63,11 +63,7 @@ bestbuyApp.directive('bbCost', function ($filter) {
         var amount = element.html();
         element.removeClass('shadow');
         element.html($filter('currency')(amount, undefined, 0));        
-        
-        //if (focusoutEnabled) {           
-          scope.save("which field?", parseCurrency(amount));
-          //var name = $(this).prev().text();
-        //}      
+        scope.save(scope.structure, parseCurrency(amount));
       });
       
       /* On Keydown */

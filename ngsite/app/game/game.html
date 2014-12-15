@@ -47,7 +47,7 @@
       <br/>
       <div class="line">
         <div class="operation" style="font-size: 14pt;">+</div>
-        <bb-editbox name="landIncome" value="finance.landIncome" save="saveValue" />
+        <bb-editbox name="landIncome" value="finance.landIncome" label="land" save="saveValue" />
       </div>
       <br class="clear"/>
       <hr/>
@@ -73,7 +73,7 @@
         </tr>
         <tr ng-repeat="structure in finance.structures">
           <td class="vheader">{{structure.name}}</td>
-          <td bb-cost cost="structure.cost" save="saveStructure"></td>
+          <td bb-cost structure="{{structure.name}}" cost="structure.cost" save="saveStructure"></td>
           <td class="money readonly">{{structure.increase | currency:undefined:0}}</td> 
           <td class="money readonly">{{structure.income | currency:undefined:0}}</td> 
         </tr>
