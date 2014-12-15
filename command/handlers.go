@@ -56,7 +56,7 @@ func setStructureCost(data domain.Data, repo repository) *domain.Event {
 	name := data["structureName"].(string)
 	st := game.Structures[name]
 	st.Cost = domain.Money(data["structureCost"].(float64))
-	//game.Structures[name] = st
+	game.Structures[name] = st
 	repo[id] = game
 	return createEvent("structureCostSet", data)
 }
