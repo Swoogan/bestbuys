@@ -10,7 +10,7 @@ angular.module('bestbuys.game', ['ngRoute'])
 }])
 
 .controller('GameCtrl', ['$scope', '$http', function($scope, $http) {
-  $scope.gameId = '54177f9ef047050f92000004';
+  $scope.gameId = '548f1a5df047051df5000005';
   //$scope.gameId = '54177f9ef047050f9200000'; 
   
   $http.get('/games/' + $scope.gameId).then(    

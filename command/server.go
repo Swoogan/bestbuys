@@ -44,9 +44,6 @@ func main() {
 
 	repo := newRepository()
 	repo.rebuild(db)
-	defer repo.snapshot(db)
-
-	logger.Println("Repo:", repo["54177f9ef047050f92000004"])
 
 	handler := newCommandHandler(repo, db.C("events"))
 	commands := mongorest.Resource{DB: db, Name: "commands", Handler: handler}
@@ -64,6 +61,7 @@ func main() {
 	signal.Notify(c, os.Interrupt)
 
 	for sig := range c {
+		repo.snapshot(db)
 		logger.Printf("Received %v, shutting down...", sig)
 		os.Exit(1)
 	}
