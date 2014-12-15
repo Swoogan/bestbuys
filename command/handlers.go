@@ -1,13 +1,14 @@
 package main
 
 import (
-        "gopkg.in/mgo.v2/bson"
+	"gopkg.in/mgo.v2/bson"
 
-        "bitbucket.org/Swoogan/bestbuys/domain"
+	"bitbucket.org/Swoogan/bestbuys/domain"
 )
 
 func setIncome(data domain.Data, repo repository) *domain.Event {
 	id, game := getGame(data, repo)
+	logger.Println(game)
 	game.Finance.Income = domain.Money(data["income"].(float64))
 	repo[id] = game
 	hourly := game.Finance.Hourly()
@@ -55,7 +56,7 @@ func setStructureCost(data domain.Data, repo repository) *domain.Event {
 	name := data["structureName"].(string)
 	st := game.Structures[name]
 	st.Cost = domain.Money(data["structureCost"].(float64))
-	game.Structures[name] = st
+	//game.Structures[name] = st
 	repo[id] = game
 	return createEvent("structureCostSet", data)
 }

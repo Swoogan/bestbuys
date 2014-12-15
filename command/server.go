@@ -1,16 +1,16 @@
 package main
 
 import (
-	"os"
-	"log"
 	"flag"
+	"log"
 	"net/http"
+	"os"
 	"os/signal"
 
-        "gopkg.in/mgo.v2"
-        "bitbucket.org/Swoogan/mongorest"
+	"bitbucket.org/Swoogan/mongorest"
+	"gopkg.in/mgo.v2"
 
-        "bitbucket.org/Swoogan/bestbuys/domain"
+	"bitbucket.org/Swoogan/bestbuys/domain"
 )
 
 /*
@@ -46,6 +46,8 @@ func main() {
 	repo.rebuild(db)
 	defer repo.snapshot(db)
 
+	logger.Println("Repo:", repo["54177f9ef047050f92000004"])
+
 	handler := newCommandHandler(repo, db.C("events"))
 	commands := mongorest.Resource{DB: db, Name: "commands", Handler: handler}
 	mongorest.Attach(commands, logger)
@@ -59,10 +61,10 @@ func main() {
 	}()
 
 	c := make(chan os.Signal, 1)
-        signal.Notify(c, os.Interrupt)
+	signal.Notify(c, os.Interrupt)
 
-        for sig := range c {
-                logger.Printf("Received %v, shutting down...", sig)
-                os.Exit(1)
-        }
+	for sig := range c {
+		logger.Printf("Received %v, shutting down...", sig)
+		os.Exit(1)
+	}
 }

@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bitbucket.org/Swoogan/mongorest"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"bitbucket.org/Swoogan/mongorest"
 
 	"bitbucket.org/Swoogan/bestbuys/domain"
 )
@@ -36,12 +36,16 @@ func newCommandHandler(repo repository, col *mgo.Collection) commandHandler {
 func (c commandHandler) Created(doc mongorest.Document) {
 	name := doc["name"].(string)
 	if handler, ok := c.pool[name]; ok {
-		data := doc["data"].(map[string]interface{})
-		edata := domain.Data(data)
-		logger.Println("Handling command:", name)
-		event := handler(edata, c.repo)
-		c.store(event)
-		dispatch(event)
+		data, ok := doc["data"].(map[string]interface{})
+		if ok {
+			edata := domain.Data(data)
+			logger.Println("Handling command:", name)
+			event := handler(edata, c.repo)
+			c.store(event)
+			dispatch(event)
+		} else {
+			logger.Println("Received data is not a map[string]interface{}: ", data)
+		}
 	} else {
 		logger.Println("No handler specified for command:", name)
 	}
