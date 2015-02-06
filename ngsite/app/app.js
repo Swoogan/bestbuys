@@ -5,7 +5,8 @@ var bestbuyApp = angular.module('bestbuys', [
   'ngRoute',
   'ngAnimate',
   'bestbuys.game',
-  'bestbuys.version'
+  'bestbuys.version',
+  'bestbuys.services'
 ]);
 
 bestbuyApp.config(['$routeProvider', function($routeProvider) {
