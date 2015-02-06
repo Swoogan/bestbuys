@@ -9,14 +9,12 @@ angular.module('bestbuys.game', ['ngRoute'])
   });
 }])
 
-.controller('GameCtrl', ['$scope', '$http', function($scope, $http) {
+.controller('GameCtrl', ['$scope', '$routeParams', 'Game', function($scope, $routeParams, Game) {
   $scope.gameId = '54d42204f047050fc600000a';
-  //$scope.gameId = '54177f9ef047050f9200000'; 
-  
-  $http.get('/games/' + $scope.gameId).then(    
-    function(result) {
-      $scope.finance = result.data;      
-    },    
+  Game.get({id: $scope.gameId},
+    function(data) {
+      $scope.finance = data;      
+    },
     function(error) {
       $scope.message = {};
       $scope.message.show = true;
