@@ -13,12 +13,6 @@ import (
 	"bitbucket.org/Swoogan/bestbuys/domain"
 )
 
-/*
-func main() {
-	StoreTest()
-	LoadTest()
-}
-*/
 var mongo *string = flag.String("m", "localhost", "Mongo server address")
 var dbname *string = flag.String("d", "command", "Mongo database name")
 var address *string = flag.String("a", ":4041", "Address to listen on")
@@ -39,7 +33,7 @@ func main() {
 	}
 	defer session.Close()
 
-	logger.Printf("Opening database %v", *dbname)
+	logger.Printf("Opening database '%v'", *dbname)
 	db := session.DB(*dbname)
 
 	repo := newRepository()

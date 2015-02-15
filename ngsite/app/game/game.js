@@ -9,7 +9,7 @@ angular.module('bestbuys.game', ['ngRoute'])
   });
 }])
 
-.controller('GameCtrl', ['$scope', '$routeParams', 'Game', function($scope, $routeParams, Game) {
+.controller('GameCtrl', ['$scope', '$routeParams', '$http', 'Game', function($scope, $routeParams, $http, Game) {
   $scope.gameId = '54d42204f047050fc600000a';
   Game.get({id: $scope.gameId},
     function(data) {
@@ -28,7 +28,8 @@ angular.module('bestbuys.game', ['ngRoute'])
     data[field] = value;   
     
     $scope.message = {};
-    $scope.message.show = true;
+    $scope.message.show = true;    
+    
     
     $http.post('/commands/', {name: command, data: data}).then(
       function () {	
