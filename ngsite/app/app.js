@@ -17,7 +17,7 @@ bestbuyApp.directive('bbEditbox', function ($filter) {
   return {    
     restrict: 'E',
     replace: true,
-    scope: { value: '=', name: '@', label: '@', save: '=' },
+    scope: { value: '=', name: '@', save: '=' },
     templateUrl: 'bb-editbox.html',
     link: function (scope, element, attrs) {
       // the second div is always the actual editbox (see the template)

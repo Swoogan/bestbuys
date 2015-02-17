@@ -9,63 +9,32 @@ angular.module('bestbuys.game', ['ngRoute'])
   });
 }])
 
-.controller('GameCtrl', ['$scope', '$routeParams', '$http', 'Game', function($scope, $routeParams, $http, Game) {
-  $scope.gameId = '54d42204f047050fc600000a';
-  Game.get({id: $scope.gameId},
-    function(data) {
-      $scope.finance = data;      
-    },
-    function(error) {
-      $scope.message = {};
-      $scope.message.show = true;
-      errorMessage($scope.message, error);
+.controller('GameCtrl', ['$scope', '$routeParams', 'Game', 'Command', 'ErrorMessage',
+  function($scope, $routeParams, Game, Command, ErrorMessage) {
+    $scope.gameId = '54d42204f047050fc600000a';
+    
+    Game.get({id: $scope.gameId},
+      function(data) {
+	$scope.finance = data;
+      },
+      function(error) {
+	$scope.message = ErrorMessage.generate(error);      
+      }
+    );
+    
+    $scope.saveValue = function(field, value) {    
+      var command = 'set' + field.charAt(0).toUpperCase() + field.slice(1);
+      var data = { game: $scope.gameId };
+      data[field] = value;
+      
+      Command.save(command, data);
     }
-  );
-  
-  $scope.saveValue = function(field, value) {    
-    var command = 'set' + field.charAt(0).toUpperCase() + field.slice(1).toLowerCase()    
-    var data = { game: $scope.gameId };
-    data[field] = value;   
     
-    $scope.message = {};
-    $scope.message.show = true;    
-    
-    
-    $http.post('/commands/', {name: command, data: data}).then(
-      function () {	
-	$scope.message.error = false;	
-	$scope.message.text = 'Successfully saved changes.';	
-      },
-      function(error) {	
-	errorMessage($scope.message, error);
-      }
-    );
+    $scope.saveStructure = function(name, value) {        
+      var data = { structureCost: value, structureName: name, game: $scope.gameId };
+      Command.save('setStructureCost', data);
+    }    
   }
-  
-  $scope.saveStructure = function(name, value) {        
-    var data = { structureCost: value, structureName: name, game: $scope.gameId };
-    $http.post('/commands/', {name: 'setStructureCost', data: data}).then(
-      function () {
-	$scope.message = {};
-	$scope.message.error = false;
-	$scope.message.show = true;
-	$scope.message.text = 'Successfully saved changes.';	
-      },
-      function(error) {	
-	errorMessage($scope.message, error);
-      }
-    );
-  }
-}]); 
+]); 
 
-function errorMessage(message, error) {
-  message.error = true;
-  message.text = 'Error in: ' + error.config.url;
-  
-  if (error.status == 404)
-    message.details = "The requested game data could not be found.";
-  else if (error.status == 502)
-    message.details = "The game data service appears unavailable. Try again later.";
-  else
-    message.details = error.statusText;
-}
+
