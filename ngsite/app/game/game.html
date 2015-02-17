@@ -82,5 +82,25 @@
     <br />
     
     <h2 class="header">Purchases</h2>
+    <table class="center">
+      <tbody>
+        <tr>          
+          <th>Cost</th>
+          <th>Increase</th>
+          <th>Income</th>
+        </tr>
+        <tr ng-repeat="path in paths">
+	  <td>{{path.name}}</td><td>{{path.price}}</td><td>{{path.hours}}</td><td>{{path.newIncome}}</td><td>{{path.incomePerHour}}</td>
+        </tr>
+      </tbody>  
+     </table>
   </div>
+  <!--
+   <script id="purchasesTemplate" type="text/x-jsrender">
+    <pre>{{:Path}}</pre> 
+    <p>{{:~format(Ratio)}}</p> 
+  </script>
+  -->
+
+  
 </div>
