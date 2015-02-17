@@ -1,12 +1,12 @@
 'use strict';
 
-var gameServices = angular.module('bestbuys.services', ['ngResource']);
+var services = angular.module('bestbuys.gameServices', ['ngResource']);
 
-gameServices.factory('Game', ['$resource', function($resource) {
+services.factory('Game', ['$resource', function($resource) {
     return $resource('/games/:id', {id:'@id'});
 }]);
 
-gameServices.service('Notification', [function() {  
+services.service('Notification', [function() {  
   this.showSuccess = function () {	      
     return {
       error: false,
@@ -33,7 +33,7 @@ gameServices.service('Notification', [function() {
   };
 }]);
   
-gameServices.service('Command', ['$http', function($http) {   
+services.service('Command', ['$http', function($http) {   
   this.save = function (name, data) {
     return $http.post('/commands/', {name: name, data: data});
   };  

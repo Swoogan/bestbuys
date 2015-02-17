@@ -1,21 +1,22 @@
 'use strict';
 
-describe('bestbuys.game module', function() {
+describe('bestbuys.purchases module', function() {
 
-  beforeEach(module('bestbuys.game'));
+  beforeEach(module('bestbuys.purchases'));
 
-  describe('game controller', function(){
+  describe('purchases controller', function(){
     var scope, ctrl;
     
     beforeEach(inject(function($rootScope, $controller) {      
       scope = $rootScope.$new();
-      ctrl = $controller('GameCtrl', {$scope: scope});
+      ctrl = $controller('PurchasesCtrl', {$scope: scope});
     }));
 
     it('should ....', function() {
       expect(ctrl).toBeDefined();
     });
     
+    /*
     it('should create "structures" model with 2 structure', function() {
       expect(scope.finance.structures.length).toBe(11);
     });
@@ -27,6 +28,6 @@ describe('bestbuys.game module', function() {
     it('should have income 0', function() {
       expect(scope.finance.income).toBe(0);
     });   
-
+    */
   });
 }); 

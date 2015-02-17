@@ -4,7 +4,7 @@ angular.module('bestbuys.game', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/game', {
-    templateUrl: 'game/game.html',
+    templateUrl: 'game/template.html',
     controller: 'GameCtrl'
   });
 }])
