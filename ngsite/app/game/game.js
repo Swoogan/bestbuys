@@ -9,9 +9,9 @@ angular.module('bestbuys.game', ['ngRoute'])
   });
 }])
 
-.controller('GameCtrl', ['$scope', '$routeParams', 'Game', 'Command', 'Notification',
-  function($scope, $routeParams, Game, Command, Notification) {
-    $scope.gameId = '54d42204f047050fc600000a';    
+.controller('GameCtrl', ['$scope', 'Game', 'Command', 'Notification',
+  function($scope, Game, Command, Notification) {
+    $scope.gameId = '54e2ac43f047051f3c000004';    
     
     Game.get({id: $scope.gameId},
       function(data) {

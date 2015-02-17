@@ -1,0 +1,27 @@
+<div ng-controller="GameCtrl">   
+  <div>
+    <h2 class="header">Purchases</h2>
+    <br />
+    <form ng-submit="generatePurchases()">
+      <button type="submit">Generate</button>
+    </form>
+    
+    <pre>{{path.details}}</pre> 
+    <p>{{path.ratio}}</p>
+  </div>
+    
+  <!--
+  <table class="center">
+    <tbody>
+      <tr>          
+        <th>Cost</th>
+        <th>Increase</th>
+        <th>Income</th>
+      </tr>
+      <tr ng-repeat="path in paths">
+        <td>{{path.name}}</td><td>{{path.price}}</td><td>{{path.hours}}</td><td>{{path.newIncome}}</td><td>{{path.incomePerHour}}</td>
+      </tr>
+    </tbody>  
+    </table>
+    -->
+</div>
