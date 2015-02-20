@@ -7,7 +7,6 @@ var bestbuyApp = angular.module('bestbuys', [
   'bestbuys.game',
   'bestbuys.version',
   'bestbuys.purchases',
-  'bestbuys.gameServices'
 ]);
 
 bestbuyApp.config(['$routeProvider', function($routeProvider) {
