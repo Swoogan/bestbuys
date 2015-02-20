@@ -4,7 +4,7 @@ angular.module('bestbuys.purchases', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/purchases', {
-    templateUrl: 'purchases/template.html',
+    templateUrl: 'purchases/purchases.html',
     controller: 'PurchasesCtrl'
   });
 }])
@@ -14,7 +14,10 @@ angular.module('bestbuys.purchases', ['ngRoute'])
   
   $scope.generatePurchases = function() {
   };
-}]); 
+}]) 
 
-
-	  
+.service('Command', ['$http', function($http) {   
+  this.save = function (name, data) {
+    return $http.post('/commands/', {name: name, data: data});
+  };  
+}]);
