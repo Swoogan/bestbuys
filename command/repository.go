@@ -1,10 +1,10 @@
 package main
 
 import (
-        "gopkg.in/mgo.v2"
-        "gopkg.in/mgo.v2/bson"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 
-        "bitbucket.org/Swoogan/bestbuys/domain"
+	"bitbucket.org/Swoogan/bestbuys/domain"
 )
 
 type repository map[string]domain.Game
