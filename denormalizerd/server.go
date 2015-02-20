@@ -1,18 +1,19 @@
 package main
 
 import (
-	"os"
+	"flag"
 	"log"
 	"net"
-	"flag"
 	"net/rpc"
-	"os/signal"
 	"net/rpc/jsonrpc"
+	"os"
+	"os/signal"
+	"syscall"
 
-        "gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2"
 
-        "bitbucket.org/Swoogan/bestbuys/domain"
-        "bitbucket.org/Swoogan/bestbuys/denormalizer"
+	"bitbucket.org/Swoogan/bestbuys/denormalizer"
+	"bitbucket.org/Swoogan/bestbuys/domain"
 )
 
 var mongo *string = flag.String("m", "localhost", "Mongo server address")
@@ -41,7 +42,11 @@ func main() {
 	go serve()
 
 	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
+	signal.Notify(c,
+		syscall.SIGHUP,
+		syscall.SIGINT,
+		syscall.SIGTERM,
+		syscall.SIGQUIT)
 
 	for sig := range c {
 		logger.Printf("Received %v, shutting down...", sig)
