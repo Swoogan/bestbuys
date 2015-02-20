@@ -56,6 +56,10 @@ func setStructureCost(data domain.Data, repo repository) *domain.Event {
 	name := data["structureName"].(string)
 	st := game.Structures[name]
 	st.Cost = domain.Money(data["structureCost"].(float64))
+	if len(game.Structures) == 0 {
+		logger.Println("Structures weren't hydrated correctly.")
+		//return nil, error
+	}
 	game.Structures[name] = st
 	repo[id] = game
 	return createEvent("structureCostSet", data)

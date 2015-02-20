@@ -11,7 +11,7 @@ angular.module('bestbuys.game', ['ngRoute', 'ngResource'])
 
 .controller('GameCtrl', ['$scope', 'Game', 'Command', 'Notification',
   function($scope, Game, Command, Notification) {
-    $scope.gameId = '54e2ac43f047051f3c000004';    
+    $scope.gameId = '54e6a1a7f047055eb3000004';    
     
     Game.get({id: $scope.gameId},
       function(data) {
