@@ -1,6 +1,5 @@
 Outstanding
 -----------
-* Total does not update dynamically
 * Fix format so that it handles decimal places
 * Verify the findbest algorithm is operating correctly
 * Improve the findbest data structure
@@ -20,6 +19,7 @@ Outstanding
 
 DONE
 ----
+* Total does not update dynamically
 * Have Finance and Structure accordians open by default
 * Find out why the keys in the purchases are title case but not in the structures (query side)
 * Get findbest results returning to browser

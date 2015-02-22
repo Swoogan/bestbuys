@@ -11,7 +11,7 @@ angular.module('bestbuys.game', ['ngRoute', 'ngResource'])
 
 .controller('GameCtrl', ['$scope', 'Game', 'Command', 'Notification',
   function($scope, Game, Command, Notification) {
-    $scope.gameId = '54e6a1a7f047055eb3000004';    
+    $scope.gameId = '54e6a1a7f047055eb3000004';
     
     Game.get({id: $scope.gameId},
       function(data) {
@@ -29,6 +29,7 @@ angular.module('bestbuys.game', ['ngRoute', 'ngResource'])
       
       Command.save(command, data).then(
         function () {
+          $scope.finance[field] = value;
           $scope.message = Notification.showSuccess();
         },
         function (error) {
@@ -47,7 +48,7 @@ angular.module('bestbuys.game', ['ngRoute', 'ngResource'])
           $scope.message = Notification.showError(error);
         }
       );
-    }    
+    }
   }
 ]) 
 
