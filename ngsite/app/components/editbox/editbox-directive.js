@@ -8,7 +8,7 @@ bestbuys.directive('bbEditbox', function ($filter, utilities) {
   return {
     restrict: 'E',
     replace: true,
-    scope: { value: '=', name: '@', save: '=' },
+    scope: {value: '=', name: '@', label: '@', save: '='},
     templateUrl: '/app/components/editbox/editbox.html',
     link: function (scope, element, attrs) {
       // the second div is always the actual editbox (see the template)
@@ -34,6 +34,6 @@ bestbuys.directive('bbEditbox', function ($filter, utilities) {
       /* On Keyup */
       editbox.bind('keyup', utilities.handleEscape);
     }
-  }
+  };
 });
 
