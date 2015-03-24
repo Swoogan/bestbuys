@@ -4,7 +4,7 @@
 
 var bestbuys = angular.module('bestbuys');
 
-bestbuys.directive('bbEditbox', function ($filter, parseCurrency) {
+bestbuys.directive('bbEditbox', function ($filter, utilities) {
   return {
     restrict: 'E',
     replace: true,
@@ -17,7 +17,7 @@ bestbuys.directive('bbEditbox', function ($filter, parseCurrency) {
       /* On Focus */
       editbox.bind('focus', function () {
         editbox.addClass('shadow');
-        editbox.html(parseCurrency(editbox.html()));
+        editbox.html(utilities.parseCurrency(editbox.html()));
       });
 
       /* On Blur */
@@ -25,14 +25,14 @@ bestbuys.directive('bbEditbox', function ($filter, parseCurrency) {
         var amount = editbox.html();
         editbox.removeClass('shadow');
         editbox.html($filter('currency')(amount, undefined, 0));
-        scope.save(attrs.name, parseCurrency(amount));
+        scope.save(attrs.name, utilities.parseCurrency(amount));
       });
 
       /* On Keydown */
-      editbox.bind('keydown', handleEnter);
+      editbox.bind('keydown', utilities.handleEnter);
 
       /* On Keyup */
-      editbox.bind('keyup', handleEscape);
+      editbox.bind('keyup', utilities.handleEscape);
     }
   }
 });
