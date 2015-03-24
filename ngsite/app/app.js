@@ -1,5 +1,7 @@
 'use strict';
 
+/*global angular*/
+
 // Declare app level module which depends on views, and components
 var bestbuyApp = angular.module('bestbuys', [
   'ngRoute',
@@ -7,7 +9,7 @@ var bestbuyApp = angular.module('bestbuys', [
   'ngAnimate',
 ]);
 
-bestbuyApp.config(['$routeProvider', function($routeProvider) {
+bestbuyApp.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/game'});
 }]);
 
