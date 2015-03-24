@@ -4,7 +4,7 @@
 
 var bestbuys = angular.module('bestbuys');
 
-bestbuys.directive('bbCost', function ($filter, parseCurrency) {
+bestbuys.directive('bbCost', function ($filter, utilities) {
   return {
     restrict: 'A',
     replace: true,
@@ -14,7 +14,7 @@ bestbuys.directive('bbCost', function ($filter, parseCurrency) {
       /* On Focus */
       element.bind('focus', function () {
         element.addClass('shadow');
-        element.html(parseCurrency(element.html()));
+        element.html(utilities.parseCurrency(element.html()));
       });
 
       /* On Blur */
@@ -22,14 +22,14 @@ bestbuys.directive('bbCost', function ($filter, parseCurrency) {
         var amount = element.html();
         element.removeClass('shadow');
         element.html($filter('currency')(amount, undefined, 0));
-        scope.save(scope.structure, parseCurrency(amount));
+        scope.save(scope.structure, utilities.parseCurrency(amount));
       });
  
       /* On Keydown */
-      element.bind('keydown', handleEnter);
+      element.bind('keydown', utilities.handleEnter);
 
       /* On Keyup */
-      element.bind('keyup', handleEscape);
+      element.bind('keyup', utilities.handleEscape);
     }
   };
 });
